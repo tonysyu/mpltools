@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 __all__ = ['figure', 'figsize']
 
 
-def figure(aspect_ratio=1.3, scale=1, *args, **kwargs):
+def figure(aspect_ratio=1.3, scale=1, width=None, *args, **kwargs):
     """Return matplotlib figure window.
 
     Parameters
@@ -13,6 +13,8 @@ def figure(aspect_ratio=1.3, scale=1, *args, **kwargs):
         Aspect ratio, width / height, of figure.
     scale : float
         Scale default size of the figure.
+    width : float
+        Figure width in inches. If None, default to rc parameters.
 
     See Also
     --------
@@ -20,11 +22,11 @@ def figure(aspect_ratio=1.3, scale=1, *args, **kwargs):
 
     """
     assert 'figsize' not in kwargs
-    size = figsize(aspect_ratio=aspect_ratio, scale=scale)
+    size = figsize(aspect_ratio=aspect_ratio, scale=scale, width=width)
     return plt.figure(figsize=size, *args, **kwargs)
 
 
-def figsize(aspect_ratio=1.3, scale=1):
+def figsize(aspect_ratio=1.3, scale=1, width=None):
     """Return figure size (width, height) in inches.
 
     Parameters
@@ -33,9 +35,12 @@ def figsize(aspect_ratio=1.3, scale=1):
         Aspect ratio, width / height, of figure.
     scale : float
         Scale default size of the figure.
+    width : float
+        Figure width in inches. If None, default to rc parameters.
     """
 
-    width, h = plt.rcParams['figure.figsize']
+    if width is None:
+        width, h = plt.rcParams['figure.figsize']
     height = width / aspect_ratio
     size = (width * scale, height * scale)
     return size
