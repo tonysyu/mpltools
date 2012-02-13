@@ -6,10 +6,19 @@ styles with matplotlib.
 Subpackages
 ===========
 style
-    Library of styles.
+    Library of styles and functions for setting the style.
 
 Utility functions
 =================
+figure
+    Create matplotlib figure with specified aspect ratio and scale.
+figsize
+    Calculate figure size based on aspect ratio and scale.
+
+Attributes
+==========
+styles
+    Available matplotlib styles.
 
 """
 from utils import *
