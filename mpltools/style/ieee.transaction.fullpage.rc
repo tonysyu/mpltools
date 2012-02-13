@@ -1,0 +1,20 @@
+
+figure.figsize = (7, 5)
+
+font.family = 'serif'
+
+axes.labelsize = 12
+
+text.fontsize = 12
+legend.fontsize = 10
+xtick.labelsize = 10
+ytick.labelsize = 10
+
+axes.linewidth = .75
+lines.linewidth = .75
+
+figure.subplot.left = 0.125
+figure.subplot.right = 0.95
+figure.subplot.bottom = 0.1
+figure.subplot.top = .95
+

@@ -1,0 +1,20 @@
+# Journal of Fluid Mechanics style file
+
+figure.figsize = (3.58, 2.65)
+
+font.size = 9
+legend.fontsize = 9
+axes.titlesize = 9
+
+lines.linewidth = 1
+axes.linewidth = 0.5
+patch.linewidth = 0.5
+lines.markersize = 3
+
+savefig.extension = 'pdf'
+
+figure.subplot.left = 0.17
+figure.subplot.bottom = 0.16
+figure.subplot.right = 0.93
+figure.subplot.top = 0.93
+
