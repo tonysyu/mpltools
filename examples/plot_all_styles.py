@@ -66,6 +66,9 @@ def test_simple_plot():
 
 
 for style in mpltools.styles:
+    # reset matplotlib defaults before applying new style
+    plt.rcdefaults()
+
     mpltools.style.use(style, use_baselib=True)
     print "Plotting tests for '%s' style" % style
 
