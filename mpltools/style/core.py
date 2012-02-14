@@ -6,10 +6,7 @@ from configobj import ConfigObj
 import matplotlib.pyplot as plt
 
 
-__all__ = ['use', 'reset', 'lib', 'baselib']
-
-
-_rcParams_default = plt.rcParams.copy()
+__all__ = ['use', 'lib', 'baselib']
 
 
 def use(name=None, use_baselib=False):
@@ -18,11 +15,6 @@ def use(name=None, use_baselib=False):
         plt.rcParams.update(baselib[name])
     else:
         plt.rcParams.update(lib[name])
-
-
-def reset():
-    """Reset matplotlib rc parameters to defaults."""
-    plt.rcParams = _rcParams_default
 
 
 def load_base_library():
