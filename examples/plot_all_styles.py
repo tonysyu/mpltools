@@ -35,7 +35,7 @@ def test_artists_plot():
     axes[0].grid()
     axes[0].legend()
 
-    axes[1].imshow(np.random.random(size=(20, 20)))
+    img = axes[1].imshow(np.random.random(size=(20, 20)))
     axes[1].set_title('image')
 
     ncolors = len(plt.rcParams['axes.color_cycle'])
@@ -49,7 +49,9 @@ def test_artists_plot():
     axes[3].set_ylabel('y-label')
     axes[3].set_title('title')
 
-    plt.tight_layout()
+    fig.tight_layout()
+    # `colorbar` should be called after `tight_layout`.
+    fig.colorbar(img, ax=axes[1])
     return fig
 
 def test_simple_plot():
