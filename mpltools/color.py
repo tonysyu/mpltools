@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import mpltools
 
 
-__all__ = ['color_mapper', 'colors_from_cmap', 'cycle_cmap', 'cycle_cmap_axes']
+__all__ = ['color_mapper', 'colors_from_cmap', 'cycle_cmap']
 
 
 CMAP_RANGE = mpltools.config['color']['cmap_range']
@@ -64,6 +64,7 @@ def colors_from_cmap(length=50, cmap='YlOrBr', start=None, stop=None):
     start, stop: 0 <= float <= 1
         Limit colormap to this range (start < stop 1). You should limit the
         range of colormaps with light values (assuming a white background).
+        Some colors have default start/stop values (see `CMAP_RANGE`).
 
     Returns
     -------
@@ -72,7 +73,7 @@ def colors_from_cmap(length=50, cmap='YlOrBr', start=None, stop=None):
 
     See Also
     --------
-    `cycle_cmap`, `cycle_cmap_axes`
+    `cycle_cmap`
 
     """
     if isinstance(cmap, basestring):
@@ -92,35 +93,11 @@ def colors_from_cmap(length=50, cmap='YlOrBr', start=None, stop=None):
     return cmap(idx)
 
 
-def cycle_cmap(length=50, cmap='YlOrBr', start=None, stop=None):
+def cycle_cmap(length=50, cmap='YlOrBr', start=None, stop=None, ax=None):
     """Set default color cycle of matplotlib based on colormap.
 
-    Parameters
-    ----------
-    length : int
-        The number of colors in the cycle. When `length` is large (> ~10), it
-        is difficult to distinguish between successive lines because successive
-        colors are very similar.
-
-    cmap : str
-        Name of a matplotlib colormap (see matplotlib.pyplot.cm).
-
-    start, stop: 0 <= float <= 1
-        Limit colormap to this range (start < stop 1). You should limit the
-        range of colormaps with light values (assuming a white background).
-
-    See Also
-    --------
-    `colors_from_cmap`, `cycle_cmap_axes`
-
-    """
-    color_cycle = colors_from_cmap(length, cmap, start, stop)
-    # set_default_color_cycle doesn't play nice with numpy arrays
-    plt.rc('axes', color_cycle=color_cycle.tolist())
-
-
-def cycle_cmap_axes(length=50, cmap='YlOrBr', start=None, stop=None, ax=None):
-    """Return axes with color cycle set to a given colormap `cmap`.
+    Note that the default color cycle is **not changed** if `ax` parameter
+    is set; only the axes's color cycle will be changed.
 
     Parameters
     ----------
@@ -135,32 +112,34 @@ def cycle_cmap_axes(length=50, cmap='YlOrBr', start=None, stop=None, ax=None):
     start, stop: 0 <= float <= 1
         Limit colormap to this range (start < stop 1). You should limit the
         range of colormaps with light values (assuming a white background).
+        Some colors have default start/stop values (see `CMAP_RANGE`).
 
-    Returns
-    -------
     ax : matplotlib axes
-        Axes with new color cycle.
+        If ax is not None, then change the axes's color cycle instead of the
+        default color cycle.
 
     See Also
     --------
-    `colors_from_cmap`, `cycle_cmap`
+    `colors_from_cmap`
 
     """
-    ax = ax if ax is not None else plt.gca()
     color_cycle = colors_from_cmap(length, cmap, start, stop)
-    # set_default_color_cycle doesn't play nice with numpy arrays
-    ax.set_color_cycle(color_cycle)
-    return ax
+
+    if ax is None:
+        plt.rc('axes', color_cycle=color_cycle.tolist())
+    else:
+        ax.set_color_cycle(color_cycle)
 
 
 if __name__ == '__main__':
-    n_lines = 10
-    cycle_cmap(n_lines)
-    x = np.linspace(0, 10)
     f, (ax1, ax2) = plt.subplots(ncols=2)
+
+    n_lines = 10
+    cycle_cmap(n_lines, ax=ax1)
+    x = np.linspace(0, 10)
     for shift in np.linspace(0, np.pi, n_lines):
         ax1.plot(x, np.sin(x - shift), linewidth=2)
-    ax1.set_title('cycle colormap')
+    ax1.set_title('colorcycle from colormap')
 
     parameter_range = (0.1, 1)
     #pvalues = np.logspace(parameter_range[0], parameter_range[1], 5)
