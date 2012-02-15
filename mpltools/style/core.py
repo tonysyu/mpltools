@@ -2,8 +2,9 @@ import os
 import glob
 import copy
 
-from configobj import ConfigObj
 import matplotlib.pyplot as plt
+
+from .. import _config
 
 
 __all__ = ['use', 'lib', 'baselib']
@@ -38,7 +39,7 @@ def load_base_library():
 
     for style_path in style_files:
         filename = os.path.basename(style_path)
-        cfg = ConfigObj(style_path, unrepr=True)
+        cfg = _config.read(style_path)
         # remove last three letters, which are '.rc'
         library[filename[:-3]] = cfg.dict()
 
@@ -50,14 +51,8 @@ def update_user_library(base_library):
 
     library = copy.deepcopy(base_library)
 
-    rc_paths = [os.path.expanduser('~/.mplstyle'),
-                './mplstyle']
-    for path in rc_paths:
 
-        if not os.path.exists(path):
-            continue
-
-        cfg = ConfigObj(path, unrepr=True)
+    for cfg in _config.iter_paths(['~/.mplstyle', './mplstyle']):
 
         # update all styles with any global settings.
         if 'global' in cfg:
