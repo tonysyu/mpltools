@@ -80,7 +80,6 @@ def colors_from_cmap(length=50, cmap='YlOrBr', start=None, stop=None):
         cmap = getattr(plt.cm, cmap)
 
     crange = CMAP_RANGE.get(cmap.name, (0, 1))
-    print crange
     if start is not None:
         crange[0] = start
     if stop is not None:
