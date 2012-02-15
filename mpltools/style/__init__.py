@@ -1,14 +1,14 @@
 """
 This module defines styles redefine matplotlib rc parameters. In addition, you
-can override pre-defined styles with "mpltoolsrc" files in the current
+can override pre-defined styles with "mplstyle" files in the current
 directory and your home directory. The priority of style files is:
 
-    1. ./mpltoolsrc
-    2. ~/.mpltoolsrc
+    1. ./mplstyle
+    2. ~/.mplstyle
     3. mpltools/style/
 
-Style names should be specified as sections in "mpltoolsrc" files.  A simple
-"mpltoolsrc" file would look like:
+Style names should be specified as sections in "mplstyle" files.  A simple
+"mplstyle" file would look like:
 
     [style1]
 

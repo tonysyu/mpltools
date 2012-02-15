@@ -50,8 +50,8 @@ def update_user_library(base_library):
 
     library = copy.deepcopy(base_library)
 
-    rc_paths = [os.path.expanduser('~/.mpltoolsrc'),
-                './mpltoolsrc']
+    rc_paths = [os.path.expanduser('~/.mplstyle'),
+                './mplstyle']
     for path in rc_paths:
 
         if not os.path.exists(path):

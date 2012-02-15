@@ -10,11 +10,11 @@ Styles
 
 A key feature of `mpltools` is the idea of "styles"---essentially stylesheets
 that are similar to [matplotlibrc][2] files. Unfortunately, the syntax for
-a `mpltoolsrc` file is slightly different than `matplotlibrc` files because
+a `mplstyle` file is slightly different than `matplotlibrc` files because
 we use [ConfigObj][3] to parse them.
 
-Style names should be specified as sections in "mpltoolsrc" files.  A simple
-`mpltoolsrc` file would look like:
+Style names should be specified as sections in "mplstyle" files.  A simple
+`mplstyle` file would look like:
 
     [style1]
 
@@ -27,7 +27,7 @@ Style names should be specified as sections in "mpltoolsrc" files.  A simple
     font.family = 'serif'
 
 `mpltools` searches the current working directory and your home directory for
-`mpltoolsrc` files. To use a style, you just add:
+`mplstyle` files. To use a style, you just add:
 
     >>> import mpltools
     >>> mpltools.style.use('style1')
