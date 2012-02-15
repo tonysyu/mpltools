@@ -10,7 +10,17 @@ __all__ = ['use', 'lib', 'baselib']
 
 
 def use(name=None, use_baselib=False):
-    """Use matplotlib rc parameters from a pre-defined name or from a file."""
+    """Use matplotlib rc parameters from a pre-defined name or from a file.
+
+    Parameters
+    ----------
+    name : str
+        Name of style. For list of styles see `mpltools.styles`.
+
+    use_baselib : bool
+        If True, only use styles defined in `mpltools/style` (without user's
+        customization).
+    """
     if use_baselib:
         plt.rcParams.update(baselib[name])
     else:
