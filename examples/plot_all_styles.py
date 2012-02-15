@@ -49,7 +49,7 @@ def test_artists_plot():
     axes[3].set_ylabel('y-label')
     axes[3].set_title('title')
 
-    fig.tight_layout()
+    #fig.tight_layout()
     # `colorbar` should be called after `tight_layout`.
     fig.colorbar(img, ax=axes[1])
     return fig
