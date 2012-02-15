@@ -1,0 +1,21 @@
+
+
+[color]
+
+    [[cmap_range]]
+
+    # limit color ranges for visibility on white background
+
+    gray = (0.8, 0)
+    Blues = (0.2, 1)
+    Oranges = (0.4, 1)
+    OrRd = (0.2, 1)
+    BuGn = (0.2, 1)
+    PuRd = (0.2, 1)
+    YlGn = (0.2, 1)
+    YlGnBu = (0.2, 1)
+    YlOrBr = (0.2, 1)
+    YlOrRd = (0.2, 1)
+    hot = (0.9, 0)
+    bone = (0.8, 0)
+    pink = (0.6, 0)
