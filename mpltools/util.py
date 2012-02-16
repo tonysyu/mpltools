@@ -7,6 +7,8 @@ __all__ = ['figure', 'figsize']
 def figure(aspect_ratio=1.3, scale=1, width=None, *args, **kwargs):
     """Return matplotlib figure window.
 
+    Calculate figure height using `aspect_ratio` and *default* figure width.
+
     Parameters
     ----------
     aspect_ratio : float
@@ -28,6 +30,8 @@ def figure(aspect_ratio=1.3, scale=1, width=None, *args, **kwargs):
 
 def figsize(aspect_ratio=1.3, scale=1, width=None):
     """Return figure size (width, height) in inches.
+
+    Calculate figure height using `aspect_ratio` and *default* figure width.
 
     Parameters
     ----------
