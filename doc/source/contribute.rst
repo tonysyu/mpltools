@@ -16,6 +16,10 @@ Things I'd like to add:
 
 * Infrastructure to build examples into documentation (like `scikits-image
   auto-examples`_).
+* A way to support `matplotlibrc`-style config files. Currently `mpltoolsrc`
+  and `mplstyle` files are parsed using ConfigObj_, which requires a different
+  syntax than `matplotlibrc` files. This isn't a difficult task, but at the
+  moment, I don't really care enough to do it.
 * Tests!
 
 
@@ -42,7 +46,13 @@ source files are deleted. To clean everything out just run::
 
 
 .. _github: https://github.com/tonysyu/mpltools
+
 .. _scikits-image auto examples: http://scikits-image.org/docs/dev/auto_examples/index.html
+
+.. _ConfigObj: http://www.voidspace.org.uk/python/configobj.html
+
 .. _PEP 8: http://www.python.org/dev/peps/pep-0008/
+
 .. _Numpy Documentation Standard: https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt
+
 .. _Sphinx: http://sphinx.pocoo.org/
