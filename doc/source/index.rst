@@ -31,7 +31,9 @@ Sections
 
    * - `API Reference <api/api.html>`_
 
-       Documentation for the functions included in `mpltools`.
+       Documentation for the functions included in `mpltools`. (Currently the
+       API doesn't build correctly on "readthedocs.org". Sorry for the 404
+       error.)
 
      - `License Info <license.html>`_
 
