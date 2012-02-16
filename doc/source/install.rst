@@ -4,28 +4,29 @@ Install
 =======
 
 Requirements
-------------
+============
 
-* [matplotlib][1] (of course)
-* [ConfigObj][3]
+* matplotlib_ (of course)
+* ConfigObj_
 
 
 Installation from source
-------------------------
+========================
 
-`mpltools` may be installed globally using:
+`mpltools` may be installed globally using::
 
     $ git clone git@github.com:tonysyu/mpltools.git
     $ cd mpltools
     $ python setup.py install
 
-or locally using:
+or locally using::
 
     $ python setup.py install --prefix=${HOME}
 
 If you prefer, you can use it without installing, by simply adding
-this path to your `PYTHONPATH` variable and compiling the extensions:
+the path to the `mpltools` package to your `PYTHONPATH` variable.
 
-    $ python setup.py build_ext -i
 
+.. _Matplotlib: http://matplotlib.sourceforge.net/
+.. _ConfigObj: http://www.voidspace.org.uk/python/configobj.html
 
