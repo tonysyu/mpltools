@@ -40,12 +40,6 @@ Sections
        Conditions on the use and redistribution of this package.
 
 
-Licence
-=======
-
-Please read `LICENSE` in this directory.
-
-
 .. _Matplotlib: http://matplotlib.sourceforge.net/
 
 
