@@ -47,7 +47,7 @@ source files are deleted. To clean everything out just run::
 
 .. _github: https://github.com/tonysyu/mpltools
 
-.. _scikits-image auto examples: http://scikits-image.org/docs/dev/auto_examples/index.html
+.. _scikits-image auto-examples: http://scikits-image.org/docs/dev/auto_examples/index.html
 
 .. _ConfigObj: http://www.voidspace.org.uk/python/configobj.html
 
