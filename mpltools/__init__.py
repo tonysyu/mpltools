@@ -25,7 +25,7 @@ config
     Dictionary of package configuration settings.
 
 """
-from utils import *
+from util import *
 
 import os.path as _osp
 pkgdir = _osp.abspath(_osp.dirname(__file__))
