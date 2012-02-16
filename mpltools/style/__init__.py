@@ -27,8 +27,6 @@ Functions
 =========
 use
     Redefine rc parameters using specified style.
-reset
-    Reset rc parameters to matplotlib defaults.
 lib
     Style library.
 baselib
