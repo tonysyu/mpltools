@@ -18,7 +18,7 @@ def figure(aspect_ratio=1.3, scale=1, width=None, *args, **kwargs):
 
     See Also
     --------
-    `figsize`
+    figsize
 
     """
     assert 'figsize' not in kwargs

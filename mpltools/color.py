@@ -73,7 +73,7 @@ def colors_from_cmap(length=50, cmap='YlOrBr', start=None, stop=None):
 
     See Also
     --------
-    `cycle_cmap`
+    cycle_cmap
 
     """
     if isinstance(cmap, basestring):
@@ -119,7 +119,7 @@ def cycle_cmap(length=50, cmap='YlOrBr', start=None, stop=None, ax=None):
 
     See Also
     --------
-    `colors_from_cmap`
+    colors_from_cmap, color_mapper
 
     """
     color_cycle = colors_from_cmap(length, cmap, start, stop)
