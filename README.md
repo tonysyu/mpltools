@@ -38,6 +38,12 @@ all available styles, use:
     >>> print mpltools.styles
 
 
+Documentation
+-------------
+
+For more details about use and installation, see the `mpltools` [documentation][4].
+
+
 Requirements
 ------------
 
@@ -73,4 +79,5 @@ Please read `LICENSE` in this directory.
 [1]: http://matplotlib.sourceforge.net/
 [2]: http://matplotlib.sourceforge.net/users/customizing.html
 [3]: http://www.voidspace.org.uk/python/configobj.html
+[4]: http://readthedocs.org/docs/mpltools/en/latest/
 
