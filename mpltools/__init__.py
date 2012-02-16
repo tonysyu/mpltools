@@ -27,20 +27,11 @@ config
 """
 from util import *
 
-import os.path as _osp
-pkgdir = _osp.abspath(_osp.dirname(__file__))
-
 import _config
-config = {}
-for cfg in _config.iter_paths([_osp.join(pkgdir, 'mpltoolsrc'),
-                               '~/.mpltoolsrc',
-                               './mpltoolsrc']):
-    config.update(cfg)
+config = _config.config
 
 import style
 styles = style.lib.keys()
 
-import color
-
 # clean up namespace
-del _osp, _config
+del _config

@@ -1,13 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-import mpltools
+from ._config import config
 
 
 __all__ = ['color_mapper', 'colors_from_cmap', 'cycle_cmap']
 
 
-CMAP_RANGE = mpltools.config['color']['cmap_range']
+CMAP_RANGE = config['color']['cmap_range']
 
 
 def color_mapper(parameter_range, cmap='YlOrBr', start=0, stop=1):

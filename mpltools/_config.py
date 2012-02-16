@@ -5,6 +5,9 @@ import os
 from configobj import ConfigObj
 
 
+__all__ = ['iter_paths', 'read', 'config']
+
+
 def iter_paths(config_paths):
     for path in config_paths:
         path = os.path.expanduser(path)
@@ -18,4 +21,13 @@ def iter_paths(config_paths):
 def read(path):
     """Return dict-like object of config parameters from file path."""
     return ConfigObj(path, unrepr=True)
+
+
+config = {}
+pkgdir = os.path.abspath(os.path.dirname(__file__))
+for cfg in iter_paths([os.path.join(pkgdir, 'mpltoolsrc'),
+                       '~/.mpltoolsrc',
+                       './mpltoolsrc']):
+    config.update(cfg)
+
 
