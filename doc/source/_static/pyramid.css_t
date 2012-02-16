@@ -88,7 +88,7 @@ div.related {
 }
 
 div.related a {
-    color: #1b61d6;
+    color: #1a55a3;
 }
 
 div.related ul {
@@ -172,7 +172,7 @@ p.sidebar-title {
 /* -- body styles ----------------------------------------------------------- */
 
 a, a .pre {
-    color: #1b61d6;
+    color: #1a55a3;
     text-decoration: none;
 }
 
@@ -202,7 +202,7 @@ div.body h5 { font-size: 100%; background-color: #ffffff; }
 div.body h6 { font-size: 100%; background-color: #ffffff; }
 
 a.headerlink {
-    color: #1b61d6;
+    color: #1a55a3;
     font-size: 0.8em;
     padding: 0 4px 0 4px;
     text-decoration: none;
@@ -321,3 +321,24 @@ tt.xref {
     font-weight: normal;
     font-style: normal;
 }
+
+
+/*---- contents table ----*/
+table.contentstable p.biglink {
+    line-height: 150%;
+}
+
+table.contentstable, table.contentstable td, table.contentstable th {
+    border-style: none;
+}
+
+div.body table.contentstable p {
+    margin: 0.5em;
+    text-align: left;
+}
+
+table.contentstable a {
+    text-decoration: none;
+    font-size: 120%;
+}
+

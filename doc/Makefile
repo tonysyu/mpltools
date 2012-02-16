@@ -40,8 +40,14 @@ help:
 
 clean:
 	-rm -rf $(BUILDDIR)/*
+	-rm -rf source/api
 
-html:
+api:
+	@mkdir -p source/api
+	python tools/build_modref_templates.py
+	@echo "Build API docs...done."
+
+html: api
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."

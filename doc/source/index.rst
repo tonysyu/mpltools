@@ -1,23 +1,55 @@
-.. mpltools documentation master file, created by
-   sphinx-quickstart on Wed Feb 15 21:16:13 2012.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
 
-``mpltools``: Tools for Matplotlib
-==================================
+================================
+`mpltools`: Tools for Matplotlib
+================================
 
-Contents:
-
-.. toctree::
-   :maxdepth: 2
-
-.. automodule:: mpltools
+`mpltools` provides tools for Matplotlib_ that make it easier to adjust the
+style, choose colors, make specialized plots, etc.
 
 
-Indices and tables
-==================
+Sections
+========
+
+.. list-table::
+   :class: contentstable
+
+   * - `Getting Started <getting_started.html>`_
+
+       Introduction to mpltools.
+
+     - `Installation Steps <install.html>`_
+
+       How to install mpltools.
+
+   * - `Examples <examples.html>`_
+
+       Introductory examples
+
+     - `Contribute <contribute.html>`_
+
+       Take part in development.
+
+   * - `API Reference <api/api.html>`_
+
+       Documentation for the functions included in `mpltools`.
+
+     - `License Info <license.html>`_
+
+       Conditions on the use and redistribution of this package.
+
+
+Licence
+=======
+
+Please read `LICENSE` in this directory.
+
+
+.. _Matplotlib: http://matplotlib.sourceforge.net/
+
+
+Index
+=====
 
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`
 
