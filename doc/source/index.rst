@@ -21,9 +21,9 @@ Sections
 
        How to install mpltools.
 
-   * - `Examples <examples.html>`_
+   * - `Examples <auto_examples/index.html>`_
 
-       Introductory examples
+       Introductory examples.
 
      - `Contribute <contribute.html>`_
 

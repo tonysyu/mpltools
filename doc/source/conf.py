@@ -13,6 +13,8 @@
 
 import sys, os
 
+on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
@@ -32,6 +34,10 @@ extensions = ['sphinx.ext.autodoc', 'sphinx.ext.autosummary',
               'sphinx.ext.todo', 'sphinx.ext.coverage',
               'sphinx.ext.pngmath', 'sphinx.ext.mathjax',
               'sphinx.ext.viewcode', 'numpydoc']
+
+if not on_rtd:
+    # Plots require matplotlib and can't be built by ReadTheDocs.
+    extensions.append('gen_plot_rst')
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -267,6 +273,8 @@ class Mock(object):
             return Mock()
 
 MOCK_MODULES = ['matplotlib', 'matplotlib.pyplot']
-for mod_name in MOCK_MODULES:
-    sys.modules[mod_name] = Mock()
+
+if on_rtd:
+    for mod_name in MOCK_MODULES:
+        sys.modules[mod_name] = Mock()
 
