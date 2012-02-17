@@ -1,4 +1,3 @@
 *.pyc
 build
 examples/test*
-doc/source/api
