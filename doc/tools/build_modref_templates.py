@@ -16,6 +16,28 @@ def abort(error):
     print '*WARNING* API documentation not generated: %s'%error
     exit()
 
+
+def assert_source_and_install_match(package):
+    """
+    Check that the source version is equal to the installed
+    version. If the versions mismatch the API documentation sources
+    are not (re)generated. This avoids automatic generation of documentation
+    for older or newer versions if such versions are installed on the system.
+    """
+    module = sys.modules[package]
+
+    installed_version = V(module.version.version)
+
+    setup_lines = open('../setup.py').readlines()
+    for l in setup_lines:
+        if l.startswith('VERSION'):
+            source_version = V(l.split("'")[1])
+            break
+
+    if source_version != installed_version:
+        abort("Installed version does not match source version")
+
+
 if __name__ == '__main__':
     package = 'mpltools'
 
@@ -28,24 +50,7 @@ if __name__ == '__main__':
     except ImportError, e:
         abort("Cannot import mpltools")
 
-    module = sys.modules[package]
-
-    # Check that the source version is equal to the installed
-    # version. If the versions mismatch the API documentation sources
-    # are not (re)generated. This avoids automatic generation of documentation
-    # for older or newer versions if such versions are installed on the system.
-
-    #installed_version = V(module.version.version)
-
-    setup_lines = open('../setup.py').readlines()
-    version = 'vUndefined'
-    for l in setup_lines:
-        if l.startswith('VERSION'):
-            source_version = V(l.split("'")[1])
-            break
-
-    #if source_version != installed_version:
-        #abort("Installed version does not match source version")
+    #assert_source_and_install_match(package)
 
     outdir = 'source/api'
     docwriter = ApiDocWriter(package)
