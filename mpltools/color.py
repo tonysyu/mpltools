@@ -10,7 +10,7 @@ __all__ = ['color_mapper', 'colors_from_cmap', 'cycle_cmap']
 CMAP_RANGE = config['color']['cmap_range']
 
 
-def color_mapper(parameter_range, cmap=None, start=0, stop=1):
+def color_mapper(parameter_range, cmap=None, start=None, stop=None):
     """Return color mapper, which returns color based on parameter value.
 
     Parameters
@@ -35,7 +35,13 @@ def color_mapper(parameter_range, cmap=None, start=0, stop=1):
         cmap = config['color']['cmap']
     if isinstance(cmap, basestring):
         cmap = getattr(plt.cm, cmap)
-    assert start < stop
+
+    crange = list(CMAP_RANGE.get(cmap.name, (0, 1)))
+    if start is None:
+        start = crange[0]
+    if stop is None:
+        stop = crange[1]
+
     assert 0 <= start <= 1
     assert 0 <= stop <= 1
 
