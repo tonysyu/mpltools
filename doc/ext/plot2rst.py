@@ -246,7 +246,7 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     image_path = os.path.join(image_dir, image_fmt_str)
 
     if cfg.plot2rst_add_gallery:
-        figure_list = save_plot(src_path, image_path, thumb_path)
+        figure_list = save_plot(src_path, image_path, thumb_path, cfg)
         this_template = plot_rst_template
     else:
         figure_list = []
@@ -273,7 +273,7 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     f.flush()
 
 
-def save_plot(src_path, image_path, thumb_path):
+def save_plot(src_path, image_path, thumb_path, cfg):
     """Save plots as images.
 
     Parameters
@@ -284,6 +284,8 @@ def save_plot(src_path, image_path, thumb_path):
         Path where plots are saved (format string with single string argument).
     thumbpath : str
         Path where thumbnails of plots are saved.
+    cfg : config object
+        Sphinx config object created by Sphinx.
 
     Returns
     -------
@@ -303,6 +305,8 @@ def save_plot(src_path, image_path, thumb_path):
             # We need to execute the code
             print 'plotting %s' % src_name
             import matplotlib.pyplot as plt
+            plt.rcdefaults()
+            plt.rcParams.update(cfg.plot2rst_rcparams)
             plt.close('all')
             cwd = os.getcwd()
             try:

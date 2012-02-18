@@ -278,3 +278,8 @@ if on_rtd:
     for mod_name in MOCK_MODULES:
         sys.modules[mod_name] = Mock()
 
+# -- Options for plot2rst
+plot2rst_rcparams = {'legend.loc': 'best',
+                     'legend.numpoints': 1,
+                     'image.cmap' : 'gray'}
+
