@@ -37,7 +37,7 @@ extensions = ['sphinx.ext.autodoc', 'sphinx.ext.autosummary',
 
 if not on_rtd:
     # Plots require matplotlib and can't be built by ReadTheDocs.
-    extensions.append('gen_plot_rst')
+    extensions.append('plot2rst')
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
