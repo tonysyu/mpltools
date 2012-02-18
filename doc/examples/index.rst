@@ -3,5 +3,5 @@
 General examples
 -------------------
 
-General-purpose and introductory examples for the `mpltools`.
+General-purpose and introductory examples for `mpltools`.
 

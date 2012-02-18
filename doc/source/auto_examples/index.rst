@@ -1,4 +1,5 @@
 
+
 .. raw:: html
 
     <style type="text/css">
@@ -32,18 +33,18 @@ Examples
 General examples
 -------------------
 
-General-purpose and introductory examples for the `mpltools`.
+General-purpose and introductory examples for `mpltools`.
 
 
 
 
-.. figure:: ./images/thumb/plot_color_mapper.png
+.. figure:: images/thumb/plot_color_mapper.png
    :figclass: gallery
    :target: ./plot_color_mapper.html
 
    :ref:`example_plot_color_mapper.py`
 
-.. figure:: ./images/thumb/plot_cycle_cmap.png
+.. figure:: images/thumb/plot_cycle_cmap.png
    :figclass: gallery
    :target: ./plot_cycle_cmap.html
 
@@ -53,4 +54,3 @@ General-purpose and introductory examples for the `mpltools`.
 .. raw:: html
 
     <div style="clear: both"></div>
-    
