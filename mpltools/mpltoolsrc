@@ -2,6 +2,8 @@
 
 [color]
 
+    cmap = 'YlOrBr'
+
     [[cmap_range]]
 
     # limit color ranges for visibility on white background

@@ -10,7 +10,7 @@ __all__ = ['color_mapper', 'colors_from_cmap', 'cycle_cmap']
 CMAP_RANGE = config['color']['cmap_range']
 
 
-def color_mapper(parameter_range, cmap='YlOrBr', start=0, stop=1):
+def color_mapper(parameter_range, cmap=None, start=0, stop=1):
     """Return color mapper, which returns color based on parameter value.
 
     Parameters
@@ -31,6 +31,8 @@ def color_mapper(parameter_range, cmap='YlOrBr', start=0, stop=1):
         Function that returns an RGBA color from a parameter value.
 
     """
+    if cmap is None:
+        cmap = config['color']['cmap']
     if isinstance(cmap, basestring):
         cmap = getattr(plt.cm, cmap)
     assert start < stop
@@ -48,7 +50,7 @@ def color_mapper(parameter_range, cmap='YlOrBr', start=0, stop=1):
     return map_color
 
 
-def colors_from_cmap(length=50, cmap='YlOrBr', start=None, stop=None):
+def colors_from_cmap(length=50, cmap=None, start=None, stop=None):
     """Return color cycle from a given colormap.
 
     Parameters
@@ -76,6 +78,8 @@ def colors_from_cmap(length=50, cmap='YlOrBr', start=None, stop=None):
     cycle_cmap
 
     """
+    if cmap is None:
+        cmap = config['color']['cmap']
     if isinstance(cmap, basestring):
         cmap = getattr(plt.cm, cmap)
 
@@ -92,7 +96,7 @@ def colors_from_cmap(length=50, cmap='YlOrBr', start=None, stop=None):
     return cmap(idx)
 
 
-def cycle_cmap(length=50, cmap='YlOrBr', start=None, stop=None, ax=None):
+def cycle_cmap(length=50, cmap=None, start=None, stop=None, ax=None):
     """Set default color cycle of matplotlib based on colormap.
 
     Note that the default color cycle is **not changed** if `ax` parameter
@@ -128,28 +132,4 @@ def cycle_cmap(length=50, cmap='YlOrBr', start=None, stop=None, ax=None):
         plt.rc('axes', color_cycle=color_cycle.tolist())
     else:
         ax.set_color_cycle(color_cycle)
-
-
-if __name__ == '__main__':
-    f, (ax1, ax2) = plt.subplots(ncols=2)
-
-    n_lines = 10
-    cycle_cmap(n_lines, ax=ax1)
-    x = np.linspace(0, 10)
-    for shift in np.linspace(0, np.pi, n_lines):
-        ax1.plot(x, np.sin(x - shift), linewidth=2)
-    ax1.set_title('colorcycle from colormap')
-
-    parameter_range = (0.1, 1)
-    #pvalues = np.logspace(parameter_range[0], parameter_range[1], 5)
-    pvalues = np.logspace(-1, 0, 5)
-    map_color = color_mapper(parameter_range, start=0.1)
-    x = np.linspace(0, 10)
-    for pval in pvalues:
-        y = np.sin(x) * np.exp(-pval * x)
-        ax2.plot(x, y, 's', color=map_color(pval))
-    ax2.legend(['val = %0.2f' % pval for pval in pvalues])
-    ax2.set_title('color based on parameter value')
-
-    plt.show()
 
