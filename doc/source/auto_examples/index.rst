@@ -37,6 +37,12 @@ General-purpose and introductory examples for the `mpltools`.
 
 
 
+.. figure:: ./images/thumb/plot_color_mapper.png
+   :figclass: gallery
+   :target: ./plot_color_mapper.html
+
+   :ref:`example_plot_color_mapper.py`
+
 .. figure:: ./images/thumb/plot_cycle_cmap.png
    :figclass: gallery
    :target: ./plot_cycle_cmap.html

@@ -19,7 +19,7 @@ but if you pass it a plot axes, only the color cycle for the axes is altered.
 
 
 **Python source code:** :download:`plot_cycle_cmap.py <plot_cycle_cmap.py>`
-(generated using ``skimage`` |version|)
+(generated using ``mpltools`` |version|)
 
 .. literalinclude:: plot_cycle_cmap.py
     :lines: 11-
