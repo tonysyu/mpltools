@@ -292,59 +292,53 @@ def save_plot(src_path, image_path, thumb_path, cfg):
     figure_list : list
         List of figure names saved by the example.
     """
-    src_name = os.path.basename(src_path)
-    image_dir, image_fmt_str = os.path.split(image_path)
     figure_list = []
-    if src_name.startswith('plot'):
-        # generate the plot as png image if file name starts with plot and if
-        # it is more recent than an existing image.
-        first_image_file = image_path % 1
 
-        if (not os.path.exists(first_image_file) or
-            mod_time(first_image_file) <= mod_time(src_path)):
-            # We need to execute the code
-            print 'plotting %s' % src_name
-            import matplotlib.pyplot as plt
-            plt.rcdefaults()
-            plt.rcParams.update(cfg.plot2rst_rcparams)
-            plt.close('all')
-            cwd = os.getcwd()
-            try:
-                # First CD in the original example dir, so that any file
-                # created by the example get created in this directory
-                os.chdir(os.path.dirname(src_path))
-                execfile(os.path.basename(src_path), {'pl' : plt})
-                os.chdir(cwd)
+    src_dir, src_name = os.path.split(src_path)
+    if not src_name.startswith('plot'):
+        return figure_list
 
-                fig_mngr = matplotlib._pylab_helpers.Gcf.get_all_fig_managers()
-                # In order to save every figure we have two solutions :
-                # * iterate from 1 to infinity and call plt.fignum_exists(n)
-                #   (this requires the figures to be numbered
-                #    incrementally: 1, 2, 3 and not 1, 2, 5)
-                # * iterate over [fig_mngr.num for fig_mngr in
-                #   matplotlib._pylab_helpers.Gcf.get_all_fig_managers()]
-                for fig_num in (m.num for m in fig_mngr):
-                    # Set the fig_num figure as the current figure as we can't
-                    # save a figure that's not the current figure.
-                    plt.figure(fig_num)
-                    plt.savefig(image_path % fig_num)
-                    figure_list.append(image_fmt_str % fig_num)
-            except:
-                print 80*'_'
-                print '%s is not compiling:' % src_name
-                traceback.print_exc()
-                print 80*'_'
-            finally:
-                os.chdir(cwd)
-        else:
-            figure_list = [f[len(image_dir):]
-                            for f in glob.glob(image_path % '[1-9]')]
-                            #for f in glob.glob(image_path % '*')]
+    image_dir, image_fmt_str = os.path.split(image_path)
+    first_image_file = image_path % 1
 
-        # generate thumb file
-        from matplotlib import image
-        if os.path.exists(first_image_file):
-            image.thumbnail(first_image_file, thumb_path, 0.2)
+    needs_replot = (not os.path.exists(first_image_file) or
+                    mod_time(first_image_file) <= mod_time(src_path))
+    if needs_replot:
+        print 'plotting %s' % src_name
+        import matplotlib.pyplot as plt
+        plt.rcdefaults()
+        plt.rcParams.update(cfg.plot2rst_rcparams)
+        plt.close('all')
+        cwd = os.getcwd()
+        try:
+            # Plot example in source directory.
+            os.chdir(src_dir)
+            execfile(src_name, {'pl' : plt})
+            os.chdir(cwd)
+
+            fig_mngr = matplotlib._pylab_helpers.Gcf.get_all_fig_managers()
+            # Save every figure by looping over all open figures.
+            for fig_num in (m.num for m in fig_mngr):
+                # Set the fig_num figure as the current figure as we can't
+                # save a figure that's not the current figure.
+                plt.figure(fig_num)
+                plt.savefig(image_path % fig_num)
+                figure_list.append(image_fmt_str % fig_num)
+        except:
+            print 80*'_'
+            print '%s is not compiling:' % src_name
+            traceback.print_exc()
+            print 80*'_'
+        finally:
+            os.chdir(cwd)
+    else:
+        figure_list = [f[len(image_dir):]
+                        for f in glob.glob(image_path % '[1-9]')]
+
+    # generate thumb file
+    from matplotlib import image
+    if os.path.exists(first_image_file):
+        image.thumbnail(first_image_file, thumb_path, 0.2)
 
     return figure_list
 
