@@ -129,10 +129,9 @@ def generate_rst_gallery(app):
     """Add list of examples and gallery to Sphinx app."""
     rst_dir = os.path.join(app.builder.srcdir, GEN_RST_PATH)
     example_dir = os.path.abspath(app.builder.srcdir + '/' + PY_GALLERY_PATH)
-    try:
-        plot2rst_add_gallery = eval(app.builder.config.plot2rst_add_gallery)
-    except TypeError:
-        plot2rst_add_gallery = bool(app.builder.config.plot2rst_add_gallery)
+
+    cfg = app.builder.config
+
     if not os.path.exists(example_dir):
         os.makedirs(example_dir)
     if not os.path.exists(rst_dir):
@@ -143,14 +142,14 @@ def generate_rst_gallery(app):
     gallery_index.write(GALLERY_HEADER)
     # Here we don't use an os.walk, but we recurse only twice: flat is
     # better than nested.
-    write_gallery(gallery_index, example_dir, rst_dir, plot2rst_add_gallery)
+    write_gallery(gallery_index, example_dir, rst_dir, cfg)
     for d in sorted(os.listdir(example_dir)):
         if os.path.isdir(os.path.join(example_dir, d)):
-            write_gallery(d, gallery_index, example_dir, rst_dir, plot2rst_add_gallery)
+            write_gallery(d, gallery_index, example_dir, rst_dir, cfg)
     gallery_index.flush()
 
 
-def write_gallery(gallery_index, src_dir, rst_dir, plot2rst_add_gallery):
+def write_gallery(gallery_index, src_dir, rst_dir, cfg):
     """Generate the rst files for an example directory, i.e. gallery.
 
     Write rst files from python examples and add example links to gallery.
@@ -163,8 +162,8 @@ def write_gallery(gallery_index, src_dir, rst_dir, plot2rst_add_gallery):
         Source directory for python examples.
     rst_dir : 'str'
         Destination directory for rst files generated from python examples.
-    plot2rst_add_gallery : bool
-        If true, generate gallery from python examples.
+    cfg : config object
+        Sphinx config object created by Sphinx.
     """
     if not os.path.exists(os.path.join(src_dir, INDEX)):
         print src_dir
@@ -189,7 +188,7 @@ def write_gallery(gallery_index, src_dir, rst_dir, plot2rst_add_gallery):
 
     for src_name in sorted(os.listdir(src_dir), key=sort_key):
         if src_name.endswith('py'):
-            rst_file_from_example(src_name, src_dir, rst_dir, plot2rst_add_gallery)
+            rst_file_from_example(src_name, src_dir, rst_dir, cfg)
             thumb = os.path.join('images/thumb', src_name[:-3] + '.png')
             gallery_index.write('.. figure:: %s\n' % thumb)
 
@@ -207,7 +206,7 @@ def valid_plot_script(src_name):
     return src_name.startswith('plot') and src_name.endswith('.py')
 
 
-def rst_file_from_example(src_name, src_dir, rst_dir, plot2rst_add_gallery):
+def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     """Write rst file from a given python example.
 
     Parameters
@@ -218,8 +217,8 @@ def rst_file_from_example(src_name, src_dir, rst_dir, plot2rst_add_gallery):
         Source directory for python examples.
     rst_dir : 'str'
         Destination directory for rst files generated from python examples.
-    plot2rst_add_gallery : bool
-        If true, generate gallery from python examples.
+    cfg : config object
+        Sphinx config object created by Sphinx.
     """
     base_image_name = os.path.splitext(src_name)[0]
     image_fmt_str = '%s_%%s.png' % base_image_name
@@ -246,7 +245,7 @@ def rst_file_from_example(src_name, src_dir, rst_dir, plot2rst_add_gallery):
 
     image_path = os.path.join(image_dir, image_fmt_str)
 
-    if plot2rst_add_gallery:
+    if cfg.plot2rst_add_gallery:
         figure_list = save_plot(src_path, image_path, thumb_path)
         this_template = plot_rst_template
     else:
