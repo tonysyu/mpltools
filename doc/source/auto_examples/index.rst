@@ -38,6 +38,14 @@ General-purpose and introductory examples for `mpltools`.
 
 
 
+
+
+.. toctree::
+   :hidden:
+
+   plot_color_mapper
+   plot_cycle_cmap
+
 .. figure:: images/thumb/plot_color_mapper.png
    :figclass: gallery
    :target: ./plot_color_mapper.html

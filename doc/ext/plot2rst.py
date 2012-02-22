@@ -59,6 +59,15 @@ plot_rst_template = """
     :lines: %(end_row)s-
     """
 
+toctree_template = """
+
+.. toctree::
+   :hidden:
+
+   %s
+
+"""
+
 
 CLEAR_SECTION = """
 .. raw:: html
@@ -174,8 +183,8 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg):
         print 80*'_'
         return
 
-    readme_file = file(os.path.join(src_dir, INDEX)).read()
-    gallery_index.write("""\n\n\n%s\n\n\n""" % readme_file)
+    gallery_description = file(os.path.join(src_dir, INDEX)).read()
+    gallery_index.write("""\n\n\n%s\n\n\n""" % gallery_description)
 
     if not os.path.exists(rst_dir):
         os.makedirs(rst_dir)
@@ -186,19 +195,23 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg):
             return 'zz' + a
         return a
 
-    for src_name in sorted(os.listdir(src_dir), key=sort_key):
-        if src_name.endswith('py'):
-            rst_file_from_example(src_name, src_dir, rst_dir, cfg)
-            thumb = os.path.join('images/thumb', src_name[:-3] + '.png')
-            gallery_index.write('.. figure:: %s\n' % thumb)
+    examples = [fname for fname in sorted(os.listdir(src_dir), key=sort_key)
+                      if fname.endswith('py')]
+    ex_names = [ex[:-3] for ex in examples] # strip '.py' extension
+    gallery_index.write(toctree_template % '\n   '.join(ex_names))
 
-            link_name = src_name.replace(os.path.sep, '_')
-            if link_name.startswith('._'):
-                link_name = link_name[2:]
+    for src_name in examples:
+        rst_file_from_example(src_name, src_dir, rst_dir, cfg)
+        thumb = os.path.join('images/thumb', src_name[:-3] + '.png')
+        gallery_index.write('.. figure:: %s\n' % thumb)
 
-            gallery_index.write('   :figclass: gallery\n')
-            gallery_index.write('   :target: ./%s.html\n\n' % src_name[:-3])
-            gallery_index.write('   :ref:`example_%s`\n\n' % link_name)
+        link_name = src_name.replace(os.path.sep, '_')
+        if link_name.startswith('._'):
+            link_name = link_name[2:]
+
+        gallery_index.write('   :figclass: gallery\n')
+        gallery_index.write('   :target: ./%s.html\n\n' % src_name[:-3])
+        gallery_index.write('   :ref:`example_%s`\n\n' % link_name)
     gallery_index.write(CLEAR_SECTION) # clear at the end of the section
 
 
