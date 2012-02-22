@@ -10,6 +10,17 @@ style, choose colors, make specialized plots, etc.
 Sections
 ========
 
+.. toctree::
+   :hidden:
+
+   getting_started
+   install
+   auto_examples/index
+   contribute
+   api/api
+   license
+
+
 .. list-table::
    :class: contentstable
 
