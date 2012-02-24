@@ -28,8 +28,8 @@ Style names should be specified as sections in "mplstyle" files.  A simple
     text.fontsize = 10
     font.family = 'serif'
 
-`mpltools` searches the current working directory and your home directory for
-"mplstyle" files. To use a style, you just add::
+`mpltools` searches the current working directory and ~/.mplstyle/ directory
+for "mplstyle" files. To use a style, you just add::
 
     >>> import mpltools
     >>> mpltools.style.use('style1')
