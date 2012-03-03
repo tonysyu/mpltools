@@ -1,0 +1,16 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+Module: :mod:`layout`
+=====================
+.. automodule:: mpltools.layout
+
+.. currentmodule:: mpltools.layout
+.. autosummary::
+
+   mpltools.layout.figimage
+
+figimage
+--------
+
+.. autofunction:: mpltools.layout.figimage
+

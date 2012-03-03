@@ -1,0 +1,164 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Color from parameter value &mdash; mpltools 0.1dev documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mpltools 0.1dev documentation" href="../index.html" />
+    <link rel="up" title="Examples" href="index.html" />
+    <link rel="next" title="Color cycle from a colormap" href="plot_cycle_cmap.html" />
+    <link rel="prev" title="Examples" href="index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="plot_cycle_cmap.html" title="Color cycle from a colormap"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Examples"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">mpltools 0.1dev documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Examples</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="color-from-parameter-value">
+<span id="example-plot-color-mapper-py"></span><h1>Color from parameter value<a class="headerlink" href="#color-from-parameter-value" title="Permalink to this headline">¶</a></h1>
+<p>Suppose you want to plot a series of curves, and each curve describes
+a response to different values of a parameter. <tt class="docutils literal"><span class="pre">color_mapper</span></tt> returns
+a function that maps a parameter value to an RGBA color in a color map.</p>
+<img alt="../_images/plot_color_mapper_1.png" class="align-center" src="../_images/plot_color_mapper_1.png" />
+<p><strong>Python source code:</strong> <a class="reference download internal" href="../_downloads/plot_color_mapper.py"><tt class="xref download docutils literal"><span class="pre">plot_color_mapper.py</span></tt></a>
+(generated using <tt class="docutils literal"><span class="pre">mpltools</span></tt> 0.1dev)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="kn">import</span> <span class="nn">mpltools</span>
+<span class="kn">from</span> <span class="nn">mpltools</span> <span class="kn">import</span> <span class="n">color</span>
+
+
+<span class="n">pvalues</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">parameter_range</span> <span class="o">=</span> <span class="p">(</span><span class="n">pvalues</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pvalues</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="c"># Pass parameter range so that color mapper knows how to normalize the data.</span>
+<span class="n">map_color1</span> <span class="o">=</span> <span class="n">color</span><span class="o">.</span><span class="n">color_mapper</span><span class="p">(</span><span class="n">parameter_range</span><span class="p">)</span>
+<span class="n">map_color2</span> <span class="o">=</span> <span class="n">color</span><span class="o">.</span><span class="n">color_mapper</span><span class="p">(</span><span class="n">parameter_range</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s">&#39;BuPu&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="n">figsize</span> <span class="o">=</span> <span class="n">mpltools</span><span class="o">.</span><span class="n">figsize</span><span class="p">(</span><span class="n">aspect_ratio</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">pval</span> <span class="ow">in</span> <span class="n">pvalues</span><span class="p">:</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">pval</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s">&#39;s&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">map_color1</span><span class="p">(</span><span class="n">pval</span><span class="p">))</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">map_color2</span><span class="p">(</span><span class="n">pval</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">):</span>
+    <span class="n">leg</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s">&#39;</span><span class="si">%0.1f</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">pvalues</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s">&#39;lower right&#39;</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">leg</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s">&#39;decay rate&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Examples</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="plot_cycle_cmap.html"
+                        title="next chapter">Color cycle from a colormap</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="plot_cycle_cmap.html" title="Color cycle from a colormap"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Examples"
+             >previous</a> |</li>
+        <li><a href="../index.html">mpltools 0.1dev documentation</a> &raquo;</li>
+          <li><a href="index.html" >Examples</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Tony S. Yu.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

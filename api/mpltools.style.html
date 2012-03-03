@@ -1,0 +1,208 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Module: style &mdash; mpltools 0.1dev documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mpltools 0.1dev documentation" href="../index.html" />
+    <link rel="up" title="API Reference" href="api.html" />
+    <link rel="next" title="Module: util" href="mpltools.util.html" />
+    <link rel="prev" title="Module: layout" href="mpltools.layout.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpltools.util.html" title="Module: util"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="mpltools.layout.html" title="Module: layout"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">mpltools 0.1dev documentation</a> &raquo;</li>
+          <li><a href="api.html" accesskey="U">API Reference</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-mpltools.style">
+<span id="module-style"></span><h1>Module: <tt class="xref py py-mod docutils literal"><span class="pre">style</span></tt><a class="headerlink" href="#module-mpltools.style" title="Permalink to this headline">¶</a></h1>
+<p>This module defines styles redefine matplotlib rc parameters. In addition, you
+can override pre-defined styles with &#8220;mplstyle&#8221; files in the current
+directory and your home directory. The priority of style files is:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>./mplstyle</li>
+<li>~/.mplstyle</li>
+<li>mpltools/style/</li>
+</ol>
+</div></blockquote>
+<p>Style names should be specified as sections in &#8220;mplstyle&#8221; files.  A simple
+&#8220;mplstyle&#8221; file would look like:</p>
+<blockquote>
+<div><p>[style1]</p>
+<p>text.fontsize = 12
+figure.dpi = 150</p>
+<p>[style2]</p>
+<p>text.fontsize = 10
+font.family = &#8216;serif&#8217;</p>
+</div></blockquote>
+<p>Note that we use ConfigObj for parsing rc files so, unlike Matplotlib,
+key/value pairs are separated by an equals sign and strings must be quoted.</p>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>use</dt>
+<dd>Redefine rc parameters using specified style.</dd>
+<dt>lib</dt>
+<dd>Style library.</dd>
+<dt>baselib</dt>
+<dd>Style library defined by mpltools (i.e. before user definitions).</dd>
+</dl>
+</div>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.style.use" title="mpltools.style.use"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.style.use</span></tt></a>([name,&nbsp;use_baselib])</td>
+<td>Use matplotlib rc parameters from a pre-defined name or from a file.</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="use">
+<h2>use<a class="headerlink" href="#use" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mpltools.style.use">
+<tt class="descclassname">mpltools.style.</tt><tt class="descname">use</tt><big>(</big><em>name=None</em>, <em>use_baselib=False</em><big>)</big><a class="headerlink" href="#mpltools.style.use" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use matplotlib rc parameters from a pre-defined name or from a file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>name</strong> : str</p>
+<blockquote>
+<div><p>Name of style. For list of styles see <cite>mpltools.styles</cite>.</p>
+</div></blockquote>
+<p><strong>use_baselib</strong> : bool</p>
+<blockquote class="last">
+<div><p>If True, only use styles defined in <cite>mpltools/style</cite> (without user&#8217;s
+customization).</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Module: <tt class="docutils literal"><span class="pre">style</span></tt></a><ul>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#use">use</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mpltools.layout.html"
+                        title="previous chapter">Module: <tt class="docutils literal docutils literal docutils literal"><span class="pre">layout</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mpltools.util.html"
+                        title="next chapter">Module: <tt class="docutils literal"><span class="pre">util</span></tt></a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpltools.util.html" title="Module: util"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="mpltools.layout.html" title="Module: layout"
+             >previous</a> |</li>
+        <li><a href="../index.html">mpltools 0.1dev documentation</a> &raquo;</li>
+          <li><a href="api.html" >API Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Tony S. Yu.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

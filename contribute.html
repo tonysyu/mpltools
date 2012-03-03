@@ -1,0 +1,150 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Contribute &mdash; mpltools 0.1dev documentation</title>
+    
+    <link rel="stylesheet" href="_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mpltools 0.1dev documentation" href="index.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">mpltools 0.1dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="contribute">
+<h1>Contribute<a class="headerlink" href="#contribute" title="Permalink to this headline">¶</a></h1>
+<p>At the moment, this is just a pet project so it&#8217;s really informal. If you&#8217;d
+like to contribute something to <cite>mpltools</cite>, just send me a pull request on
+<a class="reference external" href="https://github.com/tonysyu/mpltools">github</a>.</p>
+</div>
+<div class="section" id="tasks">
+<h1>Tasks<a class="headerlink" href="#tasks" title="Permalink to this headline">¶</a></h1>
+<p>Things I&#8217;d like to add:</p>
+<ul class="simple">
+<li>Infrastructure to build examples into documentation (like <a class="reference external" href="http://scikits-image.org/docs/dev/auto_examples/index.html">scikits-image
+auto-examples</a>).</li>
+<li>Add more styles based on journals.</li>
+<li>A way to support <cite>matplotlibrc</cite>-style config files. Currently <cite>mpltoolsrc</cite>
+and <cite>mplstyle</cite> files are parsed using <a class="reference external" href="http://www.voidspace.org.uk/python/configobj.html">ConfigObj</a>, which requires a different
+syntax than <cite>matplotlibrc</cite> files. This isn&#8217;t a difficult task, but at the
+moment, I don&#8217;t really care enough to do it.</li>
+<li>Tests!</li>
+</ul>
+<div class="section" id="coding-guidelines">
+<h2>Coding guidelines<a class="headerlink" href="#coding-guidelines" title="Permalink to this headline">¶</a></h2>
+<p>Any code you submit should follow the <a class="reference external" href="http://www.python.org/dev/peps/pep-0008/">PEP 8</a> guidelines and the <a class="reference external" href="https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt">Numpy
+Documentation Standard</a> as much as possible.</p>
+</div>
+<div class="section" id="building-the-documentation">
+<h2>Building the documentation<a class="headerlink" href="#building-the-documentation" title="Permalink to this headline">¶</a></h2>
+<p>The documentation is built using <a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a>. To build the docs, run the following
+in a terminal:</p>
+<div class="highlight-python"><pre>$ cd /path/to/mpltools/doc
+$ make html</pre>
+</div>
+<p>That&#8217;s it. Sometimes you may need to clean out the cruft that builds up when
+source files are deleted. To clean everything out just run:</p>
+<div class="highlight-python"><pre>$ make clean</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Contribute</a></li>
+<li><a class="reference internal" href="#tasks">Tasks</a><ul>
+<li><a class="reference internal" href="#coding-guidelines">Coding guidelines</a></li>
+<li><a class="reference internal" href="#building-the-documentation">Building the documentation</a></li>
+</ul>
+</li>
+</ul>
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="index.html">mpltools 0.1dev documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Tony S. Yu.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+
+
+.. _example_plot_color_mapper.py:
+
+
+==========================
+Color from parameter value
+==========================
+
+Suppose you want to plot a series of curves, and each curve describes
+a response to different values of a parameter. ``color_mapper`` returns
+a function that maps a parameter value to an RGBA color in a color map.
+
+
+
+
+.. image:: images/plot_color_mapper_1.png
+    :align: center
+
+
+**Python source code:** :download:`plot_color_mapper.py <plot_color_mapper.py>`
+(generated using ``mpltools`` |version|)
+
+.. literalinclude:: plot_color_mapper.py
+    :lines: 11-
+    

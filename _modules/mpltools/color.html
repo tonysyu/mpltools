@@ -1,0 +1,249 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mpltools.color &mdash; mpltools 0.1dev documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mpltools 0.1dev documentation" href="../../index.html" />
+    <link rel="up" title="mpltools" href="../mpltools.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">mpltools 0.1dev documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../mpltools.html" accesskey="U">mpltools</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for mpltools.color</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">._config</span> <span class="kn">import</span> <span class="n">config</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;color_mapper&#39;</span><span class="p">,</span> <span class="s">&#39;colors_from_cmap&#39;</span><span class="p">,</span> <span class="s">&#39;cycle_cmap&#39;</span><span class="p">]</span>
+
+
+<span class="n">CMAP_RANGE</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&#39;color&#39;</span><span class="p">][</span><span class="s">&#39;cmap_range&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="color_mapper"><a class="viewcode-back" href="../../api/mpltools.color.html#mpltools.color.color_mapper">[docs]</a><span class="k">def</span> <span class="nf">color_mapper</span><span class="p">(</span><span class="n">parameter_range</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return color mapper, which returns color based on parameter value.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    parameter_range : tuple of floats</span>
+<span class="sd">        Minimum and maximum value of parameter.</span>
+
+<span class="sd">    cmap : str or colormap</span>
+<span class="sd">        A matplotlib colormap (see matplotlib.pyplot.cm) or the name of one.</span>
+
+<span class="sd">    start, stop: 0 &lt;= float &lt;= 1</span>
+<span class="sd">        Limit colormap to this range (start &lt; stop 1). You should limit the</span>
+<span class="sd">        range of colormaps with light values (assuming a white background).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    map_color : function</span>
+<span class="sd">        Function that returns an RGBA color from a parameter value.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">cmap</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">cmap</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&#39;color&#39;</span><span class="p">][</span><span class="s">&#39;cmap&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cmap</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">):</span>
+        <span class="n">cmap</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="p">,</span> <span class="n">cmap</span><span class="p">)</span>
+
+    <span class="n">crange</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">CMAP_RANGE</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cmap</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+    <span class="k">if</span> <span class="n">start</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">crange</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">stop</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">stop</span> <span class="o">=</span> <span class="n">crange</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">start</span> <span class="o">&lt;=</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">stop</span> <span class="o">&lt;=</span> <span class="mi">1</span>
+
+    <span class="n">pmin</span><span class="p">,</span> <span class="n">pmax</span> <span class="o">=</span> <span class="n">parameter_range</span>
+    <span class="k">def</span> <span class="nf">map_color</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return color based on parameter value `val`.&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">pmin</span> <span class="o">&lt;=</span> <span class="n">val</span> <span class="o">&lt;=</span> <span class="n">pmax</span>
+        <span class="n">val_norm</span> <span class="o">=</span> <span class="p">(</span><span class="n">val</span> <span class="o">-</span> <span class="n">pmin</span><span class="p">)</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">stop</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">pmax</span> <span class="o">-</span> <span class="n">pmin</span><span class="p">)</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">val_norm</span> <span class="o">+</span> <span class="n">start</span>
+        <span class="k">return</span> <span class="n">cmap</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">map_color</span>
+
+</div>
+<div class="viewcode-block" id="colors_from_cmap"><a class="viewcode-back" href="../../api/mpltools.color.html#mpltools.color.colors_from_cmap">[docs]</a><span class="k">def</span> <span class="nf">colors_from_cmap</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return color cycle from a given colormap.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    length : int</span>
+<span class="sd">        The number of colors in the cycle. When `length` is large (&gt; ~10), it</span>
+<span class="sd">        is difficult to distinguish between successive lines because successive</span>
+<span class="sd">        colors are very similar.</span>
+
+<span class="sd">    cmap : str</span>
+<span class="sd">        Name of a matplotlib colormap (see matplotlib.pyplot.cm).</span>
+
+<span class="sd">    start, stop: 0 &lt;= float &lt;= 1</span>
+<span class="sd">        Limit colormap to this range (start &lt; stop 1). You should limit the</span>
+<span class="sd">        range of colormaps with light values (assuming a white background).</span>
+<span class="sd">        Some colors have default start/stop values (see `CMAP_RANGE`).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    colors : list</span>
+<span class="sd">        List of RGBA colors.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    cycle_cmap</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">cmap</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">cmap</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s">&#39;color&#39;</span><span class="p">][</span><span class="s">&#39;cmap&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cmap</span><span class="p">,</span> <span class="nb">basestring</span><span class="p">):</span>
+        <span class="n">cmap</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="p">,</span> <span class="n">cmap</span><span class="p">)</span>
+
+    <span class="n">crange</span> <span class="o">=</span> <span class="n">CMAP_RANGE</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cmap</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">crange</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">start</span>
+    <span class="k">if</span> <span class="n">stop</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">crange</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">stop</span>
+
+    <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">crange</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">crange</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">1</span>
+
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">crange</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">crange</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">num</span><span class="o">=</span><span class="n">length</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cmap</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="cycle_cmap"><a class="viewcode-back" href="../../api/mpltools.color.html#mpltools.color.cycle_cmap">[docs]</a><span class="k">def</span> <span class="nf">cycle_cmap</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Set default color cycle of matplotlib based on colormap.</span>
+
+<span class="sd">    Note that the default color cycle is **not changed** if `ax` parameter</span>
+<span class="sd">    is set; only the axes&#39;s color cycle will be changed.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    length : int</span>
+<span class="sd">        The number of colors in the cycle. When `length` is large (&gt; ~10), it</span>
+<span class="sd">        is difficult to distinguish between successive lines because successive</span>
+<span class="sd">        colors are very similar.</span>
+
+<span class="sd">    cmap : str</span>
+<span class="sd">        Name of a matplotlib colormap (see matplotlib.pyplot.cm).</span>
+
+<span class="sd">    start, stop: 0 &lt;= float &lt;= 1</span>
+<span class="sd">        Limit colormap to this range (start &lt; stop 1). You should limit the</span>
+<span class="sd">        range of colormaps with light values (assuming a white background).</span>
+<span class="sd">        Some colors have default start/stop values (see `CMAP_RANGE`).</span>
+
+<span class="sd">    ax : matplotlib axes</span>
+<span class="sd">        If ax is not None, then change the axes&#39;s color cycle instead of the</span>
+<span class="sd">        default color cycle.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    colors_from_cmap, color_mapper</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">color_cycle</span> <span class="o">=</span> <span class="n">colors_from_cmap</span><span class="p">(</span><span class="n">length</span><span class="p">,</span> <span class="n">cmap</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span><span class="s">&#39;axes&#39;</span><span class="p">,</span> <span class="n">color_cycle</span><span class="o">=</span><span class="n">color_cycle</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_color_cycle</span><span class="p">(</span><span class="n">color_cycle</span><span class="p">)</span>
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">mpltools 0.1dev documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../mpltools.html" >mpltools</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Tony S. Yu.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>

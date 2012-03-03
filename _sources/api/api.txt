@@ -1,0 +1,12 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+API Reference
+=============
+
+.. toctree::
+
+   mpltools
+   mpltools.color
+   mpltools.layout
+   mpltools.style
+   mpltools.util

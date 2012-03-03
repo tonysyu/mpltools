@@ -1,0 +1,249 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>mpltools &mdash; mpltools 0.1dev documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mpltools 0.1dev documentation" href="../index.html" />
+    <link rel="up" title="API Reference" href="api.html" />
+    <link rel="next" title="Module: color" href="mpltools.color.html" />
+    <link rel="prev" title="API Reference" href="api.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpltools.color.html" title="Module: color"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api.html" title="API Reference"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">mpltools 0.1dev documentation</a> &raquo;</li>
+          <li><a href="api.html" accesskey="U">API Reference</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-mpltools">
+<span id="mpltools"></span><h1><a class="reference internal" href="#module-mpltools" title="mpltools"><tt class="xref py py-mod docutils literal"><span class="pre">mpltools</span></tt></a><a class="headerlink" href="#module-mpltools" title="Permalink to this headline">¶</a></h1>
+<p>Tools for Matplotlib</p>
+<p>The primary purpose of this package is to provide tools to use pre-configured
+styles with matplotlib.</p>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>style</dt>
+<dd>Library of styles and functions for setting the style.</dd>
+<dt>color</dt>
+<dd>Color choice and custom colors (e.g. parameter-based color choice).</dd>
+</dl>
+</div>
+<div class="section" id="utility-functions">
+<h2>Utility functions<a class="headerlink" href="#utility-functions" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>figure</dt>
+<dd>Create matplotlib figure with specified aspect ratio and scale.</dd>
+<dt>figsize</dt>
+<dd>Calculate figure size based on aspect ratio and scale.</dd>
+</dl>
+</div>
+<div class="section" id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>styles</dt>
+<dd>Available matplotlib styles.</dd>
+<dt>config</dt>
+<dd>Dictionary of package configuration settings.</dd>
+</dl>
+</div>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.figsize" title="mpltools.figsize"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.figsize</span></tt></a>([aspect_ratio,&nbsp;scale,&nbsp;width])</td>
+<td>Return figure size (width, height) in inches.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.figure" title="mpltools.figure"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.figure</span></tt></a>([aspect_ratio,&nbsp;scale,&nbsp;width])</td>
+<td>Return matplotlib figure window.</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="figsize">
+<h2>figsize<a class="headerlink" href="#figsize" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mpltools.figsize">
+<tt class="descclassname">mpltools.</tt><tt class="descname">figsize</tt><big>(</big><em>aspect_ratio=1.3</em>, <em>scale=1</em>, <em>width=None</em><big>)</big><a class="headerlink" href="#mpltools.figsize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return figure size (width, height) in inches.</p>
+<p>Calculate figure height using <cite>aspect_ratio</cite> and <em>default</em> figure width.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>aspect_ratio</strong> : float</p>
+<blockquote>
+<div><p>Aspect ratio, width / height, of figure.</p>
+</div></blockquote>
+<p><strong>scale</strong> : float</p>
+<blockquote>
+<div><p>Scale default size of the figure.</p>
+</div></blockquote>
+<p><strong>width</strong> : float</p>
+<blockquote class="last">
+<div><p>Figure width in inches. If None, default to rc parameters.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="figure">
+<h2>figure<a class="headerlink" href="#figure" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mpltools.figure">
+<tt class="descclassname">mpltools.</tt><tt class="descname">figure</tt><big>(</big><em>aspect_ratio=1.3</em>, <em>scale=1</em>, <em>width=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#mpltools.figure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return matplotlib figure window.</p>
+<p>Calculate figure height using <cite>aspect_ratio</cite> and <em>default</em> figure width.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>aspect_ratio</strong> : float</p>
+<blockquote>
+<div><p>Aspect ratio, width / height, of figure.</p>
+</div></blockquote>
+<p><strong>scale</strong> : float</p>
+<blockquote>
+<div><p>Scale default size of the figure.</p>
+</div></blockquote>
+<p><strong>width</strong> : float</p>
+<blockquote class="last">
+<div><p>Figure width in inches. If None, default to rc parameters.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#mpltools.figsize" title="mpltools.figsize"><tt class="xref py py-obj docutils literal"><span class="pre">figsize</span></tt></a></p>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">mpltools</span></tt></a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#utility-functions">Utility functions</a></li>
+<li><a class="reference internal" href="#attributes">Attributes</a></li>
+<li><a class="reference internal" href="#figsize">figsize</a></li>
+<li><a class="reference internal" href="#figure">figure</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="api.html"
+                        title="previous chapter">API Reference</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mpltools.color.html"
+                        title="next chapter">Module: <tt class="docutils literal"><span class="pre">color</span></tt></a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpltools.color.html" title="Module: color"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="api.html" title="API Reference"
+             >previous</a> |</li>
+        <li><a href="../index.html">mpltools 0.1dev documentation</a> &raquo;</li>
+          <li><a href="api.html" >API Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Tony S. Yu.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>
