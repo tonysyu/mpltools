@@ -8,5 +8,6 @@ API Reference
    mpltools
    mpltools.color
    mpltools.layout
+   mpltools.special
    mpltools.style
    mpltools.util

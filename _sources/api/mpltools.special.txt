@@ -1,0 +1,16 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+Module: :mod:`special`
+======================
+.. automodule:: mpltools.special
+
+.. currentmodule:: mpltools.special
+.. autosummary::
+
+   mpltools.special.hinton
+
+hinton
+------
+
+.. autofunction:: mpltools.special.hinton
+

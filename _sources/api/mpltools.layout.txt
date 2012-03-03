@@ -7,10 +7,34 @@ Module: :mod:`layout`
 .. currentmodule:: mpltools.layout
 .. autosummary::
 
+   mpltools.layout.clear_frame
+   mpltools.layout.cross_spines
    mpltools.layout.figimage
+   mpltools.layout.floating_yaxis
+   mpltools.layout.pad_limits
+
+clear_frame
+-----------
+
+.. autofunction:: mpltools.layout.clear_frame
+
+cross_spines
+------------
+
+.. autofunction:: mpltools.layout.cross_spines
 
 figimage
 --------
 
 .. autofunction:: mpltools.layout.figimage
+
+floating_yaxis
+--------------
+
+.. autofunction:: mpltools.layout.floating_yaxis
+
+pad_limits
+----------
+
+.. autofunction:: mpltools.layout.pad_limits
 
