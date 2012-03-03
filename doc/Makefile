@@ -55,6 +55,9 @@ html: api
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
+push: html
+	ghp-import -p $(BUILDDIR)/html/
+
 dirhtml:
 	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml
 	@echo
