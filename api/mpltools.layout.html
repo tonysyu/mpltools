@@ -77,16 +77,13 @@
 <tr class="row-odd"><td><a class="reference internal" href="#mpltools.layout.clear_frame" title="mpltools.layout.clear_frame"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.layout.clear_frame</span></tt></a>([ax])</td>
 <td>Remove the frame (ticks and spines) from an axes.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#mpltools.layout.cross_spines" title="mpltools.layout.cross_spines"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.layout.cross_spines</span></tt></a>([ax,&nbsp;zero])</td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.layout.cross_spines" title="mpltools.layout.cross_spines"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.layout.cross_spines</span></tt></a>([zero_cross,&nbsp;ax])</td>
+<td>Remove top and right spines from an axes.</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#mpltools.layout.figimage" title="mpltools.layout.figimage"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.layout.figimage</span></tt></a>(img[,&nbsp;scale,&nbsp;dpi])</td>
 <td>Return figure and axes with figure tightly surrounding image.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#mpltools.layout.floating_yaxis" title="mpltools.layout.floating_yaxis"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.layout.floating_yaxis</span></tt></a>(ax)</td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#mpltools.layout.pad_limits" title="mpltools.layout.pad_limits"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.layout.pad_limits</span></tt></a>([pad_frac,&nbsp;ax])</td>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.layout.pad_limits" title="mpltools.layout.pad_limits"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.layout.pad_limits</span></tt></a>([pad_frac,&nbsp;ax])</td>
 <td>Pad data limits to nicely accomodate data.</td>
 </tr>
 </tbody>
@@ -100,6 +97,18 @@
 <p>This differs from turning off the axis (<cite>plt.axis(&#8216;off&#8217;)</cite> or
 <cite>ax.set_axis_off()</cite>) in that only the ticks and spines are removed. Turning
 off the axis also removes the axes background and axis labels.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>ax</strong> : <tt class="xref py py-class docutils literal"><span class="pre">Axes</span></tt></p>
+<blockquote class="last">
+<div><p>Axes to modify. If None, use current axes.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -107,8 +116,25 @@ off the axis also removes the axes background and axis labels.</p>
 <h2>cross_spines<a class="headerlink" href="#cross-spines" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="mpltools.layout.cross_spines">
-<tt class="descclassname">mpltools.layout.</tt><tt class="descname">cross_spines</tt><big>(</big><em>ax=None</em>, <em>zero=False</em><big>)</big><a class="headerlink" href="#mpltools.layout.cross_spines" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<tt class="descclassname">mpltools.layout.</tt><tt class="descname">cross_spines</tt><big>(</big><em>zero_cross=False</em>, <em>ax=None</em><big>)</big><a class="headerlink" href="#mpltools.layout.cross_spines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove top and right spines from an axes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>zero_cross</strong> : bool</p>
+<blockquote>
+<div><p>If True, the spines are set so that they cross at zero.</p>
+</div></blockquote>
+<p><strong>ax</strong> : <tt class="xref py py-class docutils literal"><span class="pre">Axes</span></tt></p>
+<blockquote class="last">
+<div><p>Axes to modify. If None, use current axes.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </div>
 <div class="section" id="figimage">
@@ -129,23 +155,19 @@ overlays.</p>
 <div><p>image to plot</p>
 </div></blockquote>
 <p><strong>scale</strong> : float</p>
-<blockquote class="last">
+<blockquote>
 <div><p>If scale is 1, the figure and axes have the same dimension as the
 image.  Smaller values of <cite>scale</cite> will shrink the figure.</p>
+</div></blockquote>
+<p><strong>dpi</strong> : int</p>
+<blockquote class="last">
+<div><p>Dots per inch for figure. If None, use the default rcParam.</p>
 </div></blockquote>
 </td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
-
-</div>
-<div class="section" id="floating-yaxis">
-<h2>floating_yaxis<a class="headerlink" href="#floating-yaxis" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="mpltools.layout.floating_yaxis">
-<tt class="descclassname">mpltools.layout.</tt><tt class="descname">floating_yaxis</tt><big>(</big><em>ax</em><big>)</big><a class="headerlink" href="#mpltools.layout.floating_yaxis" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </div>
 <div class="section" id="pad-limits">
@@ -161,9 +183,13 @@ data limits since only their center-positions are used to calculate limits.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>pad_frac</strong> : float</p>
-<blockquote class="last">
+<blockquote>
 <div><p>Padding is calculated as a fraction of the data span. <cite>pad_frac = 0</cite>
 is equivalent to calling plt.axis(&#8216;tight&#8217;).</p>
+</div></blockquote>
+<p><strong>ax</strong> : <tt class="xref py py-class docutils literal"><span class="pre">Axes</span></tt></p>
+<blockquote class="last">
+<div><p>Axes to modify. If None, use current axes.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -186,7 +212,6 @@ is equivalent to calling plt.axis(&#8216;tight&#8217;).</p>
 <li><a class="reference internal" href="#clear-frame">clear_frame</a></li>
 <li><a class="reference internal" href="#cross-spines">cross_spines</a></li>
 <li><a class="reference internal" href="#figimage">figimage</a></li>
-<li><a class="reference internal" href="#floating-yaxis">floating_yaxis</a></li>
 <li><a class="reference internal" href="#pad-limits">pad_limits</a></li>
 </ul>
 </li>
