@@ -2,6 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+__all__ = ['clear_frame', 'figimage', 'cross_spines', 'pad_limits']
+
+
 def clear_frame(ax=None):
     """Remove the frame (ticks and spines) from an axes.
 
