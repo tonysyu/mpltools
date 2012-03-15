@@ -19,8 +19,8 @@ def clear_frame(ax=None):
     """
     ax = ax if ax is not None else plt.gca()
 
-    ax.xaxis.set_visible(False)
-    ax.yaxis.set_visible(False)
+    ax.xaxis.set_ticks([])
+    ax.yaxis.set_ticks([])
     for spine in ax.spines.itervalues():
         spine.set_visible(False)
 
