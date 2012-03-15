@@ -1,0 +1,1 @@
+from .rectangle_selector import RectangleSelector
