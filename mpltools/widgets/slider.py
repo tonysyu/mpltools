@@ -1,9 +1,5 @@
 import matplotlib.widgets as mwidgets
 
-if not hasattr(mwidgets, 'AxesWidget'):
-    msg = "mpltools.widgets requires very recent master of Matplotlib"
-    raise ImportError(msg)
-
 
 class Slider(mwidgets.Slider):
     """Slider widget to select a value from a floating point range.

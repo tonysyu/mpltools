@@ -1,21 +1,7 @@
-"""
-Do a mouseclick somewhere, move the mouse to some destination, release
-the button.  This class gives click- and release-events and also draws
-a line or a box from the click-point to the actual mouseposition
-(within the same axes) until the button is released.  Within the
-method 'self.ignore()' it is checked whether the button from eventpress
-and eventrelease are the same.
-
-"""
 import numpy as np
 
 import matplotlib.widgets as mwidgets
 from matplotlib import lines
-
-
-if not hasattr(mwidgets, 'AxesWidget'):
-    msg = "mpltools.widgets requires very recent master of Matplotlib"
-    raise ImportError(msg)
 
 
 class RectangleSelector(mwidgets.RectangleSelector):
@@ -252,22 +238,14 @@ class RectangleSelector(mwidgets.RectangleSelector):
         return False
 
 
-def rect_select_callback(eclick, erelease):
-    """eclick and erelease are the press and release events"""
-    x1, y1 = eclick.xdata, eclick.ydata
-    x2, y2 = erelease.xdata, erelease.ydata
-    print "(%3.2f, %3.2f) --> (%3.2f, %3.2f)" % (x1, y1, x2, y2)
-    print " The button you used were: ", eclick.button, erelease.button
-
-
 if __name__ == '__main__':
     import matplotlib.pyplot as plt
 
     f, ax = plt.subplots()
-
     ax.imshow(np.random.random((20, 20)), interpolation='nearest')
 
     rect_select = RectangleSelector(ax, useblit=True)
-
     plt.show()
+    print "Final selection:",
+    rect_select.onenter(rect_select.extents)
 
