@@ -133,7 +133,8 @@ class RectangleSelector(mwidgets.RectangleSelector):
         mwidgets.RectangleSelector.release(self, event)
         # Undo hiding of rectangle and redraw.
         self.set_visible(True)
-        self.canvas.draw()
+        self.update()
+        self.set_animated(False)
 
     def press(self, event):
         p = event.x, event.y # cursor coords
@@ -163,9 +164,10 @@ class RectangleSelector(mwidgets.RectangleSelector):
             self.active_handle = None
 
         # Clear previous rectangle before drawing new rectangle.
+        self.set_animated(True)
         if not close_to_handle:
             self.set_visible(False)
-            self.canvas.draw()
+            self.update()
             self.set_visible(True)
 
         mwidgets.RectangleSelector.press(self, event)
@@ -174,7 +176,7 @@ class RectangleSelector(mwidgets.RectangleSelector):
         if event.key == 'enter':
             self.onenter(self.extents)
             self.set_visible(False)
-            self.canvas.draw()
+            self.update()
 
     def onmove(self, event):
 
@@ -224,6 +226,12 @@ class RectangleSelector(mwidgets.RectangleSelector):
         self._rect.set_visible(val)
         self._corner_handles.set_visible(val)
         self._edge_handles.set_visible(val)
+
+    def set_animated(self, val):
+        self._rect.set_animated(val)
+        self._corner_handles.set_animated(val)
+        self._edge_handles.set_animated(val)
+
 
     def update(self):
         if self.useblit:
