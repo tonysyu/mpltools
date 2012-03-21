@@ -1,8 +1,8 @@
 import matplotlib.widgets as mwidgets
 
 if not hasattr(mwidgets, 'AxesWidget'):
-    branch = "<https://github.com/tonysyu/matplotlib/tree/base-widget>"
-    msg = "mpltools.widgets requires a branch of Matplotlib: %s" % branch
+    version = "(github master; after March 16, 2012)"
+    msg = "mpltools.widgets requires recent version of Matplotlib %s" % version
     raise ImportError(msg)
 
 
