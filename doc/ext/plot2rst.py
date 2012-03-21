@@ -243,7 +243,9 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
         last_dir = ''
     else:
         last_dir += '_'
-    short_filename = last_dir + src_name
+
+    info = dict(src_name=src_name)
+    info['short_filename'] = last_dir + src_name
     src_path = os.path.join(src_dir, src_name)
     example_file = os.path.join(rst_dir, src_name)
     shutil.copyfile(src_path, example_file)
@@ -269,6 +271,8 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
         shutil.copy('source/auto_examples/images/blank_image.png', thumb_path)
 
     docstring, short_desc, end_row = extract_module_docstring(example_file)
+    info['docstring'] = docstring
+    info['end_row'] = end_row
 
     # Depending on whether we have one or more figures, we're using a
     # horizontal list or a single rst call to 'image'.
@@ -276,13 +280,15 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     if len(figure_list) == 1:
         figure_name = figure_list[0]
         image_list = SINGLE_IMAGE % figure_name.lstrip('/')
+        info['image_list'] = image_list
     else:
         image_list = HLIST_HEADER
         for figure_name in figure_list:
             image_list += HLIST_IMAGE_TEMPLATE % figure_name.lstrip('/')
+        info['image_list'] = image_list
 
     f = open(os.path.join(rst_dir, src_name[:-2] + EXT),'w')
-    f.write(this_template % locals())
+    f.write(this_template % info)
     f.flush()
 
 
