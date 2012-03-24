@@ -25,7 +25,6 @@ import token, tokenize
 
 
 EXT = 'rst'
-INDEX = 'index.rst'
 # config paths relative to doc-source directory
 GEN_RST_PATH = 'auto_examples'
 PY_GALLERY_PATH = '../examples'
@@ -136,10 +135,9 @@ def setup(app):
 
 def generate_rst_gallery(app):
     """Add list of examples and gallery to Sphinx app."""
-    rst_dir = os.path.join(app.builder.srcdir, GEN_RST_PATH)
-    example_dir = os.path.abspath(app.builder.srcdir + '/' + PY_GALLERY_PATH)
-
-    cfg = app.builder.config
+    doc_src = os.path.abspath(app.builder.srcdir) # path/to/doc/source
+    rst_dir = os.path.join(doc_src, GEN_RST_PATH)
+    example_dir = os.path.join(doc_src, PY_GALLERY_PATH)
 
     if not os.path.exists(example_dir):
         os.makedirs(example_dir)
@@ -147,8 +145,10 @@ def generate_rst_gallery(app):
         os.makedirs(rst_dir)
 
     # we create an index.rst with all examples
-    gallery_index = file(os.path.join(rst_dir, INDEX), 'w')
+    gallery_index = file(os.path.join(rst_dir, 'index.' + EXT), 'w')
     gallery_index.write(GALLERY_HEADER)
+
+    cfg = app.builder.config
     # Here we don't use an os.walk, but we recurse only twice: flat is
     # better than nested.
     write_gallery(gallery_index, example_dir, rst_dir, cfg)
@@ -174,16 +174,16 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg):
     cfg : config object
         Sphinx config object created by Sphinx.
     """
-    if not os.path.exists(os.path.join(src_dir, INDEX)):
+    if not os.path.exists(os.path.join(src_dir, 'index.' + EXT)):
         print src_dir
         print 80*'_'
         print ('Example directory %s does not have a %s file'
-                        % (src_dir, INDEX))
+                        % (src_dir, 'index.' + EXT))
         print 'Skipping this directory'
         print 80*'_'
         return
 
-    gallery_description = file(os.path.join(src_dir, INDEX)).read()
+    gallery_description = file(os.path.join(src_dir, 'index.' + EXT)).read()
     gallery_index.write("""\n\n\n%s\n\n\n""" % gallery_description)
 
     if not os.path.exists(rst_dir):
