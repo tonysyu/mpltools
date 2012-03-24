@@ -153,8 +153,9 @@ def generate_rst_gallery(app):
     # better than nested.
     write_gallery(gallery_index, example_dir, rst_dir, cfg)
     for d in sorted(os.listdir(example_dir)):
-        if os.path.isdir(os.path.join(example_dir, d)):
-            write_gallery(d, gallery_index, example_dir, rst_dir, cfg)
+        sub_path = os.path.join(example_dir, d)
+        if os.path.isdir(sub_path):
+            write_gallery(gallery_index, sub_path, rst_dir, cfg)
     gallery_index.flush()
 
 
@@ -199,7 +200,6 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg):
                       if fname.endswith('py')]
     ex_names = [ex[:-3] for ex in examples] # strip '.py' extension
     gallery_index.write(toctree_template % '\n   '.join(ex_names))
-
     for src_name in examples:
         rst_file_from_example(src_name, src_dir, rst_dir, cfg)
         thumb = os.path.join('images/thumb', src_name[:-3] + '.png')
