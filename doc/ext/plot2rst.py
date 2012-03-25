@@ -31,7 +31,6 @@ PY_GALLERY_PATH = '../examples'
 
 
 rst_template = """
-
 .. _example_%(short_filename)s:
 
 %(docstring)s
@@ -41,10 +40,10 @@ rst_template = """
 
 .. literalinclude:: %(src_name)s
     :lines: %(end_row)s-
-    """
+
+"""
 
 plot_rst_template = """
-
 .. _example_%(short_filename)s:
 
 %(docstring)s
@@ -56,10 +55,10 @@ plot_rst_template = """
 
 .. literalinclude:: %(src_name)s
     :lines: %(end_row)s-
-    """
+
+"""
 
 toctree_template = """
-
 .. toctree::
    :hidden:
 
@@ -72,6 +71,7 @@ CLEAR_SECTION = """
 .. raw:: html
 
     <div style="clear: both"></div>
+
 """
 
 
@@ -90,15 +90,16 @@ HLIST_IMAGE_TEMPLATE = """
 
       .. image:: images/%s
             :scale: 50
+
 """
 
 SINGLE_IMAGE = """
 .. image:: images/%s
     :align: center
+
 """
 
 GALLERY_HEADER = """
-
 .. raw:: html
 
     <style type="text/css">
@@ -124,6 +125,7 @@ Examples
 ========
 
 .. _examples-index:
+
 """
 
 
@@ -185,7 +187,7 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg):
         return
 
     gallery_description = file(os.path.join(src_dir, 'index.' + EXT)).read()
-    gallery_index.write("""\n\n\n%s\n\n\n""" % gallery_description)
+    gallery_index.write('\n\n%s\n\n' % gallery_description)
 
     if not os.path.exists(rst_dir):
         os.makedirs(rst_dir)
