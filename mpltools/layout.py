@@ -2,7 +2,65 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-__all__ = ['clear_frame', 'figimage', 'cross_spines', 'pad_limits']
+__all__ = ['figure', 'figaspect', 'figimage',
+           'clear_frame', 'cross_spines', 'pad_limits']
+
+
+def figure(aspect_ratio=0.75, scale=1, width=None, **kwargs):
+    """Return matplotlib figure window.
+
+    Calculate figure height using `aspect_ratio` and *default* figure width.
+
+    Parameters
+    ----------
+    aspect_ratio : float
+        Aspect ratio, height / width, of figure.
+    scale : float
+        Scale default size of the figure.
+    width : float
+        Figure width in inches. If None, default to rc parameters.
+
+    See Also
+    --------
+    figaspect
+
+    """
+    size = figaspect(aspect_ratio, scale=scale, width=width)
+    return plt.figure(figsize=size, **kwargs)
+
+
+def figaspect(aspect_ratio=0.75, scale=1, width=None):
+    """Return figure size (width, height) in inches.
+
+    Calculate figure height using `aspect_ratio` and *default* figure width.
+    For example, `figaspect(2)` gives a size that's twice as tall as it is
+    wide.
+
+    Note that `figaspect` uses the default figure width, or a specified
+    `width`, and adjusts the height; this is the opposite of
+    `pyplot.figaspect`, which constrains the figure height and adjusts the
+    width. This function's behavior is preferred when you have a constraint on
+    the figure width (e.g. in a journal article or a web page with a set
+    body-width).
+
+    Parameters
+    ----------
+    aspect_ratio : float
+        Aspect ratio, height / width, of figure.
+    scale : float
+        Scale default size of the figure.
+    width : float
+        Figure width in inches. If None, default to rc parameters.
+
+    Returns
+    -------
+    width, height : float
+        Width and height of figure.
+    """
+    if width is None:
+        width, h = plt.rcParams['figure.figsize']
+    height = width * aspect_ratio
+    return width * scale, height * scale
 
 
 def clear_frame(ax=None):

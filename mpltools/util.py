@@ -1,69 +1,64 @@
-import matplotlib.pyplot as plt
+import functools
+import warnings
+
+from . import layout
 
 
-__all__ = ['figure', 'figaspect', 'figsize']
+__all__ = ['deprecated', 'figure', 'figaspect', 'figsize']
 
 
-def figure(aspect_ratio=1.3, scale=1, width=None, *args, **kwargs):
-    """Return matplotlib figure window.
+class deprecated(object):
+    """Decorator to mark deprecated functions with warning.
 
-    Calculate figure height using `aspect_ratio` and *default* figure width.
-
-    Parameters
-    ----------
-    aspect_ratio : float
-        Aspect ratio, width / height, of figure.
-    scale : float
-        Scale default size of the figure.
-    width : float
-        Figure width in inches. If None, default to rc parameters.
-
-    See Also
-    --------
-    figsize
-
-    """
-    assert 'figsize' not in kwargs
-    size = figsize(aspect_ratio=aspect_ratio, scale=scale, width=width)
-    return plt.figure(figsize=size, *args, **kwargs)
-
-
-def figaspect(aspect_ratio=0.75, scale=1, width=None):
-    """Return figure size (width, height) in inches.
-
-    Calculate figure height using `aspect_ratio` and *default* figure width.
-    For example, `figsize(2)` gives a size that's twice as tall as it is wide.
-
-    Note that `figsize` uses the default figure width, or a specified `width`,
-    and adjusts the height; this is the opposite of `pyplot.figaspect`, which
-    constrains the figure height and adjusts the width. This function's
-    behavior is preferred when you have a constraint on the figure width
-    (e.g. in a journal article or a web page with a set body-width).
+    Adapted from <http://wiki.python.org/moin/PythonDecoratorLibrary>.
 
     Parameters
     ----------
-    aspect_ratio : float
-        Aspect ratio, height / width, of figure.
-    scale : float
-        Scale default size of the figure.
-    width : float
-        Figure width in inches. If None, default to rc parameters.
-
-    Returns
-    -------
-    width, height : float
-        Width and height of figure.
+    alt_func : str
+        If given, tell user what function to use instead.
+    behavior : {'warn', 'raise'}
+        Behavior during call to deprecated function: 'warn' = warn user that
+        function is deprecated; 'raise' = raise error.
     """
-    if width is None:
-        width, h = plt.rcParams['figure.figsize']
-    height = width * aspect_ratio
-    return width * scale, height * scale
+
+    def __init__(self, alt_func=None, behavior='warn'):
+        self.alt_func = alt_func
+        self.behavior = behavior
+
+    def __call__(self, func):
+
+        msg = "Call to deprecated function `%s`." % func.__name__
+        if self.alt_func is not None:
+            msg = msg + " Use `%s` instead." % self.alt_func
+
+        @functools.wraps(func)
+        def wrapped(*args, **kwargs):
+            if self.behavior == 'warn':
+                warnings.warn_explicit(msg,
+                    category=DeprecationWarning,
+                    filename=func.func_code.co_filename,
+                    lineno=func.func_code.co_firstlineno + 1)
+            elif self.behavior == 'raise':
+                raise DeprecationWarning(msg)
+            return func(*args, **kwargs)
+
+        return wrapped
 
 
+@deprecated('layout.figure')
+def figure(aspect_ratio=1.3, **kwargs):
+    print "NOTE: `layout.figure` uses inverse definition of `aspect_ratio`."
+    aspect_ratio = 1.0 / aspect_ratio
+    return layout.figure(aspect_ratio, **kwargs)
+
+
+@deprecated('layout.figaspect')
+def figaspect(*args, **kwargs):
+    return layout.figaspect(*args, **kwargs)
+
+
+@deprecated('layout.figaspect')
 def figsize(aspect_ratio=1.3, **kwargs):
-    from warnings import warn
-    msg = ("`figsize` is deprecated; Use `figaspect` instead.\n"
-           "(Note that `figaspect` uses inverse definition of aspect ratio)")
-    warn(msg)
-    return figaspect(1./aspect_ratio, **kwargs)
+    print "NOTE: `layout.figaspect` uses inverse definition of `aspect_ratio`."
+    return layout.figaspect(1./aspect_ratio, **kwargs)
 
