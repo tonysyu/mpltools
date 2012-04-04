@@ -9,6 +9,5 @@ setup(name='mpltools',
       author_email='tsyu80@gmail.com',
       license='Modified BSD',
       download_url='http://github.com/tonysyu/mpltools',
-      packages=['mpltools'],
+      packages=['mpltools','mpltools.style','mpltools.widgets','mpltools.special'],
      )
-
