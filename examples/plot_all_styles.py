@@ -68,7 +68,9 @@ def test_simple_plot():
     return fig
 
 
-for style in mpltools.styles:
+# Only show styles defined by package, not by user.
+base_styles = mpltools.style.baselib.keys()
+for style in base_styles:
     # reset matplotlib defaults before applying new style
     plt.rcdefaults()
 

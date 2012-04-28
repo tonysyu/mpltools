@@ -68,10 +68,12 @@ class Slider(mwidgets.Slider):
                              verticalalignment='center',
                              horizontalalignment='right')
 
-        self.valtext = ax.text(1 + pad, y0, value_fmt%value,
-                               transform=ax.transAxes,
-                               verticalalignment='center',
-                               horizontalalignment='left')
+        self.show_value = False if value_fmt is None else True
+        if self.show_value:
+            self.valtext = ax.text(1 + pad, y0, value_fmt%value,
+                                   transform=ax.transAxes,
+                                   verticalalignment='center',
+                                   horizontalalignment='left')
 
         self.slidermin = slidermin
         self.slidermax = slidermax
@@ -89,16 +91,20 @@ class Slider(mwidgets.Slider):
     def value(self):
         return self.val
 
+    @value.setter
+    def value(self, value):
+        self.val = value
+        self.line_low.set_xdata([self.valmin, value])
+        self.line_high.set_xdata([value, self.valmax])
+        self.val_handle.set_xdata([value])
+        if self.show_value:
+            self.valtext.set_text(self.valfmt % value)
+
     def set_val(self, value):
         """Set value of slider."""
         # Override matplotlib.widgets.Slider to update graphics objects.
 
-        self.val = value
-
-        self.line_low.set_xdata([self.valmin, value])
-        self.line_high.set_xdata([value, self.valmax])
-        self.val_handle.set_xdata([value])
-        self.valtext.set_text(self.valfmt % value)
+        self.value = value
 
         if self.drawon:
             self.ax.figure.canvas.draw()
@@ -113,32 +119,21 @@ if __name__ == '__main__':
     import numpy as np
     import matplotlib.pyplot as plt
 
-    ax = plt.subplot(111)
-    box_left = 0.15
-    box_width = 0.7
-    box_right = box_left + box_width
-
-    plt.subplots_adjust(left=box_left, right=box_right, bottom=0.25)
-    axfreq = plt.axes([box_left, 0.1, box_width, 0.03])
-    axamp  = plt.axes([box_left, 0.05, box_width, 0.03])
+    ax = plt.subplot2grid((10, 1), (0, 0), rowspan=8)
+    ax_slider = plt.subplot2grid((10, 1), (9, 0))
 
     a0 = 5
-    f0 = 3
     x = np.arange(0.0, 1.0, 0.001)
-    y = a0 * np.sin(2*np.pi*f0*x)
+    y = np.sin(6 * np.pi * x)
 
-    line, = ax.plot(x, y, lw=2, color='red')
+    line, = ax.plot(x, a0 * y, lw=2, color='red')
     ax.axis([x.min(), x.max(), -10, 10])
 
     def update(val):
         amp = samp.value
-        freq = sfreq.value
-        line.set_ydata(amp*np.sin(2*np.pi*freq*x))
-        plt.draw()
+        line.set_ydata(amp * y)
 
-    sfreq = Slider(axfreq, (0.1, 30.0), on_slide=update,
-                   label='Frequency:', value=f0)
-    samp = Slider(axamp, (0.1, 10.0), on_slide=update,
+    samp = Slider(ax_slider, (0.1, 10.0), on_slide=update,
                   label='Amplitude:', value=a0)
 
     plt.show()

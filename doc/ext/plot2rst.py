@@ -25,14 +25,12 @@ import token, tokenize
 
 
 EXT = 'rst'
-INDEX = 'index.rst'
 # config paths relative to doc-source directory
 GEN_RST_PATH = 'auto_examples'
 PY_GALLERY_PATH = '../examples'
 
 
 rst_template = """
-
 .. _example_%(short_filename)s:
 
 %(docstring)s
@@ -42,10 +40,10 @@ rst_template = """
 
 .. literalinclude:: %(src_name)s
     :lines: %(end_row)s-
-    """
+
+"""
 
 plot_rst_template = """
-
 .. _example_%(short_filename)s:
 
 %(docstring)s
@@ -57,10 +55,10 @@ plot_rst_template = """
 
 .. literalinclude:: %(src_name)s
     :lines: %(end_row)s-
-    """
+
+"""
 
 toctree_template = """
-
 .. toctree::
    :hidden:
 
@@ -73,6 +71,7 @@ CLEAR_SECTION = """
 .. raw:: html
 
     <div style="clear: both"></div>
+
 """
 
 
@@ -91,15 +90,16 @@ HLIST_IMAGE_TEMPLATE = """
 
       .. image:: images/%s
             :scale: 50
+
 """
 
 SINGLE_IMAGE = """
 .. image:: images/%s
     :align: center
+
 """
 
 GALLERY_HEADER = """
-
 .. raw:: html
 
     <style type="text/css">
@@ -125,6 +125,7 @@ Examples
 ========
 
 .. _examples-index:
+
 """
 
 
@@ -136,10 +137,9 @@ def setup(app):
 
 def generate_rst_gallery(app):
     """Add list of examples and gallery to Sphinx app."""
-    rst_dir = os.path.join(app.builder.srcdir, GEN_RST_PATH)
-    example_dir = os.path.abspath(app.builder.srcdir + '/' + PY_GALLERY_PATH)
-
-    cfg = app.builder.config
+    doc_src = os.path.abspath(app.builder.srcdir) # path/to/doc/source
+    rst_dir = os.path.join(doc_src, GEN_RST_PATH)
+    example_dir = os.path.join(doc_src, PY_GALLERY_PATH)
 
     if not os.path.exists(example_dir):
         os.makedirs(example_dir)
@@ -147,14 +147,17 @@ def generate_rst_gallery(app):
         os.makedirs(rst_dir)
 
     # we create an index.rst with all examples
-    gallery_index = file(os.path.join(rst_dir, INDEX), 'w')
+    gallery_index = file(os.path.join(rst_dir, 'index.' + EXT), 'w')
     gallery_index.write(GALLERY_HEADER)
+
+    cfg = app.builder.config
     # Here we don't use an os.walk, but we recurse only twice: flat is
     # better than nested.
     write_gallery(gallery_index, example_dir, rst_dir, cfg)
     for d in sorted(os.listdir(example_dir)):
-        if os.path.isdir(os.path.join(example_dir, d)):
-            write_gallery(d, gallery_index, example_dir, rst_dir, cfg)
+        sub_path = os.path.join(example_dir, d)
+        if os.path.isdir(sub_path):
+            write_gallery(gallery_index, sub_path, rst_dir, cfg)
     gallery_index.flush()
 
 
@@ -174,17 +177,17 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg):
     cfg : config object
         Sphinx config object created by Sphinx.
     """
-    if not os.path.exists(os.path.join(src_dir, INDEX)):
+    if not os.path.exists(os.path.join(src_dir, 'index.' + EXT)):
         print src_dir
         print 80*'_'
         print ('Example directory %s does not have a %s file'
-                        % (src_dir, INDEX))
+                        % (src_dir, 'index.' + EXT))
         print 'Skipping this directory'
         print 80*'_'
         return
 
-    gallery_description = file(os.path.join(src_dir, INDEX)).read()
-    gallery_index.write("""\n\n\n%s\n\n\n""" % gallery_description)
+    gallery_description = file(os.path.join(src_dir, 'index.' + EXT)).read()
+    gallery_index.write('\n\n%s\n\n' % gallery_description)
 
     if not os.path.exists(rst_dir):
         os.makedirs(rst_dir)
@@ -199,7 +202,6 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg):
                       if fname.endswith('py')]
     ex_names = [ex[:-3] for ex in examples] # strip '.py' extension
     gallery_index.write(toctree_template % '\n   '.join(ex_names))
-
     for src_name in examples:
         rst_file_from_example(src_name, src_dir, rst_dir, cfg)
         thumb = os.path.join('images/thumb', src_name[:-3] + '.png')
@@ -243,7 +245,9 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
         last_dir = ''
     else:
         last_dir += '_'
-    short_filename = last_dir + src_name
+
+    info = dict(src_name=src_name)
+    info['short_filename'] = last_dir + src_name
     src_path = os.path.join(src_dir, src_name)
     example_file = os.path.join(rst_dir, src_name)
     shutil.copyfile(src_path, example_file)
@@ -269,6 +273,8 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
         shutil.copy('source/auto_examples/images/blank_image.png', thumb_path)
 
     docstring, short_desc, end_row = extract_module_docstring(example_file)
+    info['docstring'] = docstring
+    info['end_row'] = end_row
 
     # Depending on whether we have one or more figures, we're using a
     # horizontal list or a single rst call to 'image'.
@@ -276,13 +282,15 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     if len(figure_list) == 1:
         figure_name = figure_list[0]
         image_list = SINGLE_IMAGE % figure_name.lstrip('/')
+        info['image_list'] = image_list
     else:
         image_list = HLIST_HEADER
         for figure_name in figure_list:
             image_list += HLIST_IMAGE_TEMPLATE % figure_name.lstrip('/')
+        info['image_list'] = image_list
 
     f = open(os.path.join(rst_dir, src_name[:-2] + EXT),'w')
-    f.write(this_template % locals())
+    f.write(this_template % info)
     f.flush()
 
 
