@@ -62,24 +62,19 @@ CLEAR_SECTION = """
 
 """
 
-
-# The following strings are used when we have several pictures: we use
-# an html div tag that our CSS uses to turn the lists into horizontal
-# lists.
-
-
-HLIST_HEADER = """
-.. rst-class:: horizontal
+MULTI_IMAGE_HEADER = """
+.. rst-class:: multi-image
 
 """
 
-HLIST_IMAGE_TEMPLATE = """
+MULTI_IMAGE_TEMPLATE = """
 
       .. image:: images/%s
+          :align: center
 
 """
 
-SINGLE_IMAGE = """
+SINGLE_IMAGE_TEMPLATE = """
 .. image:: images/%s
     :align: center
 
@@ -254,13 +249,12 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
 
     if len(figure_list) == 1:
         figure_name = figure_list[0]
-        image_list = SINGLE_IMAGE % figure_name.lstrip('/')
-        info['image_list'] = image_list
+        image_list = SINGLE_IMAGE_TEMPLATE % figure_name.lstrip('/')
     else:
-        image_list = HLIST_HEADER
+        image_list = MULTI_IMAGE_HEADER
         for figure_name in figure_list:
-            image_list += HLIST_IMAGE_TEMPLATE % figure_name.lstrip('/')
-        info['image_list'] = image_list
+            image_list += MULTI_IMAGE_TEMPLATE % figure_name.lstrip('/')
+    info['image_list'] = image_list
 
     f = open(os.path.join(rst_dir, src_name[:-2] + EXT),'w')
     f.write(plot_rst_template % info)
