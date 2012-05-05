@@ -274,8 +274,10 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
         figure_list = []
 
     if not os.path.exists(thumb_path):
-        # create something not to replace the thumbnail
-        shutil.copy('source/auto_examples/images/blank_image.png', thumb_path)
+        # create something to stand in for the thumbnail
+        # TODO: figure out a way that doesn't require storing an image.
+        #shutil.copy('source/auto_examples/images/blank_image.png', thumb_path)
+        pass
 
     docstring, short_desc, end_row = extract_module_docstring(example_file)
     info['docstring'] = docstring
