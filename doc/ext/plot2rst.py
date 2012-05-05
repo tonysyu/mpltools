@@ -160,13 +160,16 @@ def generate_rst_gallery(app):
     # better than nested.
     write_gallery(gallery_index, example_dir, rst_dir, cfg)
     for d in sorted(os.listdir(example_dir)):
-        sub_path = os.path.join(example_dir, d)
-        if os.path.isdir(sub_path):
-            write_gallery(gallery_index, sub_path, rst_dir, cfg)
+        example_sub = os.path.join(example_dir, d)
+        if os.path.isdir(example_sub):
+            rst_sub = os.path.join(rst_dir, d)
+            if not os.path.exists(rst_sub):
+                os.makedirs(rst_sub)
+            write_gallery(gallery_index, example_sub, rst_sub, cfg, depth=1)
     gallery_index.flush()
 
 
-def write_gallery(gallery_index, src_dir, rst_dir, cfg):
+def write_gallery(gallery_index, src_dir, rst_dir, cfg, depth=0):
     """Generate the rst files for an example directory, i.e. gallery.
 
     Write rst files from python examples and add example links to gallery.
@@ -206,20 +209,28 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg):
     examples = [fname for fname in sorted(os.listdir(src_dir), key=sort_key)
                       if fname.endswith('py')]
     ex_names = [ex[:-3] for ex in examples] # strip '.py' extension
-    gallery_index.write(toctree_template % '\n   '.join(ex_names))
+    if depth == 0:
+        sub_dir = ''
+    else:
+        sub_dir_list = src_dir.split('/')[-depth:]
+        sub_dir = '/'.join(sub_dir_list) + '/'
+    gallery_index.write(toctree_template % (sub_dir + '\n   '.join(ex_names)))
+
+    write = gallery_index.write
     for src_name in examples:
         rst_file_from_example(src_name, src_dir, rst_dir, cfg)
-        thumb = os.path.join('images/thumb', src_name[:-3] + '.png')
+        thumb = os.path.join(sub_dir, 'images/thumb', src_name[:-3] + '.png')
         gallery_index.write('.. figure:: %s\n' % thumb)
 
-        link_name = src_name.replace(os.path.sep, '_')
+        link_name = sub_dir + src_name
+        link_name = link_name.replace(os.path.sep, '_')
         if link_name.startswith('._'):
             link_name = link_name[2:]
 
-        gallery_index.write('   :figclass: gallery\n')
-        gallery_index.write('   :target: ./%s.html\n\n' % src_name[:-3])
-        gallery_index.write('   :ref:`example_%s`\n\n' % link_name)
-    gallery_index.write(CLEAR_SECTION) # clear at the end of the section
+        write('   :figclass: gallery\n')
+        write('   :target: ./%s.html\n\n' % (sub_dir + src_name[:-3]))
+        write('   :ref:`example_%s`\n\n' % (link_name))
+    write(CLEAR_SECTION) # clear at the end of the section
 
 
 def valid_plot_script(src_name):
