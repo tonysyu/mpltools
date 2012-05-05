@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.collections as collections
-import matplotlib.transforms as transforms
+from matplotlib import collections
+from matplotlib import transforms
+from matplotlib import ticker
 
 
 __all__ = ['hinton']
@@ -33,6 +34,9 @@ def hinton(inarray, max_value=None):
     Unlike the hinton demo in the matplotlib gallery [1]_, this implementation
     uses a RegularPolyCollection to draw squares, which is much more efficient
     than drawing individual Rectangles.
+
+    .. note::
+        This function inverts the y-axis to match the origin for arrays.
 
     .. [1] http://matplotlib.sourceforge.net/examples/api/hinton_demo.html
 
@@ -69,17 +73,23 @@ def hinton(inarray, max_value=None):
     # set data limits instead of using xlim, ylim.
     ax.set_xlim(-0.5, width-0.5)
     ax.set_ylim(height-0.5, -0.5)
-    # reimplement ticks using a locator object.
-    ax.set_xticks(np.arange(width))
-    ax.set_yticks(np.arange(height))
-    ax.set_xlabel('column')
-    ax.set_ylabel('row')
-    ax.xaxis.set_ticks_position('top')
-    ax.xaxis.set_label_position('top')
+
+    ax.xaxis.set_major_locator(IndexLocator())
+    ax.yaxis.set_major_locator(IndexLocator())
 
 
-if __name__ == '__main__':
-    A = np.random.uniform(-1, 1, size=(20, 20))
-    hinton(A)
-    plt.show()
+class IndexLocator(ticker.Locator):
+
+    def __init__(self, max_ticks=10):
+        self.max_ticks = max_ticks
+
+    def __call__(self):
+        """Return the locations of the ticks."""
+        dmin, dmax = self.axis.get_data_interval()
+        if dmax < self.max_ticks:
+            step = 1
+        else:
+            step = np.ceil(dmax / self.max_ticks)
+        return self.raise_if_exceeds(np.arange(0, dmax, step))
+
 
