@@ -89,13 +89,13 @@ we use <a class="reference external" href="http://www.voidspace.org.uk/python/co
 </div>
 <p><cite>mpltools</cite> searches the current working directory and your home directory for
 &#8220;mplstyle&#8221; files. To use a style, you just add:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">mpltools</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">mpltools</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">&#39;style1&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mpltools</span> <span class="kn">import</span> <span class="n">style</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">&#39;style1&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>There are a number of pre-defined styles located in <cite>mpltools/style/</cite>. To list
 all available styles, use:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">mpltools</span><span class="o">.</span><span class="n">styles</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">style</span><span class="o">.</span><span class="n">available</span>
 </pre></div>
 </div>
 </div>
