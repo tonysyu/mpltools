@@ -1,17 +1,21 @@
 """
-Example generation for the mpltools.
+Example generation from python files.
 
 Generate the rst files for the examples by iterating over the python
 example files. Files that generate images should start with 'plot'.
 
-This code was taken from scikits-image, which took it from scikits-learn.
+This code was adapted from scikits-image, which took it from scikits-learn.
 
 Options
 -------
-The ``gen_plot_rst`` extension accepts the following options:
+The ``plot2rst`` extension accepts the following options:
 
     plot2rst_add_gallery : bool
         If true, generate gallery from python examples.
+
+    plot2rst_rcparams : dict
+        Matplotlib configuration parameters. See
+        http://matplotlib.sourceforge.net/users/customizing.html for details.
 """
 import os
 import shutil
