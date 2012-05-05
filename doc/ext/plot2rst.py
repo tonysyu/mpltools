@@ -146,7 +146,8 @@ def generate_rst_gallery(app):
     example_dir = os.path.join(doc_src, PY_GALLERY_PATH)
 
     if not os.path.exists(example_dir):
-        os.makedirs(example_dir)
+        print "No example directory found at", example_dir
+        return
     if not os.path.exists(rst_dir):
         os.makedirs(rst_dir)
 
