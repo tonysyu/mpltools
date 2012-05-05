@@ -1,6 +1,5 @@
 
-
-.. _example_plot_color_mapper.py:
+.. _example_color_plot_color_mapper.py:
 
 
 ==========================
@@ -18,9 +17,10 @@ a function that maps a parameter value to an RGBA color in a color map.
     :align: center
 
 
+
 **Python source code:** :download:`plot_color_mapper.py <plot_color_mapper.py>`
 (generated using ``mpltools`` |version|)
 
 .. literalinclude:: plot_color_mapper.py
     :lines: 11-
-    
+

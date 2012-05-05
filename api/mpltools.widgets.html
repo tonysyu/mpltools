@@ -1,0 +1,517 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Module: widgets &mdash; mpltools 0.1dev documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mpltools 0.1dev documentation" href="../index.html" />
+    <link rel="up" title="API Reference" href="api.html" />
+    <link rel="prev" title="Module: util" href="mpltools.util.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpltools.util.html" title="Module: util"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">mpltools 0.1dev documentation</a> &raquo;</li>
+          <li><a href="api.html" accesskey="U">API Reference</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-widgets">
+<h1>Module: <tt class="xref py py-mod docutils literal"><span class="pre">widgets</span></tt><a class="headerlink" href="#module-widgets" title="Permalink to this headline">¶</a></h1>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">mpltools.widgets</span></tt>:</p>
+<span class="target" id="module-mpltools.widgets"></span><div class="section" id="rectangleselector">
+<h2><a class="reference internal" href="#mpltools.widgets.RectangleSelector" title="mpltools.widgets.RectangleSelector"><tt class="xref py py-class docutils literal"><span class="pre">RectangleSelector</span></tt></a><a class="headerlink" href="#rectangleselector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mpltools.widgets.RectangleSelector">
+<em class="property">class </em><tt class="descclassname">mpltools.widgets.</tt><tt class="descname">RectangleSelector</tt><big>(</big><em>ax</em>, <em>onselect=None</em>, <em>rectprops=None</em>, <em>mindist=10</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#mpltools.widgets.RectangleSelector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">matplotlib.widgets.RectangleSelector</span></tt></p>
+<p>Widget widget for selecting a rectangular region in a plot.</p>
+<p>Unlike <tt class="xref py py-class docutils literal"><span class="pre">matplotlib.widgets.RectangleSelector</span></tt>, this widget remains
+visible after selection and can be resized using corner and edge handles.</p>
+<p>After making the desired selection, press &#8220;Enter&#8221; to accept the selection
+and call the <cite>onselect</cite> callback function.</p>
+<p>Note the difference from <tt class="xref py py-class docutils literal"><span class="pre">matplotlib.widgets.RectangleSelector</span></tt>:
+The callback method <cite>onselect</cite> is called on &#8220;Enter&#8221;, <em>not</em> after release of
+the mouse button.  In addition, the <cite>onselect</cite> function now takes a single
+argument <cite>extents</cite>, which is a tuple specifying (xmin, xmax, ymin, ymax) of
+the rectangle.</p>
+<p>TODO: Allow rectangle to flip over itself when resizing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>ax</strong> : :class:<a href="#id1"><span class="problematic" id="id2">`</span></a>matplotlib.axes.Axes</p>
+<p><strong>onselect</strong> : function</p>
+<blockquote>
+<div><p>Function accepting rectangle extents as the only argument. If None,
+print extents of rectangle.</p>
+</div></blockquote>
+<p><strong>mindist</strong> : float</p>
+<blockquote>
+<div><p>Minimum distance in pixels for selection of a control (i.e. corner or
+edge) handle.</p>
+</div></blockquote>
+<p><strong>rectprops</strong> : dict</p>
+<blockquote>
+<div><p>Properties for <tt class="xref py py-class docutils literal"><span class="pre">matplotlib.patches.Rectangle</span></tt>. This class
+redefines defaults in <tt class="xref py py-class docutils literal"><span class="pre">matplotlib.widgets.RectangleSelector</span></tt>.</p>
+</div></blockquote>
+<p class="last"><strong>kwargs</strong> : see <tt class="xref py py-class docutils literal"><span class="pre">matplotlib.widgets.RectangleSelector</span></tt>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.widgets.RectangleSelector.extents" title="mpltools.widgets.RectangleSelector.extents"><tt class="xref py py-obj docutils literal"><span class="pre">extents</span></tt></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.widgets.RectangleSelector.connect_event" title="mpltools.widgets.RectangleSelector.connect_event"><tt class="xref py py-obj docutils literal"><span class="pre">connect_event</span></tt></a>(event,&nbsp;callback)</td>
+<td>Connect callback with an event.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.widgets.RectangleSelector.disconnect_events" title="mpltools.widgets.RectangleSelector.disconnect_events"><tt class="xref py py-obj docutils literal"><span class="pre">disconnect_events</span></tt></a>()</td>
+<td>Disconnect all events created by this widget.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.widgets.RectangleSelector.get_active" title="mpltools.widgets.RectangleSelector.get_active"><tt class="xref py py-obj docutils literal"><span class="pre">get_active</span></tt></a>()</td>
+<td>Get status of active mode (boolean variable)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.widgets.RectangleSelector.ignore" title="mpltools.widgets.RectangleSelector.ignore"><tt class="xref py py-obj docutils literal"><span class="pre">ignore</span></tt></a>(event)</td>
+<td>return <em>True</em> if <em>event</em> should be ignored</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.widgets.RectangleSelector.onkeypress" title="mpltools.widgets.RectangleSelector.onkeypress"><tt class="xref py py-obj docutils literal"><span class="pre">onkeypress</span></tt></a>(event)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.widgets.RectangleSelector.onmove" title="mpltools.widgets.RectangleSelector.onmove"><tt class="xref py py-obj docutils literal"><span class="pre">onmove</span></tt></a>(event)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.widgets.RectangleSelector.press" title="mpltools.widgets.RectangleSelector.press"><tt class="xref py py-obj docutils literal"><span class="pre">press</span></tt></a>(event)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.widgets.RectangleSelector.release" title="mpltools.widgets.RectangleSelector.release"><tt class="xref py py-obj docutils literal"><span class="pre">release</span></tt></a>(event)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.widgets.RectangleSelector.set_active" title="mpltools.widgets.RectangleSelector.set_active"><tt class="xref py py-obj docutils literal"><span class="pre">set_active</span></tt></a>(active)</td>
+<td>Use this to activate / deactivate the RectangleSelector</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.widgets.RectangleSelector.set_animated" title="mpltools.widgets.RectangleSelector.set_animated"><tt class="xref py py-obj docutils literal"><span class="pre">set_animated</span></tt></a>(val)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.widgets.RectangleSelector.set_visible" title="mpltools.widgets.RectangleSelector.set_visible"><tt class="xref py py-obj docutils literal"><span class="pre">set_visible</span></tt></a>(val)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.widgets.RectangleSelector.update" title="mpltools.widgets.RectangleSelector.update"><tt class="xref py py-obj docutils literal"><span class="pre">update</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.widgets.RectangleSelector.update_background" title="mpltools.widgets.RectangleSelector.update_background"><tt class="xref py py-obj docutils literal"><span class="pre">update_background</span></tt></a>(event)</td>
+<td>force an update of the background</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mpltools.widgets.RectangleSelector.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>ax</em>, <em>onselect=None</em>, <em>rectprops=None</em>, <em>mindist=10</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#mpltools.widgets.RectangleSelector.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mpltools.widgets.RectangleSelector.connect_event">
+<tt class="descname">connect_event</tt><big>(</big><em>event</em>, <em>callback</em><big>)</big><a class="headerlink" href="#mpltools.widgets.RectangleSelector.connect_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect callback with an event.</p>
+<p>This should be used in lieu of <cite>figure.canvas.mpl_connect</cite> since this
+function stores call back ids for later clean up.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mpltools.widgets.RectangleSelector.corner_coords">
+<tt class="descname">corner_coords</tt><a class="headerlink" href="#mpltools.widgets.RectangleSelector.corner_coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Corners of rectangle from lower left, moving clockwise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpltools.widgets.RectangleSelector.disconnect_events">
+<tt class="descname">disconnect_events</tt><big>(</big><big>)</big><a class="headerlink" href="#mpltools.widgets.RectangleSelector.disconnect_events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect all events created by this widget.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mpltools.widgets.RectangleSelector.drawon">
+<tt class="descname">drawon</tt><em class="property"> = True</em><a class="headerlink" href="#mpltools.widgets.RectangleSelector.drawon" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="mpltools.widgets.RectangleSelector.edge_coords">
+<tt class="descname">edge_coords</tt><a class="headerlink" href="#mpltools.widgets.RectangleSelector.edge_coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Midpoint of rectangle edges from lower left, moving clockwise.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mpltools.widgets.RectangleSelector.eventson">
+<tt class="descname">eventson</tt><em class="property"> = True</em><a class="headerlink" href="#mpltools.widgets.RectangleSelector.eventson" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="mpltools.widgets.RectangleSelector.extents">
+<tt class="descname">extents</tt><a class="headerlink" href="#mpltools.widgets.RectangleSelector.extents" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mpltools.widgets.RectangleSelector.get_active">
+<tt class="descname">get_active</tt><big>(</big><big>)</big><a class="headerlink" href="#mpltools.widgets.RectangleSelector.get_active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get status of active mode (boolean variable)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpltools.widgets.RectangleSelector.ignore">
+<tt class="descname">ignore</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#mpltools.widgets.RectangleSelector.ignore" title="Permalink to this definition">¶</a></dt>
+<dd><p>return <em>True</em> if <em>event</em> should be ignored</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpltools.widgets.RectangleSelector.onkeypress">
+<tt class="descname">onkeypress</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#mpltools.widgets.RectangleSelector.onkeypress" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mpltools.widgets.RectangleSelector.onmove">
+<tt class="descname">onmove</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#mpltools.widgets.RectangleSelector.onmove" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mpltools.widgets.RectangleSelector.press">
+<tt class="descname">press</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#mpltools.widgets.RectangleSelector.press" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mpltools.widgets.RectangleSelector.release">
+<tt class="descname">release</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#mpltools.widgets.RectangleSelector.release" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mpltools.widgets.RectangleSelector.set_active">
+<tt class="descname">set_active</tt><big>(</big><em>active</em><big>)</big><a class="headerlink" href="#mpltools.widgets.RectangleSelector.set_active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use this to activate / deactivate the RectangleSelector
+from your program with an boolean parameter <em>active</em>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpltools.widgets.RectangleSelector.set_animated">
+<tt class="descname">set_animated</tt><big>(</big><em>val</em><big>)</big><a class="headerlink" href="#mpltools.widgets.RectangleSelector.set_animated" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mpltools.widgets.RectangleSelector.set_visible">
+<tt class="descname">set_visible</tt><big>(</big><em>val</em><big>)</big><a class="headerlink" href="#mpltools.widgets.RectangleSelector.set_visible" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mpltools.widgets.RectangleSelector.update">
+<tt class="descname">update</tt><big>(</big><big>)</big><a class="headerlink" href="#mpltools.widgets.RectangleSelector.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mpltools.widgets.RectangleSelector.update_background">
+<tt class="descname">update_background</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#mpltools.widgets.RectangleSelector.update_background" title="Permalink to this definition">¶</a></dt>
+<dd><p>force an update of the background</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="slider">
+<h2><a class="reference internal" href="#mpltools.widgets.Slider" title="mpltools.widgets.Slider"><tt class="xref py py-class docutils literal"><span class="pre">Slider</span></tt></a><a class="headerlink" href="#slider" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mpltools.widgets.Slider">
+<em class="property">class </em><tt class="descclassname">mpltools.widgets.</tt><tt class="descname">Slider</tt><big>(</big><em>ax</em>, <em>value_range</em>, <em>label=''</em>, <em>value=None</em>, <em>on_slide=None</em>, <em>value_fmt='%1.2f'</em>, <em>slidermin=None</em>, <em>slidermax=None</em>, <em>dragging=True</em>, <em>pad=0.02</em><big>)</big><a class="headerlink" href="#mpltools.widgets.Slider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">matplotlib.widgets.Slider</span></tt></p>
+<p>Slider widget to select a value from a floating point range.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>ax</strong> : <tt class="xref py py-class docutils literal"><span class="pre">Axes</span></tt> instance</p>
+<blockquote>
+<div><p>The parent axes for the widget</p>
+</div></blockquote>
+<p><strong>value_range</strong> : (float, float)</p>
+<blockquote>
+<div><p>(min, max) value allowed for value.</p>
+</div></blockquote>
+<p><strong>label</strong> : str</p>
+<blockquote>
+<div><p>The slider label.</p>
+</div></blockquote>
+<p><strong>value</strong> : float</p>
+<blockquote>
+<div><p>Initial value. If None, set to value in middle of value range.</p>
+</div></blockquote>
+<p><strong>on_slide</strong> : function</p>
+<blockquote>
+<div><p>Callback function for slide event. Function should expect slider value.</p>
+</div></blockquote>
+<p><strong>value_fmt</strong> : str</p>
+<blockquote>
+<div><p>Format string for formatting the slider text.</p>
+</div></blockquote>
+<p><strong>slidermin, slidermax</strong> : float</p>
+<blockquote>
+<div><p>Used to contrain the value of this slider to the values
+of other sliders.</p>
+</div></blockquote>
+<p><strong>dragging</strong> : bool</p>
+<blockquote>
+<div><p>If True, slider is responsive to mouse.</p>
+</div></blockquote>
+<p><strong>pad</strong> : float</p>
+<blockquote class="last">
+<div><p>Padding (in axes coordinates) between <cite>label</cite>/<cite>value_fmt</cite> and slider.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.widgets.Slider.value" title="mpltools.widgets.Slider.value"><tt class="xref py py-obj docutils literal"><span class="pre">value</span></tt></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.widgets.Slider.connect_event" title="mpltools.widgets.Slider.connect_event"><tt class="xref py py-obj docutils literal"><span class="pre">connect_event</span></tt></a>(event,&nbsp;callback)</td>
+<td>Connect callback with an event.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.widgets.Slider.disconnect" title="mpltools.widgets.Slider.disconnect"><tt class="xref py py-obj docutils literal"><span class="pre">disconnect</span></tt></a>(cid)</td>
+<td>remove the observer with connection id <em>cid</em></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.widgets.Slider.disconnect_events" title="mpltools.widgets.Slider.disconnect_events"><tt class="xref py py-obj docutils literal"><span class="pre">disconnect_events</span></tt></a>()</td>
+<td>Disconnect all events created by this widget.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.widgets.Slider.ignore" title="mpltools.widgets.Slider.ignore"><tt class="xref py py-obj docutils literal"><span class="pre">ignore</span></tt></a>(event)</td>
+<td>Return True if event should be ignored.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.widgets.Slider.on_changed" title="mpltools.widgets.Slider.on_changed"><tt class="xref py py-obj docutils literal"><span class="pre">on_changed</span></tt></a>(func)</td>
+<td>When the slider value is changed, call <em>func</em> with the new</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.widgets.Slider.reset" title="mpltools.widgets.Slider.reset"><tt class="xref py py-obj docutils literal"><span class="pre">reset</span></tt></a>()</td>
+<td>reset the slider to the initial value if needed</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.widgets.Slider.set_val" title="mpltools.widgets.Slider.set_val"><tt class="xref py py-obj docutils literal"><span class="pre">set_val</span></tt></a>(value)</td>
+<td>Set value of slider.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mpltools.widgets.Slider.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>ax</em>, <em>value_range</em>, <em>label=''</em>, <em>value=None</em>, <em>on_slide=None</em>, <em>value_fmt='%1.2f'</em>, <em>slidermin=None</em>, <em>slidermax=None</em>, <em>dragging=True</em>, <em>pad=0.02</em><big>)</big><a class="headerlink" href="#mpltools.widgets.Slider.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mpltools.widgets.Slider.connect_event">
+<tt class="descname">connect_event</tt><big>(</big><em>event</em>, <em>callback</em><big>)</big><a class="headerlink" href="#mpltools.widgets.Slider.connect_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect callback with an event.</p>
+<p>This should be used in lieu of <cite>figure.canvas.mpl_connect</cite> since this
+function stores call back ids for later clean up.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpltools.widgets.Slider.disconnect">
+<tt class="descname">disconnect</tt><big>(</big><em>cid</em><big>)</big><a class="headerlink" href="#mpltools.widgets.Slider.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>remove the observer with connection id <em>cid</em></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpltools.widgets.Slider.disconnect_events">
+<tt class="descname">disconnect_events</tt><big>(</big><big>)</big><a class="headerlink" href="#mpltools.widgets.Slider.disconnect_events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect all events created by this widget.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mpltools.widgets.Slider.drawon">
+<tt class="descname">drawon</tt><em class="property"> = True</em><a class="headerlink" href="#mpltools.widgets.Slider.drawon" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="mpltools.widgets.Slider.eventson">
+<tt class="descname">eventson</tt><em class="property"> = True</em><a class="headerlink" href="#mpltools.widgets.Slider.eventson" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mpltools.widgets.Slider.ignore">
+<tt class="descname">ignore</tt><big>(</big><em>event</em><big>)</big><a class="headerlink" href="#mpltools.widgets.Slider.ignore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if event should be ignored.</p>
+<p>This method (or a version of it) should be called at the beginning
+of any event callback.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpltools.widgets.Slider.on_changed">
+<tt class="descname">on_changed</tt><big>(</big><em>func</em><big>)</big><a class="headerlink" href="#mpltools.widgets.Slider.on_changed" title="Permalink to this definition">¶</a></dt>
+<dd><p>When the slider value is changed, call <em>func</em> with the new
+slider position</p>
+<p>A connection id is returned which can be used to disconnect</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpltools.widgets.Slider.reset">
+<tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#mpltools.widgets.Slider.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>reset the slider to the initial value if needed</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpltools.widgets.Slider.set_val">
+<tt class="descname">set_val</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#mpltools.widgets.Slider.set_val" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set value of slider.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="mpltools.widgets.Slider.value">
+<tt class="descname">value</tt><a class="headerlink" href="#mpltools.widgets.Slider.value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Module: <tt class="docutils literal"><span class="pre">widgets</span></tt></a><ul>
+<li><a class="reference internal" href="#rectangleselector"><tt class="docutils literal"><span class="pre">RectangleSelector</span></tt></a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#slider"><tt class="docutils literal"><span class="pre">Slider</span></tt></a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="mpltools.util.html"
+                        title="previous chapter">Module: <tt class="docutils literal docutils literal docutils literal"><span class="pre">util</span></tt></a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="mpltools.util.html" title="Module: util"
+             >previous</a> |</li>
+        <li><a href="../index.html">mpltools 0.1dev documentation</a> &raquo;</li>
+          <li><a href="api.html" >API Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Tony S. Yu.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

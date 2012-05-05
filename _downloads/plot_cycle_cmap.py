@@ -11,7 +11,7 @@ but if you pass it a plot axes, only the color cycle for the axes is altered.
 import numpy as np
 import matplotlib.pyplot as plt
 
-import mpltools
+from mpltools import layout
 from mpltools import color
 
 
@@ -20,7 +20,7 @@ n_lines = 10
 # Change default color cycle for all new axes
 color.cycle_cmap(n_lines)
 
-figsize = mpltools.figsize(aspect_ratio=2)
+figsize = layout.figaspect(aspect_ratio=0.5)
 fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=figsize)
 
 # Change color cycle specifically for `ax2`

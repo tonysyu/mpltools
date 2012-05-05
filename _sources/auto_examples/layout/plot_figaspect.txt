@@ -1,0 +1,37 @@
+
+.. _example_layout_plot_figaspect.py:
+
+
+============
+Figure shape
+============
+
+Often, you want to adjust the shape (or aspect ratio) of a figure, but you
+don't want to explicitly calculate its size. Matplotlib provides a function
+called ``figaspect`` to fill this role. To adjust the aspect ratio of the
+figure, ``plt.figaspect`` will change the *width* of the figure.
+``layout.figaspect`` will, instead, change the *height* of the figure.  This
+behavior is convenient if you have a fixed-width requirement (e.g., the width
+of columns in a journal page or the width of a web page).
+
+
+
+
+.. rst-class:: horizontal
+
+
+
+      .. image:: images/plot_figaspect_1.png
+
+
+
+      .. image:: images/plot_figaspect_2.png
+
+
+
+**Python source code:** :download:`plot_figaspect.py <plot_figaspect.py>`
+(generated using ``mpltools`` |version|)
+
+.. literalinclude:: plot_figaspect.py
+    :lines: 15-
+

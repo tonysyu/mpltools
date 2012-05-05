@@ -75,11 +75,53 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#mpltools.special.hinton" title="mpltools.special.hinton"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.special.hinton</span></tt></a>(inarray[,&nbsp;max_value])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.special.errorfill" title="mpltools.special.errorfill"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.special.errorfill</span></tt></a>(x,&nbsp;y[,&nbsp;yerr,&nbsp;...])</td>
+<td>Plot data with errors marked by a filled region.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.special.hinton" title="mpltools.special.hinton"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.special.hinton</span></tt></a>(inarray[,&nbsp;max_value])</td>
 <td>Plot Hinton diagram for visualizing the values of a 2D array.</td>
 </tr>
 </tbody>
 </table>
+<div class="section" id="errorfill">
+<h2>errorfill<a class="headerlink" href="#errorfill" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mpltools.special.errorfill">
+<tt class="descclassname">mpltools.special.</tt><tt class="descname">errorfill</tt><big>(</big><em>x</em>, <em>y</em>, <em>yerr=None</em>, <em>xerr=None</em>, <em>color=None</em>, <em>alpha=1</em>, <em>alpha_fill=0.29999999999999999</em>, <em>ax=None</em><big>)</big><a class="headerlink" href="#mpltools.special.errorfill" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot data with errors marked by a filled region.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>x, y</strong> : arrays</p>
+<blockquote>
+<div><p>Coordinates of data.</p>
+</div></blockquote>
+<p><strong>yerr, xerr: [scalar | N, (N, 1), or (2, N) array]</strong> :</p>
+<blockquote>
+<div><p>Error for the input data.
+- If scalar, then filled region spans <cite>y +/- yerr</cite> or <cite>x +/- xerr</cite>.</p>
+</div></blockquote>
+<p><strong>color</strong> : Matplotlib color</p>
+<blockquote>
+<div><p>Color of line and fill region.</p>
+</div></blockquote>
+<p><strong>alpha</strong> : float</p>
+<blockquote>
+<div><p>Opacity used for plotting.</p>
+</div></blockquote>
+<p><strong>alpha_fill</strong> : float</p>
+<blockquote class="last">
+<div><p>Opacity of filled region. Note: the actual opacity of the fill is
+<cite>alpha * alpha_fill</cite>.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 <div class="section" id="hinton">
 <h2>hinton<a class="headerlink" href="#hinton" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -92,6 +134,10 @@ square represents the magnitude of each value.</p>
 <p>Unlike the hinton demo in the matplotlib gallery <a class="reference internal" href="#r2">[R2]</a>, this implementation
 uses a RegularPolyCollection to draw squares, which is much more efficient
 than drawing individual Rectangles.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This function inverts the y-axis to match the origin for arrays.</p>
+</div>
 <table class="docutils citation" frame="void" id="r2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -129,6 +175,7 @@ unit square.</p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Module: <tt class="docutils literal"><span class="pre">special</span></tt></a><ul>
+<li><a class="reference internal" href="#errorfill">errorfill</a></li>
 <li><a class="reference internal" href="#hinton">hinton</a></li>
 </ul>
 </li>
@@ -181,7 +228,7 @@ unit square.</p>
     </div>
     <div class="footer">
         &copy; Copyright 2012, Tony S. Yu.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

@@ -1,0 +1,27 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+Module: :mod:`animation`
+========================
+Inheritance diagram for ``mpltools.animation``:
+
+.. inheritance-diagram:: mpltools.animation 
+   :parts: 3
+
+.. automodule:: mpltools.animation
+
+.. currentmodule:: mpltools.animation
+
+:class:`Animation`
+------------------
+
+
+.. autoclass:: Animation
+  :members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
+
+  .. automethod:: __init__
+.. autosummary::
+
+

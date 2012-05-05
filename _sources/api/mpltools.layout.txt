@@ -9,7 +9,9 @@ Module: :mod:`layout`
 
    mpltools.layout.clear_frame
    mpltools.layout.cross_spines
+   mpltools.layout.figaspect
    mpltools.layout.figimage
+   mpltools.layout.figure
    mpltools.layout.pad_limits
 
 clear_frame
@@ -22,10 +24,20 @@ cross_spines
 
 .. autofunction:: mpltools.layout.cross_spines
 
+figaspect
+---------
+
+.. autofunction:: mpltools.layout.figaspect
+
 figimage
 --------
 
 .. autofunction:: mpltools.layout.figimage
+
+figure
+------
+
+.. autofunction:: mpltools.layout.figure
 
 pad_limits
 ----------

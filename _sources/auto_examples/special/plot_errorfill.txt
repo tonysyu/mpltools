@@ -1,0 +1,23 @@
+
+.. _example_special_plot_errorfill.py:
+
+
+================
+Plot `errorfill`
+================
+
+When you have continuous data measurement and errors associated with every data point, plotting error bars can get really noisy. `special.errorfill` plots a filled region to represent the error values instead of using individual bars.
+
+
+
+.. image:: images/plot_errorfill_1.png
+    :align: center
+
+
+
+**Python source code:** :download:`plot_errorfill.py <plot_errorfill.py>`
+(generated using ``mpltools`` |version|)
+
+.. literalinclude:: plot_errorfill.py
+    :lines: 8-
+

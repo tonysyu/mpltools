@@ -5,9 +5,10 @@ API Reference
 
 .. toctree::
 
-   mpltools
+   mpltools.animation
    mpltools.color
    mpltools.layout
    mpltools.special
    mpltools.style
    mpltools.util
+   mpltools.widgets

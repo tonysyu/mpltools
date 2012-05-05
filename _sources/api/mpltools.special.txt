@@ -7,7 +7,13 @@ Module: :mod:`special`
 .. currentmodule:: mpltools.special
 .. autosummary::
 
+   mpltools.special.errorfill
    mpltools.special.hinton
+
+errorfill
+---------
+
+.. autofunction:: mpltools.special.errorfill
 
 hinton
 ------

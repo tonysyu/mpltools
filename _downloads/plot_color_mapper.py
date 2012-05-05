@@ -11,7 +11,7 @@ a function that maps a parameter value to an RGBA color in a color map.
 import numpy as np
 import matplotlib.pyplot as plt
 
-import mpltools
+from mpltools import layout
 from mpltools import color
 
 
@@ -21,7 +21,7 @@ parameter_range = (pvalues[0], pvalues[-1])
 map_color1 = color.color_mapper(parameter_range)
 map_color2 = color.color_mapper(parameter_range, cmap='BuPu', start=0.2)
 
-figsize = mpltools.figsize(aspect_ratio=2)
+figsize = layout.figaspect(aspect_ratio=0.5)
 fig, (ax1, ax2) = plt.subplots(ncols=2, figsize=figsize)
 x = np.linspace(0, 10)
 for pval in pvalues:

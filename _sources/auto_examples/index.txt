@@ -1,26 +1,5 @@
 
 
-.. raw:: html
-
-    <style type="text/css">
-    .figure {
-        float: left;
-        margin: 1em;
-    }
-
-    .figure img {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 200px;
-    }
-
-    .figure .caption {
-        width: 200px;
-        text-align: center !important;
-    }
-    </style>
-
 Examples
 ========
 
@@ -30,35 +9,106 @@ Examples
 
 .. _examples_gallery:
 
-General examples
--------------------
-
-General-purpose and introductory examples for `mpltools`.
-
-
-
 
 
 
 .. toctree::
    :hidden:
 
-   plot_color_mapper
-   plot_cycle_cmap
-
-.. figure:: images/thumb/plot_color_mapper.png
-   :figclass: gallery
-   :target: ./plot_color_mapper.html
-
-   :ref:`example_plot_color_mapper.py`
-
-.. figure:: images/thumb/plot_cycle_cmap.png
-   :figclass: gallery
-   :target: ./plot_cycle_cmap.html
-
-   :ref:`example_plot_cycle_cmap.py`
+   
 
 
 .. raw:: html
 
     <div style="clear: both"></div>
+
+
+
+`color` module
+--------------
+
+
+
+.. toctree::
+   :hidden:
+
+   color/plot_color_mapper
+   plot_cycle_cmap
+
+.. figure:: color/images/thumb/plot_color_mapper.png
+   :figclass: gallery
+   :target: ./color/plot_color_mapper.html
+
+   :ref:`example_color_plot_color_mapper.py`
+
+.. figure:: color/images/thumb/plot_cycle_cmap.png
+   :figclass: gallery
+   :target: ./color/plot_cycle_cmap.html
+
+   :ref:`example_color_plot_cycle_cmap.py`
+
+
+.. raw:: html
+
+    <div style="clear: both"></div>
+
+
+
+`layout` module
+--------------
+
+
+
+.. toctree::
+   :hidden:
+
+   layout/plot_cross_spines
+   plot_figaspect
+
+.. figure:: layout/images/thumb/plot_cross_spines.png
+   :figclass: gallery
+   :target: ./layout/plot_cross_spines.html
+
+   :ref:`example_layout_plot_cross_spines.py`
+
+.. figure:: layout/images/thumb/plot_figaspect.png
+   :figclass: gallery
+   :target: ./layout/plot_figaspect.html
+
+   :ref:`example_layout_plot_figaspect.py`
+
+
+.. raw:: html
+
+    <div style="clear: both"></div>
+
+
+
+`special` module
+--------------
+
+
+
+.. toctree::
+   :hidden:
+
+   special/plot_errorfill
+   plot_hinton
+
+.. figure:: special/images/thumb/plot_errorfill.png
+   :figclass: gallery
+   :target: ./special/plot_errorfill.html
+
+   :ref:`example_special_plot_errorfill.py`
+
+.. figure:: special/images/thumb/plot_hinton.png
+   :figclass: gallery
+   :target: ./special/plot_hinton.html
+
+   :ref:`example_special_plot_hinton.py`
+
+
+.. raw:: html
+
+    <div style="clear: both"></div>
+

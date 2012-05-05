@@ -1,0 +1,26 @@
+
+.. _example_layout_plot_cross_spines.py:
+
+
+==============
+Crossed spines
+==============
+
+By default, matplotlib surrounds plot axes with borders. ``cross_spines` uses
+the axes ``spines`` (the names ``axes`` and ``axis`` were already taken)
+attribute to eliminate the top and right spines from the plot.
+
+
+
+
+.. image:: images/plot_cross_spines_1.png
+    :align: center
+
+
+
+**Python source code:** :download:`plot_cross_spines.py <plot_cross_spines.py>`
+(generated using ``mpltools`` |version|)
+
+.. literalinclude:: plot_cross_spines.py
+    :lines: 11-
+

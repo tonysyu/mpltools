@@ -27,7 +27,7 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mpltools 0.1dev documentation" href="../index.html" />
     <link rel="up" title="API Reference" href="api.html" />
-    <link rel="next" title="License" href="../license.html" />
+    <link rel="next" title="Module: widgets" href="mpltools.widgets.html" />
     <link rel="prev" title="Module: style" href="mpltools.style.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
@@ -51,7 +51,7 @@
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../license.html" title="License"
+          <a href="mpltools.widgets.html" title="Module: widgets"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="mpltools.style.html" title="Module: style"
@@ -66,84 +66,81 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="module-mpltools.util">
-<span id="module-util"></span><h1>Module: <tt class="xref py py-mod docutils literal"><span class="pre">util</span></tt><a class="headerlink" href="#module-mpltools.util" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-util">
+<h1>Module: <tt class="xref py py-mod docutils literal"><span class="pre">util</span></tt><a class="headerlink" href="#module-util" title="Permalink to this headline">¶</a></h1>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">mpltools.util</span></tt>:</p>
+<span class="target" id="module-mpltools.util"></span><div class="section" id="deprecated">
+<h2><a class="reference internal" href="#mpltools.util.deprecated" title="mpltools.util.deprecated"><tt class="xref py py-class docutils literal"><span class="pre">deprecated</span></tt></a><a class="headerlink" href="#deprecated" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mpltools.util.deprecated">
+<em class="property">class </em><tt class="descclassname">mpltools.util.</tt><tt class="descname">deprecated</tt><big>(</big><em>alt_func=None</em>, <em>behavior='warn'</em><big>)</big><a class="reference internal" href="../_modules/mpltools/util.html#deprecated"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpltools.util.deprecated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Decorator to mark deprecated functions with warning.</p>
+<p>Adapted from &lt;<a class="reference external" href="http://wiki.python.org/moin/PythonDecoratorLibrary">http://wiki.python.org/moin/PythonDecoratorLibrary</a>&gt;.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>alt_func</strong> : str</p>
+<blockquote>
+<div><p>If given, tell user what function to use instead.</p>
+</div></blockquote>
+<p><strong>behavior</strong> : {&#8216;warn&#8217;, &#8216;raise&#8217;}</p>
+<blockquote class="last">
+<div><p>Behavior during call to deprecated function: &#8216;warn&#8217; = warn user that
+function is deprecated; &#8216;raise&#8217; = raise error.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mpltools.util.deprecated.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>alt_func=None</em>, <em>behavior='warn'</em><big>)</big><a class="reference internal" href="../_modules/mpltools/util.html#deprecated.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpltools.util.deprecated.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <table border="1" class="longtable docutils">
 <colgroup>
 <col width="10%" />
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#mpltools.util.figsize" title="mpltools.util.figsize"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.util.figsize</span></tt></a>([aspect_ratio,&nbsp;scale,&nbsp;...])</td>
-<td>Return figure size (width, height) in inches.</td>
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.util.figaspect" title="mpltools.util.figaspect"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.util.figaspect</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#mpltools.util.figure" title="mpltools.util.figure"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.util.figure</span></tt></a>([aspect_ratio,&nbsp;scale,&nbsp;...])</td>
-<td>Return matplotlib figure window.</td>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.util.figsize" title="mpltools.util.figsize"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.util.figsize</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.util.figure" title="mpltools.util.figure"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.util.figure</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td></td>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section" id="figaspect">
+<h2>figaspect<a class="headerlink" href="#figaspect" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mpltools.util.figaspect">
+<tt class="descclassname">mpltools.util.</tt><tt class="descname">figaspect</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/mpltools/util.html#figaspect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpltools.util.figaspect" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
 <div class="section" id="figsize">
 <h2>figsize<a class="headerlink" href="#figsize" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="mpltools.util.figsize">
-<tt class="descclassname">mpltools.util.</tt><tt class="descname">figsize</tt><big>(</big><em>aspect_ratio=1.3</em>, <em>scale=1</em>, <em>width=None</em><big>)</big><a class="reference internal" href="../_modules/mpltools/util.html#figsize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpltools.util.figsize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return figure size (width, height) in inches.</p>
-<p>Calculate figure height using <cite>aspect_ratio</cite> and <em>default</em> figure width.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>aspect_ratio</strong> : float</p>
-<blockquote>
-<div><p>Aspect ratio, width / height, of figure.</p>
-</div></blockquote>
-<p><strong>scale</strong> : float</p>
-<blockquote>
-<div><p>Scale default size of the figure.</p>
-</div></blockquote>
-<p><strong>width</strong> : float</p>
-<blockquote class="last">
-<div><p>Figure width in inches. If None, default to rc parameters.</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
+<tt class="descclassname">mpltools.util.</tt><tt class="descname">figsize</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/mpltools/util.html#figsize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpltools.util.figsize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 <div class="section" id="figure">
 <h2>figure<a class="headerlink" href="#figure" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="mpltools.util.figure">
-<tt class="descclassname">mpltools.util.</tt><tt class="descname">figure</tt><big>(</big><em>aspect_ratio=1.3</em>, <em>scale=1</em>, <em>width=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/mpltools/util.html#figure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpltools.util.figure" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return matplotlib figure window.</p>
-<p>Calculate figure height using <cite>aspect_ratio</cite> and <em>default</em> figure width.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>aspect_ratio</strong> : float</p>
-<blockquote>
-<div><p>Aspect ratio, width / height, of figure.</p>
-</div></blockquote>
-<p><strong>scale</strong> : float</p>
-<blockquote>
-<div><p>Scale default size of the figure.</p>
-</div></blockquote>
-<p><strong>width</strong> : float</p>
-<blockquote class="last">
-<div><p>Figure width in inches. If None, default to rc parameters.</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="admonition-see-also admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#mpltools.util.figsize" title="mpltools.util.figsize"><tt class="xref py py-obj docutils literal"><span class="pre">figsize</span></tt></a></p>
-</div>
-</dd></dl>
+<tt class="descclassname">mpltools.util.</tt><tt class="descname">figure</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/mpltools/util.html#figure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpltools.util.figure" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 </div>
@@ -157,6 +154,8 @@
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Module: <tt class="docutils literal"><span class="pre">util</span></tt></a><ul>
+<li><a class="reference internal" href="#deprecated"><tt class="docutils literal"><span class="pre">deprecated</span></tt></a></li>
+<li><a class="reference internal" href="#figaspect">figaspect</a></li>
 <li><a class="reference internal" href="#figsize">figsize</a></li>
 <li><a class="reference internal" href="#figure">figure</a></li>
 </ul>
@@ -167,8 +166,8 @@
   <p class="topless"><a href="mpltools.style.html"
                         title="previous chapter">Module: <tt class="docutils literal docutils literal docutils literal"><span class="pre">style</span></tt></a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../license.html"
-                        title="next chapter">License</a></p>
+  <p class="topless"><a href="mpltools.widgets.html"
+                        title="next chapter">Module: <tt class="docutils literal"><span class="pre">widgets</span></tt></a></p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -199,7 +198,7 @@
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="../license.html" title="License"
+          <a href="mpltools.widgets.html" title="Module: widgets"
              >next</a> |</li>
         <li class="right" >
           <a href="mpltools.style.html" title="Module: style"
@@ -210,7 +209,7 @@
     </div>
     <div class="footer">
         &copy; Copyright 2012, Tony S. Yu.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

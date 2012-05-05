@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mpltools 0.1dev documentation" href="../../index.html" />
-    <link rel="up" title="mpltools" href="../mpltools.html" />
+    <link rel="up" title="Module code" href="../index.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <!--[if lte IE 6]>
@@ -49,8 +49,7 @@
           <a href="../../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li><a href="../../index.html">mpltools 0.1dev documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li>
-          <li><a href="../mpltools.html" accesskey="U">mpltools</a> &raquo;</li> 
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -60,56 +59,69 @@
           <div class="body">
             
   <h1>Source code for mpltools.util</h1><div class="highlight"><pre>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">layout</span>
 
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;figure&#39;</span><span class="p">,</span> <span class="s">&#39;figsize&#39;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;deprecated&#39;</span><span class="p">,</span> <span class="s">&#39;figure&#39;</span><span class="p">,</span> <span class="s">&#39;figaspect&#39;</span><span class="p">,</span> <span class="s">&#39;figsize&#39;</span><span class="p">]</span>
 
 
-<div class="viewcode-block" id="figure"><a class="viewcode-back" href="../../api/mpltools.util.html#mpltools.util.figure">[docs]</a><span class="k">def</span> <span class="nf">figure</span><span class="p">(</span><span class="n">aspect_ratio</span><span class="o">=</span><span class="mf">1.3</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Return matplotlib figure window.</span>
+<div class="viewcode-block" id="deprecated"><a class="viewcode-back" href="../../api/mpltools.util.html#mpltools.util.deprecated">[docs]</a><span class="k">class</span> <span class="nc">deprecated</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Decorator to mark deprecated functions with warning.</span>
 
-<span class="sd">    Calculate figure height using `aspect_ratio` and *default* figure width.</span>
+<span class="sd">    Adapted from &lt;http://wiki.python.org/moin/PythonDecoratorLibrary&gt;.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    aspect_ratio : float</span>
-<span class="sd">        Aspect ratio, width / height, of figure.</span>
-<span class="sd">    scale : float</span>
-<span class="sd">        Scale default size of the figure.</span>
-<span class="sd">    width : float</span>
-<span class="sd">        Figure width in inches. If None, default to rc parameters.</span>
-
-<span class="sd">    See Also</span>
-<span class="sd">    --------</span>
-<span class="sd">    figsize</span>
-
+<span class="sd">    alt_func : str</span>
+<span class="sd">        If given, tell user what function to use instead.</span>
+<span class="sd">    behavior : {&#39;warn&#39;, &#39;raise&#39;}</span>
+<span class="sd">        Behavior during call to deprecated function: &#39;warn&#39; = warn user that</span>
+<span class="sd">        function is deprecated; &#39;raise&#39; = raise error.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">assert</span> <span class="s">&#39;figsize&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span>
-    <span class="n">size</span> <span class="o">=</span> <span class="n">figsize</span><span class="p">(</span><span class="n">aspect_ratio</span><span class="o">=</span><span class="n">aspect_ratio</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="deprecated.__init__"><a class="viewcode-back" href="../../api/mpltools.util.html#mpltools.util.deprecated.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alt_func</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">behavior</span><span class="o">=</span><span class="s">&#39;warn&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alt_func</span> <span class="o">=</span> <span class="n">alt_func</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">behavior</span> <span class="o">=</span> <span class="n">behavior</span>
+</div>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+
+        <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;Call to deprecated function `</span><span class="si">%s</span><span class="s">`.&quot;</span> <span class="o">%</span> <span class="n">func</span><span class="o">.</span><span class="n">__name__</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">alt_func</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span> <span class="o">+</span> <span class="s">&quot; Use `</span><span class="si">%s</span><span class="s">` instead.&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">alt_func</span>
+
+        <span class="nd">@functools.wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">wrapped</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">behavior</span> <span class="o">==</span> <span class="s">&#39;warn&#39;</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn_explicit</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span>
+                    <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">,</span>
+                    <span class="n">filename</span><span class="o">=</span><span class="n">func</span><span class="o">.</span><span class="n">func_code</span><span class="o">.</span><span class="n">co_filename</span><span class="p">,</span>
+                    <span class="n">lineno</span><span class="o">=</span><span class="n">func</span><span class="o">.</span><span class="n">func_code</span><span class="o">.</span><span class="n">co_firstlineno</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">behavior</span> <span class="o">==</span> <span class="s">&#39;raise&#39;</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">DeprecationWarning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">wrapped</span>
 
 </div>
-<div class="viewcode-block" id="figsize"><a class="viewcode-back" href="../../api/mpltools.util.html#mpltools.util.figsize">[docs]</a><span class="k">def</span> <span class="nf">figsize</span><span class="p">(</span><span class="n">aspect_ratio</span><span class="o">=</span><span class="mf">1.3</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Return figure size (width, height) in inches.</span>
+<span class="nd">@deprecated</span><span class="p">(</span><span class="s">&#39;layout.figure&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="figure"><a class="viewcode-back" href="../../api/mpltools.util.html#mpltools.util.figure">[docs]</a><span class="k">def</span> <span class="nf">figure</span><span class="p">(</span><span class="n">aspect_ratio</span><span class="o">=</span><span class="mf">1.3</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;NOTE: `layout.figure` uses inverse definition of `aspect_ratio`.&quot;</span>
+    <span class="n">aspect_ratio</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">aspect_ratio</span>
+    <span class="k">return</span> <span class="n">layout</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">aspect_ratio</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<span class="sd">    Calculate figure height using `aspect_ratio` and *default* figure width.</span>
+</div>
+<span class="nd">@deprecated</span><span class="p">(</span><span class="s">&#39;layout.figaspect&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="figaspect"><a class="viewcode-back" href="../../api/mpltools.util.html#mpltools.util.figaspect">[docs]</a><span class="k">def</span> <span class="nf">figaspect</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">layout</span><span class="o">.</span><span class="n">figaspect</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    aspect_ratio : float</span>
-<span class="sd">        Aspect ratio, width / height, of figure.</span>
-<span class="sd">    scale : float</span>
-<span class="sd">        Scale default size of the figure.</span>
-<span class="sd">    width : float</span>
-<span class="sd">        Figure width in inches. If None, default to rc parameters.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
-    <span class="k">if</span> <span class="n">width</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">width</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">&#39;figure.figsize&#39;</span><span class="p">]</span>
-    <span class="n">height</span> <span class="o">=</span> <span class="n">width</span> <span class="o">/</span> <span class="n">aspect_ratio</span>
-    <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="n">width</span> <span class="o">*</span> <span class="n">scale</span><span class="p">,</span> <span class="n">height</span> <span class="o">*</span> <span class="n">scale</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">size</span>
+</div>
+<span class="nd">@deprecated</span><span class="p">(</span><span class="s">&#39;layout.figaspect&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="figsize"><a class="viewcode-back" href="../../api/mpltools.util.html#mpltools.util.figsize">[docs]</a><span class="k">def</span> <span class="nf">figsize</span><span class="p">(</span><span class="n">aspect_ratio</span><span class="o">=</span><span class="mf">1.3</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;NOTE: `layout.figaspect` uses inverse definition of `aspect_ratio`.&quot;</span>
+    <span class="k">return</span> <span class="n">layout</span><span class="o">.</span><span class="n">figaspect</span><span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="n">aspect_ratio</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 </pre></div></div>
 
           </div>
@@ -147,13 +159,12 @@
           <a href="../../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li><a href="../../index.html">mpltools 0.1dev documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li>
-          <li><a href="../mpltools.html" >mpltools</a> &raquo;</li> 
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2012, Tony S. Yu.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

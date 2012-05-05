@@ -1,0 +1,261 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Module: animation &mdash; mpltools 0.1dev documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mpltools 0.1dev documentation" href="../index.html" />
+    <link rel="up" title="API Reference" href="api.html" />
+    <link rel="prev" title="API Reference" href="api.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api.html" title="API Reference"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">mpltools 0.1dev documentation</a> &raquo;</li>
+          <li><a href="api.html" accesskey="U">API Reference</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-animation">
+<h1>Module: <tt class="xref py py-mod docutils literal"><span class="pre">animation</span></tt><a class="headerlink" href="#module-animation" title="Permalink to this headline">¶</a></h1>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">mpltools.animation</span></tt>:</p>
+<span class="target" id="module-mpltools.animation"></span><p>Animation class.</p>
+<p>This implementation is a interface for Matplotlib&#8217;s FuncAnimation class, but
+with different interface for:</p>
+<ul class="simple">
+<li>Easy reuse of animation code.</li>
+<li>Logical separation of setup parameter (passed to <cite>__init__</cite>) and animation
+parameters (passed to <cite>animate</cite>).</li>
+<li>Unlike Matplotlib&#8217;s animation class, this Animation class clearly must be
+assigned to a variable (in order to call the <cite>animate</cite> method). The
+FuncAnimation object needs to be assigned to a variable so that it isn&#8217;t
+garbage-collected, but this requirement is confusing, and easily forgotten,
+because the user never uses the animation object directly.</li>
+</ul>
+<div class="section" id="animation">
+<h2><a class="reference internal" href="#mpltools.animation.Animation" title="mpltools.animation.Animation"><tt class="xref py py-class docutils literal"><span class="pre">Animation</span></tt></a><a class="headerlink" href="#animation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mpltools.animation.Animation">
+<em class="property">class </em><tt class="descclassname">mpltools.animation.</tt><tt class="descname">Animation</tt><a class="reference internal" href="../_modules/mpltools/animation.html#Animation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpltools.animation.Animation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Base class to create animation objects.</p>
+<p>To create an animation, simply subclass <cite>Animation</cite> and override the
+<cite>__init__</cite> method to create a plot (<cite>self.fig</cite> needs to be assigned to the
+figure object here), and override <cite>update</cite> with a generator that updates
+the plot:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">RandomPoints</span><span class="p">(</span><span class="n">Animation</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">artists</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># Clean up plot when repeating animation.</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">artists</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s">&#39;ro&#39;</span><span class="p">))</span>
+            <span class="k">yield</span> <span class="n">artists</span>
+
+<span class="n">pts</span> <span class="o">=</span> <span class="n">RandomPoints</span><span class="p">()</span>
+<span class="n">pts</span><span class="o">.</span><span class="n">animate</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Note: if you want to use blitting (see docstring for <cite>Animation.animate</cite>),
+You must yield a sequence of artists in <cite>update</cite>.</p>
+<p>This Animation class does not subclass any of Matplotlib&#8217;s animation
+classes because the <cite>__init__</cite> method takes arguments for creating the
+plot, while <cite>animate</cite> method is what accepts arguments that alter the
+animation.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.animation.Animation.animate" title="mpltools.animation.Animation.animate"><tt class="xref py py-obj docutils literal"><span class="pre">animate</span></tt></a>(**kwargs)</td>
+<td>Run animation.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.animation.Animation.update" title="mpltools.animation.Animation.update"><tt class="xref py py-obj docutils literal"><span class="pre">update</span></tt></a>()</td>
+<td>Update frame.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mpltools.animation.Animation.__init__">
+<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/mpltools/animation.html#Animation.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpltools.animation.Animation.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize plot for animation.</p>
+<p>Replace this method to initialize the plot. The only requirement is
+that you must create a figure object assigned to <cite>self.fig</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpltools.animation.Animation.animate">
+<tt class="descname">animate</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/mpltools/animation.html#Animation.animate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpltools.animation.Animation.animate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run animation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>interval</strong> : float, defaults to 200</p>
+<blockquote>
+<div><p>Time delay, in milliseconds, between frames.</p>
+</div></blockquote>
+<p><strong>repeat</strong> : {True | False}</p>
+<blockquote>
+<div><p>If True, repeat animation when the sequence of frames is completed.</p>
+</div></blockquote>
+<p><strong>repeat_delay</strong> : None</p>
+<blockquote>
+<div><p>Delay in milliseconds before repeating the animation.</p>
+</div></blockquote>
+<p><strong>blit</strong> : {False | True}</p>
+<blockquote>
+<div><p>If True, use blitting to optimize drawing. Unsupported by some
+backends.</p>
+</div></blockquote>
+<p><strong>init_func</strong> : function</p>
+<blockquote>
+<div><p>Function to draw a clear frame. If None, the results of drawing from
+the first item in the frames sequence will be used.</p>
+</div></blockquote>
+<p><strong>save_count</strong> : int</p>
+<blockquote class="last">
+<div><p>If saving a movie, <cite>save_count</cite> determines number of frames saved.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpltools.animation.Animation.update">
+<tt class="descname">update</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/mpltools/animation.html#Animation.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpltools.animation.Animation.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update frame.</p>
+<p>Replace this method to with a generator that updates artists and calls
+an empty <cite>yield</cite> when updates are complete.</p>
+</dd></dl>
+
+</dd></dl>
+
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Module: <tt class="docutils literal"><span class="pre">animation</span></tt></a><ul>
+<li><a class="reference internal" href="#animation"><tt class="docutils literal"><span class="pre">Animation</span></tt></a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="api.html"
+                        title="previous chapter">API Reference</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api.html" title="API Reference"
+             >previous</a> |</li>
+        <li><a href="../index.html">mpltools 0.1dev documentation</a> &raquo;</li>
+          <li><a href="api.html" >API Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Tony S. Yu.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

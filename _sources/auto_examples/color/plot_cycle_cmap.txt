@@ -1,6 +1,5 @@
 
-
-.. _example_plot_cycle_cmap.py:
+.. _example_color_plot_cycle_cmap.py:
 
 
 ===========================
@@ -18,9 +17,10 @@ but if you pass it a plot axes, only the color cycle for the axes is altered.
     :align: center
 
 
+
 **Python source code:** :download:`plot_cycle_cmap.py <plot_cycle_cmap.py>`
 (generated using ``mpltools`` |version|)
 
 .. literalinclude:: plot_cycle_cmap.py
     :lines: 11-
-    
+

@@ -2,13 +2,36 @@
 
 Module: :mod:`util`
 ===================
+Inheritance diagram for ``mpltools.util``:
+
+.. inheritance-diagram:: mpltools.util 
+   :parts: 3
+
 .. automodule:: mpltools.util
 
 .. currentmodule:: mpltools.util
+
+:class:`deprecated`
+-------------------
+
+
+.. autoclass:: deprecated
+  :members:
+  :undoc-members:
+  :show-inheritance:
+  :inherited-members:
+
+  .. automethod:: __init__
 .. autosummary::
 
+   mpltools.util.figaspect
    mpltools.util.figsize
    mpltools.util.figure
+
+figaspect
+---------
+
+.. autofunction:: mpltools.util.figaspect
 
 figsize
 -------
