@@ -58,18 +58,20 @@
             
   <div class="section" id="hinton-diagram">
 <span id="example-special-plot-hinton-py"></span><h1>Hinton diagram<a class="headerlink" href="#hinton-diagram" title="Permalink to this headline">¶</a></h1>
-<p>Hinton diagrams are useful for visualizing the values of a 2D array. Positive
-and negative values represented by white and black squares, respectively, and
-the size of each square represents the magnitude of each value.</p>
-<p>The <cite>special.hinton</cite> function is based off of the Hinton demo in the matplotlib
-gallery <a href="#id2"><span class="problematic" id="id3"><span id="id1"></span>[1]_</span></a>. This implementation, however, uses a <cite>RegularPolyCollection</cite> to
-draw squares, which is much more efficient than drawing individual rectangles.</p>
+<p>Hinton diagrams are useful for visualizing the values of a 2D array: Positive
+and negative values are represented by white and black squares, respectively,
+and the size of each square represents the magnitude of each value.</p>
+<p><tt class="docutils literal"><span class="pre">special.hinton</span></tt> is based off of the <a class="reference external" href="http://matplotlib.sourceforge.net/examples/api/hinton_demo.html">Hinton demo</a> in the matplotlib gallery. This implementation, however, uses a <tt class="docutils literal"><span class="pre">RegularPolyCollection</span></tt> to draw
+squares, which is much more efficient than drawing individual rectangles.</p>
 <p>Obscure example use: For my Ph.D., I wrote a numerical solver using
-finite-differences and writing down Jacobian matrices analytically, was
-incredibly-prone to bugs. To debug my code, I calculated the numerical Jacobian
-(calculated using <cite>scipy.optimize.slsqp.approx_jacobian</cite>) and plotted the
-Hinton diagram for for the difference of the numerical and analytical results.
-You could, of course, use <cite>pcolor</cite> or <cite>imshow</cite> in a similar situation.</p>
+finite-differences. For speed, the Jacobian matrices were calculated
+analytically, which was incredibly-prone to bugs. To debug my code,
+I calculated the numerical Jacobian (calculated using
+<tt class="docutils literal"><span class="pre">scipy.optimize.slsqp.approx_jacobian</span></tt>) and plotted the Hinton diagram for
+the difference of the numerical and analytical results. That allowed me to
+narrow down where the bugs were (boundary conditions!) instead of blindly
+checking every equation. You could, of course, use <tt class="docutils literal"><span class="pre">pcolor</span></tt> or <tt class="docutils literal"><span class="pre">imshow</span></tt> in
+a similar situation.</p>
 <img alt="../../_images/plot_hinton_1.png" class="align-center" src="../../_images/plot_hinton_1.png" />
 <p><strong>Python source code:</strong> <a class="reference download internal" href="../../_downloads/plot_hinton.py"><tt class="xref download docutils literal"><span class="pre">plot_hinton.py</span></tt></a>
 (generated using <tt class="docutils literal"><span class="pre">mpltools</span></tt> 0.1dev)</p>
