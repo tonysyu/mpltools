@@ -10,9 +10,6 @@ Options
 -------
 The ``plot2rst`` extension accepts the following options:
 
-    plot2rst_add_gallery : bool
-        If true, generate gallery from python examples.
-
     plot2rst_rcparams : dict
         Matplotlib configuration parameters. See
         http://matplotlib.sourceforge.net/users/customizing.html for details.
@@ -33,19 +30,6 @@ EXT = 'rst'
 GEN_RST_PATH = 'auto_examples'
 PY_GALLERY_PATH = '../examples'
 
-
-rst_template = """
-.. _example_%(short_filename)s:
-
-%(docstring)s
-
-**Python source code:** :download:`%(src_name)s <%(src_name)s>`
-(generated using ``mpltools`` |version|)
-
-.. literalinclude:: %(src_name)s
-    :lines: %(end_row)s-
-
-"""
 
 plot_rst_template = """
 .. _example_%(short_filename)s:
@@ -135,7 +119,6 @@ Examples
 
 def setup(app):
     app.connect('builder-inited', generate_rst_gallery)
-    app.add_config_value('plot2rst_add_gallery', True, True)
     app.add_config_value('plot2rst_rcparams', {}, True)
 
 
@@ -254,7 +237,6 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     base_image_name = os.path.splitext(src_name)[0]
     image_fmt_str = '%s_%%s.png' % base_image_name
 
-    this_template = rst_template
     last_dir = os.path.split(src_dir)[-1]
     # to avoid leading . in file names, and wrong names in links
     if last_dir == '.' or last_dir == 'examples':
@@ -274,15 +256,10 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
         os.makedirs(image_dir)
     if not os.path.exists(thumb_dir):
         os.makedirs(thumb_dir)
+
     thumb_path = os.path.join(thumb_dir, src_name[:-3] + '.png')
-
     image_path = os.path.join(image_dir, image_fmt_str)
-
-    if cfg.plot2rst_add_gallery:
-        figure_list = save_plot(src_path, image_path, thumb_path, cfg)
-        this_template = plot_rst_template
-    else:
-        figure_list = []
+    figure_list = save_plot(src_path, image_path, thumb_path, cfg)
 
     if not os.path.exists(thumb_path):
         # create something to stand in for the thumbnail
@@ -308,7 +285,7 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
         info['image_list'] = image_list
 
     f = open(os.path.join(rst_dir, src_name[:-2] + EXT),'w')
-    f.write(this_template % info)
+    f.write(plot_rst_template % info)
     f.flush()
 
 
