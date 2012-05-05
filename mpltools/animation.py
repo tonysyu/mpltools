@@ -17,7 +17,7 @@ with different interface for:
 
 
 """
-from matplotlib.animation import FuncAnimation, TimedAnimation
+import matplotlib.animation as _animation
 
 
 __all__ = ['Animation']
@@ -103,10 +103,10 @@ class Animation(object):
 
         """
         reusable_generator = lambda: iter(self.update())
-        self._ani = GenAnimation(self.fig, reusable_generator, **kwargs)
+        self._ani = _GenAnimation(self.fig, reusable_generator, **kwargs)
 
 
-class GenAnimation(FuncAnimation):
+class _GenAnimation(_animation.FuncAnimation):
 
     def __init__(self, fig, frames, init_func=None, save_count=None,
                  **kwargs):
@@ -120,7 +120,7 @@ class GenAnimation(FuncAnimation):
         self._func = lambda args: args
 
         self._save_seq = []
-        TimedAnimation.__init__(self, fig, **kwargs)
+        _animation.TimedAnimation.__init__(self, fig, **kwargs)
         # Clear saved seq since TimedAnimation.__init__ adds a single frame.
         self._save_seq = []
 
