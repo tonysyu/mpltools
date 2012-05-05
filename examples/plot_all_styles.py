@@ -11,7 +11,7 @@ import os.path as pth
 import numpy as np
 import matplotlib.pyplot as plt
 
-import mpltools
+from mpltools import style
 
 
 PATH = pth.abspath(pth.dirname(__file__))
@@ -69,19 +69,19 @@ def test_simple_plot():
 
 
 # Only show styles defined by package, not by user.
-base_styles = mpltools.style.baselib.keys()
-for style in base_styles:
+base_styles = style.baselib.keys()
+for sty in base_styles:
     # reset matplotlib defaults before applying new style
     plt.rcdefaults()
 
-    mpltools.style.use(style, use_baselib=True)
-    print "Plotting tests for '%s' style" % style
+    style.use(sty, use_baselib=True)
+    print "Plotting tests for '%s' style" % sty
 
     fig = test_artists_plot()
-    fig.savefig(pth.join(PATH, 'test_artists_png', style + '.png'))
-    fig.savefig(pth.join(PATH, 'test_artists_pdf', style + '.pdf'))
+    fig.savefig(pth.join(PATH, 'test_artists_png', sty + '.png'))
+    fig.savefig(pth.join(PATH, 'test_artists_pdf', sty + '.pdf'))
 
     fig = test_simple_plot()
-    fig.savefig(pth.join(PATH, 'test_simple_png', style + '.png'))
-    fig.savefig(pth.join(PATH, 'test_simple_pdf', style + '.pdf'))
+    fig.savefig(pth.join(PATH, 'test_simple_png', sty + '.png'))
+    fig.savefig(pth.join(PATH, 'test_simple_pdf', sty + '.pdf'))
 
