@@ -88,26 +88,6 @@ SINGLE_IMAGE = """
 """
 
 GALLERY_HEADER = """
-.. raw:: html
-
-    <style type="text/css">
-    .figure {
-        float: left;
-        margin: 1em;
-    }
-
-    .figure img {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 200px;
-    }
-
-    .figure .caption {
-        width: 200px;
-        text-align: center !important;
-    }
-    </style>
 
 Examples
 ========

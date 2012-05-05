@@ -363,3 +363,22 @@ table.contentstable a {
     font-size: 120%;
 }
 
+/*---- example gallery ----*/
+
+.gallery.figure {
+    float: left;
+    margin: 1em;
+}
+
+.gallery.figure img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+}
+
+.gallery.figure .caption {
+    width: 200px;
+    text-align: center !important;
+}
+
