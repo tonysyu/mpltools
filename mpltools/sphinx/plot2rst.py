@@ -360,11 +360,11 @@ def extract_module_docstring(src_name):
         Line where first
 
     """
-    lines = file(src_name).readlines()
+    py = open(src_name)
 
     docstring = ''
     first_par = ''
-    tokens = tokenize.generate_tokens(lines.__iter__().next)
+    tokens = tokenize.generate_tokens(py.readline)
     for tok_type, tok_content, _, (erow, _), _ in tokens:
         tok_type = token.tok_name[tok_type]
         if tok_type in ('NEWLINE', 'COMMENT', 'NL', 'INDENT', 'DEDENT'):
