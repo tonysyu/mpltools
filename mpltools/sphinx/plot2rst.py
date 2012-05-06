@@ -248,7 +248,7 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
         #shutil.copy('source/auto_examples/images/blank_image.png', thumb_path)
         pass
 
-    docstring, short_desc, end_row = extract_module_docstring(example_file)
+    docstring, end_row = extract_module_docstring(example_file)
     info['docstring'] = docstring
     info['end_row'] = end_row
 
@@ -354,16 +354,13 @@ def extract_module_docstring(src_name):
     -------
     docstring : str
         Module docstring.
-    first_par : str
-        First paragraph of docstring.
     end_first_par : int
-        Line where first
+        Line where first paragraph ends
 
     """
     py = open(src_name)
 
     docstring = ''
-    first_par = ''
     tokens = tokenize.generate_tokens(py.readline)
     for tok_type, tok_content, _, (erow, _), _ in tokens:
         tok_type = token.tok_name[tok_type]
@@ -371,13 +368,7 @@ def extract_module_docstring(src_name):
             continue
         elif tok_type == 'STRING':
             docstring = eval(tok_content)
-            # Extract the first paragraph of docstring:
-            lines = docstring.split('\n')
-            clean_docstring = '\n'.join(line.rstrip() for line in lines)
-            paragraphs = clean_docstring.split('\n\n')
-            if len(paragraphs) > 0:
-                first_par = paragraphs[0]
         break
     end_first_par = erow + 1
-    return docstring, first_par, end_first_par
+    return docstring, end_first_par
 
