@@ -253,5 +253,6 @@ plot2rst_rcparams = {'font.size': 9,
                      'legend.loc': 'best',
                      'legend.numpoints': 1,
                      'axes.color_cycle' : ['r', 'k', 'b', 'y', 'g', 'm', 'c'],
-                     'image.cmap' : 'gray'}
+                     'image.cmap' : 'gray',
+                     'image.interpolation' : 'none'}
 
