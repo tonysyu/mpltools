@@ -55,7 +55,7 @@ Examples
 
 
 `layout` module
---------------
+---------------
 
 
 
@@ -85,7 +85,7 @@ Examples
 
 
 `special` module
---------------
+----------------
 
 
 
@@ -106,6 +106,29 @@ Examples
    :target: ./special/plot_hinton.html
 
    :ref:`example_special_plot_hinton.py`
+
+
+.. raw:: html
+
+    <div style="clear: both"></div>
+
+
+
+`style` module
+--------------
+
+
+
+.. toctree::
+   :hidden:
+
+   style/plot_grayscale
+
+.. figure:: style/images/thumb/plot_grayscale.png
+   :figclass: gallery
+   :target: ./style/plot_grayscale.html
+
+   :ref:`example_style_plot_grayscale.py`
 
 
 .. raw:: html

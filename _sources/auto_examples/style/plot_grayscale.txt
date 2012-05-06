@@ -1,0 +1,28 @@
+
+.. _example_style_plot_grayscale.py:
+
+
+===============
+Grayscale plots
+===============
+
+A key feature of ``mpltools`` is the ability to set "styles"---essentially,
+stylesheets that are similar to matplotlibrc files. This example demonstrates
+the "grayscale" style, which changes all colors that are defined as rc
+parameters to grayscale. Note, however, that not all plot elements default to
+colors defined by an rc parameter.
+
+
+
+
+.. image:: images/plot_grayscale_1.png
+    :align: center
+
+
+
+**Python source code:** :download:`plot_grayscale.py <plot_grayscale.py>`
+(generated using ``mpltools`` |version|)
+
+.. literalinclude:: plot_grayscale.py
+    :lines: 13-
+

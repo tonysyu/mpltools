@@ -61,12 +61,13 @@
 <p>Often, you want to adjust the shape (or aspect ratio) of a figure, but you
 don&#8217;t want to explicitly calculate its size. Matplotlib provides a function
 called <tt class="docutils literal"><span class="pre">figaspect</span></tt> to fill this role. To adjust the aspect ratio of the
-figure, <tt class="docutils literal"><span class="pre">plt.figaspect</span></tt> will change the <em>width</em> of the figure.
-<tt class="docutils literal"><span class="pre">layout.figaspect</span></tt> will, instead, change the <em>height</em> of the figure.  This
-behavior is convenient if you have a fixed-width requirement (e.g., the width
-of columns in a journal page or the width of a web page).</p>
-<img alt="../../_images/plot_figaspect_1.png" class="horizontal" src="../../_images/plot_figaspect_1.png" />
-<img alt="../../_images/plot_figaspect_2.png" class="horizontal" src="../../_images/plot_figaspect_2.png" />
+figure, <tt class="docutils literal"><span class="pre">plt.figaspect</span></tt> will change the <em>width</em> of the figure.  In contrast,
+<tt class="docutils literal"><span class="pre">layout.figaspect</span></tt> will change the <em>height</em> of the figure.  This behavior is
+convenient if you have a fixed-width requirement (e.g., the width of columns in
+a journal page or the width of a web page).</p>
+<p>In this example, <tt class="docutils literal"><span class="pre">layout.figaspect</span></tt> creates a figure that doesn&#8217;t fit comfortably onto the page, while <tt class="docutils literal"><span class="pre">plt.figaspect</span></tt> does not.</p>
+<img alt="../../_images/plot_figaspect_1.png" class="multi-image align-center" src="../../_images/plot_figaspect_1.png" />
+<img alt="../../_images/plot_figaspect_2.png" class="multi-image align-center" src="../../_images/plot_figaspect_2.png" />
 <p><strong>Python source code:</strong> <a class="reference download internal" href="../../_downloads/plot_figaspect.py"><tt class="xref download docutils literal"><span class="pre">plot_figaspect.py</span></tt></a>
 (generated using <tt class="docutils literal"><span class="pre">mpltools</span></tt> 0.1dev)</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>

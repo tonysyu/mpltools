@@ -1,0 +1,169 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Grayscale plots &mdash; mpltools 0.1dev documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="mpltools 0.1dev documentation" href="../../index.html" />
+    <link rel="up" title="Examples" href="../index.html" />
+    <link rel="next" title="Contribute" href="../../contribute.html" />
+    <link rel="prev" title="Plot errorfill" href="../special/plot_errorfill.html" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
+<!--[if lte IE 6]>
+<link rel="stylesheet" href="../../_static/ie6.css" type="text/css" media="screen" charset="utf-8" />
+<![endif]-->
+
+  </head>
+  <body>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../contribute.html" title="Contribute"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../special/plot_errorfill.html" title="Plot errorfill"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">mpltools 0.1dev documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Examples</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="grayscale-plots">
+<span id="example-style-plot-grayscale-py"></span><h1>Grayscale plots<a class="headerlink" href="#grayscale-plots" title="Permalink to this headline">¶</a></h1>
+<p>A key feature of <tt class="docutils literal"><span class="pre">mpltools</span></tt> is the ability to set &#8220;styles&#8221;&#8212;essentially,
+stylesheets that are similar to matplotlibrc files. This example demonstrates
+the &#8220;grayscale&#8221; style, which changes all colors that are defined as rc
+parameters to grayscale. Note, however, that not all plot elements default to
+colors defined by an rc parameter.</p>
+<img alt="../../_images/plot_grayscale_1.png" class="align-center" src="../../_images/plot_grayscale_1.png" />
+<p><strong>Python source code:</strong> <a class="reference download internal" href="../../_downloads/plot_grayscale.py"><tt class="xref download docutils literal"><span class="pre">plot_grayscale.py</span></tt></a>
+(generated using <tt class="docutils literal"><span class="pre">mpltools</span></tt> 0.1dev)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">mpltools</span> <span class="kn">import</span> <span class="n">style</span>
+<span class="kn">from</span> <span class="nn">mpltools</span> <span class="kn">import</span> <span class="n">layout</span>
+
+
+<span class="k">def</span> <span class="nf">color_cycle_example</span><span class="p">(</span><span class="n">ax</span><span class="p">):</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">L</span><span class="p">)</span>
+    <span class="n">ncolors</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s">&#39;axes.color_cycle&#39;</span><span class="p">])</span>
+    <span class="n">shift</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">ncolors</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">shift</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">s</span><span class="p">),</span> <span class="s">&#39;o-&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">image_and_patch_example</span><span class="p">(</span><span class="n">ax</span><span class="p">):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">)),</span> <span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;none&#39;</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">radius</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;patch&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+
+<span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">&#39;grayscale&#39;</span><span class="p">)</span>
+
+<span class="n">figsize</span> <span class="o">=</span> <span class="n">layout</span><span class="o">.</span><span class="n">figaspect</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+
+<span class="n">color_cycle_example</span><span class="p">(</span><span class="n">ax1</span><span class="p">)</span>
+<span class="n">image_and_patch_example</span><span class="p">(</span><span class="n">ax2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../special/plot_errorfill.html"
+                        title="previous chapter">Plot <cite>errorfill</cite></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../contribute.html"
+                        title="next chapter">Contribute</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../np-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../contribute.html" title="Contribute"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../special/plot_errorfill.html" title="Plot errorfill"
+             >previous</a> |</li>
+        <li><a href="../../index.html">mpltools 0.1dev documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Examples</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Tony S. Yu.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
