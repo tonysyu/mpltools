@@ -4,6 +4,9 @@ Example generation from python files.
 Generate the rst files for the examples by iterating over the python
 example files. Files that generate images should start with 'plot'.
 
+To generate your own examples, just add ``'mpltools.sphinx.plot2rst'``` to the
+list of ``extensions``in your Sphinx configuration file.
+
 This code was adapted from scikits-image, which took it from scikits-learn.
 
 Options
