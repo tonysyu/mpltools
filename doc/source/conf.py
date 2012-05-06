@@ -31,7 +31,7 @@ sys.path.append(os.path.join(curpath, '..', 'ext'))
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.autosummary',
               'sphinx.ext.todo', 'sphinx.ext.coverage',
               'sphinx.ext.pngmath', 'sphinx.ext.mathjax',
-              'sphinx.ext.viewcode', 'numpydoc', 'plot2rst']
+              'sphinx.ext.viewcode', 'numpydoc', 'mpltools.sphinx.plot2rst']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
