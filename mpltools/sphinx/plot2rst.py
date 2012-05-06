@@ -13,6 +13,10 @@ Options
 -------
 The ``plot2rst`` extension accepts the following options:
 
+    plot2rst_paths : length-2 tuple
+        Paths to (python plot, generated rst) files, i.e. (source, destination).
+        Note that both paths are relative to Sphinx 'source' path.
+
     plot2rst_rcparams : dict
         Matplotlib configuration parameters. See
         http://matplotlib.sourceforge.net/users/customizing.html for details.
@@ -26,11 +30,6 @@ import matplotlib
 matplotlib.use('Agg')
 
 import token, tokenize
-
-
-# config paths relative to doc-source directory
-GEN_RST_PATH = 'auto_examples'
-PY_GALLERY_PATH = '../examples'
 
 
 plot_rst_template = """
@@ -94,22 +93,27 @@ Examples
 
 def setup(app):
     app.connect('builder-inited', generate_rst_gallery)
+
+    app.add_config_value('plot2rst_paths',
+                         ('../examples', 'auto_examples'), True)
     app.add_config_value('plot2rst_rcparams', {}, True)
 
 
 def generate_rst_gallery(app):
     """Add list of examples and gallery to Sphinx app."""
+    cfg = app.builder.config
+
     doc_src = os.path.abspath(app.builder.srcdir) # path/to/doc/source
-    rst_dir = os.path.join(doc_src, GEN_RST_PATH)
-    example_dir = os.path.join(doc_src, PY_GALLERY_PATH)
+
+    plot_path, rst_path = cfg.plot2rst_paths
+    rst_dir = os.path.join(doc_src, rst_path)
+    example_dir = os.path.join(doc_src, plot_path)
 
     if not os.path.exists(example_dir):
         print "No example directory found at", example_dir
         return
     if not os.path.exists(rst_dir):
         os.makedirs(rst_dir)
-
-    cfg = app.builder.config
 
     # we create an index.rst with all examples
     gallery_index = file(os.path.join(rst_dir, 'index'+cfg.source_suffix), 'w')
