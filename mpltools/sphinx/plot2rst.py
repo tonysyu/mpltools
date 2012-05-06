@@ -361,10 +361,6 @@ def extract_module_docstring(src_name):
 
     """
     lines = file(src_name).readlines()
-    start_row = 0
-    if lines[0].startswith('#!'):
-        lines.pop(0)
-        start_row = 1
 
     docstring = ''
     first_par = ''
@@ -382,6 +378,6 @@ def extract_module_docstring(src_name):
             if len(paragraphs) > 0:
                 first_par = paragraphs[0]
         break
-    end_first_par = erow + 1 + start_row
+    end_first_par = erow + 1
     return docstring, first_par, end_first_par
 
