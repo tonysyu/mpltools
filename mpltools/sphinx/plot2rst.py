@@ -28,7 +28,6 @@ matplotlib.use('Agg')
 import token, tokenize
 
 
-EXT = 'rst'
 # config paths relative to doc-source directory
 GEN_RST_PATH = 'auto_examples'
 PY_GALLERY_PATH = '../examples'
@@ -110,11 +109,12 @@ def generate_rst_gallery(app):
     if not os.path.exists(rst_dir):
         os.makedirs(rst_dir)
 
+    cfg = app.builder.config
+
     # we create an index.rst with all examples
-    gallery_index = file(os.path.join(rst_dir, 'index.' + EXT), 'w')
+    gallery_index = file(os.path.join(rst_dir, 'index'+cfg.source_suffix), 'w')
     gallery_index.write(GALLERY_HEADER)
 
-    cfg = app.builder.config
     # Here we don't use an os.walk, but we recurse only twice: flat is
     # better than nested.
     write_gallery(gallery_index, example_dir, rst_dir, cfg)
@@ -144,16 +144,17 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg, depth=0):
     cfg : config object
         Sphinx config object created by Sphinx.
     """
-    if not os.path.exists(os.path.join(src_dir, 'index.' + EXT)):
+    index_name = 'index' + cfg.source_suffix
+    if not os.path.exists(os.path.join(src_dir, index_name)):
         print src_dir
         print 80*'_'
         print ('Example directory %s does not have a %s file'
-                        % (src_dir, 'index.' + EXT))
+                        % (src_dir, index_name))
         print 'Skipping this directory'
         print 80*'_'
         return
 
-    gallery_description = file(os.path.join(src_dir, 'index.' + EXT)).read()
+    gallery_description = file(os.path.join(src_dir, index_name)).read()
     gallery_index.write('\n\n%s\n\n' % gallery_description)
 
     if not os.path.exists(rst_dir):
@@ -259,7 +260,8 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
             image_list += MULTI_IMAGE_TEMPLATE % figure_name.lstrip('/')
     info['image_list'] = image_list
 
-    f = open(os.path.join(rst_dir, src_name[:-2] + EXT),'w')
+    basename, py_ext = os.path.splitext(src_name)
+    f = open(os.path.join(rst_dir, basename + cfg.source_suffix),'w')
     f.write(plot_rst_template % info)
     f.flush()
 
