@@ -29,8 +29,6 @@ import glob
 import matplotlib
 matplotlib.use('Agg')
 
-import token, tokenize
-
 
 plot_rst_template = """
 .. _example_%(short_filename)s:
@@ -248,9 +246,11 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
         #shutil.copy('source/auto_examples/images/blank_image.png', thumb_path)
         pass
 
-    docstring, end_row = extract_module_docstring(example_file)
-    info['docstring'] = docstring
-    info['end_row'] = end_row
+    blocks = split_code_and_text(example_file)
+    first_text_block = [b for b in blocks if b[0] == 'text'][0]
+    label, (start, end), content = first_text_block
+    info['docstring'] = content.strip().strip('"""')
+    info['end_row'] = end + 1
 
     # Depending on whether we have one or more figures, we're using a
     # horizontal list or a single rst call to 'image'.
@@ -268,6 +268,50 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     f = open(os.path.join(rst_dir, basename + cfg.source_suffix),'w')
     f.write(plot_rst_template % info)
     f.flush()
+
+
+def split_code_and_text(source_file):
+    """Return list with source file separated into code and text blocks.
+
+    Returns
+    -------
+    blocks : list of (block_name, (start, end+1),  block_string)
+        List where each element is a tuple with the name ('text' or 'code'),
+        the (start, end+1) line numbers, and content of block.
+    """
+    with open(source_file) as f:
+        source_lines = f.readlines()
+    blocks = []
+    i = 0
+    while True:
+        try:
+            if start_of_text(source_lines[i]):
+                block_name = 'text'
+                token = source_lines[i][:3] + '\n' # either """\n or '''\n
+                j = _end_index(i, lambda k: source_lines[k].endswith(token))
+                j += 1 # set j to line after text block
+            else:
+                block_name = 'code'
+                j = _end_index(i, lambda k: start_of_text(source_lines[k]))
+        except IndexError:
+            break
+        # Add 1 to convert list indices to line numbers, which start at 1.
+        blocks.append((block_name, (i+1, j+1), ''.join(source_lines[i:j])))
+        i = j
+    return blocks
+
+
+def _end_index(i, stop_condition):
+    j = i
+    while True:
+        j += 1
+        if stop_condition(j):
+            break
+    return j
+
+
+def start_of_text(line):
+    return line.startswith('"""') or line.startswith("'''")
 
 
 def save_plot(src_path, image_path, thumb_path, cfg):
@@ -339,36 +383,7 @@ def save_plot(src_path, image_path, thumb_path, cfg):
 
     return figure_list
 
+
 def mod_time(file_path):
     return os.stat(file_path).st_mtime
-
-def extract_module_docstring(src_name):
-    """Return module-level docstring.
-
-    Parameters
-    ----------
-    src_name : str
-        Name of python example.
-
-    Returns
-    -------
-    docstring : str
-        Module docstring.
-    end_first_par : int
-        Line where first paragraph ends
-
-    """
-    py = open(src_name)
-
-    docstring = ''
-    tokens = tokenize.generate_tokens(py.readline)
-    for tok_type, tok_content, _, (erow, _), _ in tokens:
-        tok_type = token.tok_name[tok_type]
-        if tok_type in ('NEWLINE', 'COMMENT', 'NL', 'INDENT', 'DEDENT'):
-            continue
-        elif tok_type == 'STRING':
-            docstring = eval(tok_content)
-        break
-    end_first_par = erow + 1
-    return docstring, end_first_par
 
