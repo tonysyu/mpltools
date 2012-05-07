@@ -275,29 +275,29 @@ def split_code_and_text(source_file):
 
     Returns
     -------
-    blocks : list of (block_name, (start, end+1),  block_string)
-        List where each element is a tuple with the name ('text' or 'code'),
-        the (start, end+1) line numbers, and content of block.
+    blocks : list of (label, (start, end+1), content)
+        List where each element is a tuple with the label ('text' or 'code'),
+        the (start, end+1) line numbers, and content string of block.
     """
     with open(source_file) as f:
         source_lines = f.readlines()
     blocks = []
     i = 0
+    last_line = len(source_lines)
     while True:
-        try:
-            if start_of_text(source_lines[i]):
-                block_name = 'text'
-                token = source_lines[i][:3] + '\n' # either """\n or '''\n
-                j = _end_index(i, lambda k: source_lines[k].endswith(token))
-                j += 1 # set j to line after text block
-            else:
-                block_name = 'code'
-                j = _end_index(i, lambda k: start_of_text(source_lines[k]))
-        except IndexError:
-            break
+        if start_of_text(source_lines[i]):
+            label = 'text'
+            token = source_lines[i][:3] + '\n' # either """\n or '''\n
+            j = _end_index(i, lambda k: source_lines[k].endswith(token))
+            j += 1 # set j to line after text block
+        else:
+            label = 'code'
+            j = _end_index(i, lambda k: start_of_text(source_lines[k]))
         # Add 1 to convert list indices to line numbers, which start at 1.
-        blocks.append((block_name, (i+1, j+1), ''.join(source_lines[i:j])))
+        blocks.append((label, (i+1, j+1), ''.join(source_lines[i:j])))
         i = j
+        if i == last_line:
+            break
     return blocks
 
 
@@ -305,9 +305,11 @@ def _end_index(i, stop_condition):
     j = i
     while True:
         j += 1
-        if stop_condition(j):
-            break
-    return j
+        try:
+            if stop_condition(j):
+                return j
+        except IndexError:
+            return j
 
 
 def start_of_text(line):
