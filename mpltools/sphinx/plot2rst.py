@@ -338,16 +338,6 @@ def save_plot(src_path, image_path, thumb_path, cfg):
             # Plot example in source directory.
             os.chdir(src_dir)
             execfile(src_name, {})
-            os.chdir(cwd)
-
-            fig_mngr = matplotlib._pylab_helpers.Gcf.get_all_fig_managers()
-            # Save every figure by looping over all open figures.
-            for fig_num in (m.num for m in fig_mngr):
-                # Set the fig_num figure as the current figure as we can't
-                # save a figure that's not the current figure.
-                plt.figure(fig_num)
-                plt.savefig(image_path % fig_num)
-                figure_list.append(image_fmt_str % fig_num)
         except:
             print 80*'_'
             print '%s is not compiling:' % src_name
@@ -355,6 +345,15 @@ def save_plot(src_path, image_path, thumb_path, cfg):
             print 80*'_'
         finally:
             os.chdir(cwd)
+
+        fig_mngr = matplotlib._pylab_helpers.Gcf.get_all_fig_managers()
+        # Save every figure by looping over all open figures.
+        for fig_num in (m.num for m in fig_mngr):
+            # Set the fig_num figure as the current figure as we can't
+            # save a figure that's not the current figure.
+            plt.figure(fig_num)
+            plt.savefig(image_path % fig_num)
+            figure_list.append(image_fmt_str % fig_num)
     else:
         figure_list = [f[len(image_dir):]
                         for f in glob.glob(image_path % '[1-9]')]
