@@ -61,19 +61,8 @@ CLEAR_SECTION = """
 
 """
 
-MULTI_IMAGE_HEADER = """
-.. rst-class:: multi-image
 
-"""
-
-MULTI_IMAGE_TEMPLATE = """
-
-      .. image:: images/%s
-          :align: center
-
-"""
-
-SINGLE_IMAGE_TEMPLATE = """
+IMAGE_TEMPLATE = """
 .. image:: images/%s
     :align: center
 
@@ -255,14 +244,10 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     # Depending on whether we have one or more figures, we're using a
     # horizontal list or a single rst call to 'image'.
 
-    if len(figure_list) == 1:
-        figure_name = figure_list[0]
-        image_list = SINGLE_IMAGE_TEMPLATE % figure_name.lstrip('/')
-    else:
-        image_list = MULTI_IMAGE_HEADER
-        for figure_name in figure_list:
-            image_list += MULTI_IMAGE_TEMPLATE % figure_name.lstrip('/')
-    info['image_list'] = image_list
+    image_rst_directives = []
+    for figure_name in figure_list:
+        image_rst_directives.append(IMAGE_TEMPLATE % figure_name.lstrip('/'))
+    info['image_list'] = ''.join(image_rst_directives)
 
     basename, py_ext = os.path.splitext(src_name)
     f = open(os.path.join(rst_dir, basename + cfg.source_suffix),'w')
