@@ -337,7 +337,7 @@ def save_plot(src_path, image_path, thumb_path, cfg):
         try:
             # Plot example in source directory.
             os.chdir(src_dir)
-            execfile(src_name, {'pl' : plt})
+            execfile(src_name, {})
             os.chdir(cwd)
 
             fig_mngr = matplotlib._pylab_helpers.Gcf.get_all_fig_managers()
