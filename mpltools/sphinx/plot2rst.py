@@ -95,6 +95,8 @@ def setup(app):
     app.add_config_value('plot2rst_rcparams', {}, True)
     app.add_config_value('plot2rst_default_thumb', None, True)
     app.add_config_value('plot2rst_thumb_scale', 0.2, True)
+    app.add_config_value('plot2rst_inline_command',
+                         'PLOT2RST.current_figure', True)
 
 def generate_rst_gallery(app):
     """Add list of examples and gallery to Sphinx app."""
@@ -228,22 +230,35 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     example_file = os.path.join(rst_dir, src_name)
     shutil.copyfile(src_path, example_file)
 
-    blocks = split_code_and_text(example_file)
-    first_text_block = [b for b in blocks if b[0] == 'text'][0]
-    label, (start, end), content = first_text_block
-    info['docstring'] = content.strip().strip('"""')
-    info['end_row'] = end + 1
-
     image_dir = os.path.join(rst_dir, 'images')
     thumb_dir = os.path.join(image_dir, 'thumb')
     if not os.path.exists(image_dir):
         os.makedirs(image_dir)
     if not os.path.exists(thumb_dir):
         os.makedirs(thumb_dir)
-
     thumb_path = os.path.join(thumb_dir, src_name[:-3] + '.png')
     image_path = os.path.join(image_dir, image_fmt_str)
-    figure_list = save_plot(src_path, image_path, thumb_path, cfg)
+
+    blocks = split_code_and_text(example_file)
+
+    plot_inline = any(b for b in blocks if cfg.plot2rst_inline_command in b[2])
+    if plot_inline:
+        pass
+    else:
+        first_text_block = [b for b in blocks if b[0] == 'text'][0]
+        label, (start, end), content = first_text_block
+        info['docstring'] = content.strip().strip('"""')
+        info['end_row'] = end + 1
+        figure_list = save_plot(src_path, image_path, thumb_path, cfg)
+
+        rst_blocks = [IMAGE_TEMPLATE % f.lstrip('/') for f in figure_list]
+        info['image_list'] = ''.join(rst_blocks)
+
+        basename, py_ext = os.path.splitext(src_name)
+        f = open(os.path.join(rst_dir, basename + cfg.source_suffix),'w')
+        f.write(plot_rst_template % info)
+        f.flush()
+
 
     if not os.path.exists(thumb_path):
         if cfg.plot2rst_default_thumb is None:
@@ -251,15 +266,6 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
             print "Specify 'plot2rst_default_thumb' in Sphinx config file."
         else:
             shutil.copy(cfg.plot2rst_default_thumb, thumb_path)
-
-    image_rst_blocks = [IMAGE_TEMPLATE % f.lstrip('/') for f in figure_list]
-    info['image_list'] = ''.join(image_rst_blocks)
-
-    basename, py_ext = os.path.splitext(src_name)
-    f = open(os.path.join(rst_dir, basename + cfg.source_suffix),'w')
-    f.write(plot_rst_template % info)
-    f.flush()
-
 
 def split_code_and_text(source_file):
     """Return list with source file separated into code and text blocks.
