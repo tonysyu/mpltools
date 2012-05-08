@@ -306,7 +306,7 @@ def save_plot(src_path, image_path, thumb_path, cfg):
     src_path : str
         Path to example file.
     image_path : str
-        Path where plots are saved (format string with single string argument).
+        Path where plots are saved (format string which accepts figure number).
     thumbpath : str
         Path where thumbnails of plots are saved.
     cfg : config object
@@ -317,11 +317,10 @@ def save_plot(src_path, image_path, thumb_path, cfg):
     figure_list : list
         List of figure names saved by the example.
     """
-    figure_list = []
 
     src_dir, src_name = os.path.split(src_path)
     if not src_name.startswith('plot'):
-        return figure_list
+        return []
 
     image_dir, image_fmt_str = os.path.split(image_path)
     first_image_file = image_path % 1
@@ -335,15 +334,7 @@ def save_plot(src_path, image_path, thumb_path, cfg):
         plt.close('all')
 
         exec_source_in_dir(src_name, src_dir)
-
-        fig_mngr = matplotlib._pylab_helpers.Gcf.get_all_fig_managers()
-        # Save every figure by looping over all open figures.
-        for fig_num in (m.num for m in fig_mngr):
-            # Set the fig_num figure as the current figure as we can't
-            # save a figure that's not the current figure.
-            plt.figure(fig_num)
-            plt.savefig(image_path % fig_num)
-            figure_list.append(image_fmt_str % fig_num)
+        figure_list = save_all_figures(image_path)
     else:
         figure_list = [f[len(image_dir):]
                         for f in glob.glob(image_path % '[1-9]')]
@@ -370,6 +361,26 @@ def exec_source_in_dir(source_file, source_path):
         print 80*'_'
     finally:
         os.chdir(cwd)
+
+
+def save_all_figures(image_path):
+    """Save all matplotlib figures.
+
+    Parameters
+    ----------
+    image_path : str
+        Path where plots are saved (format string which accepts figure number).
+    """
+    figure_list = []
+    image_dir, image_fmt_str = os.path.split(image_path)
+    fig_mngr = matplotlib._pylab_helpers.Gcf.get_all_fig_managers()
+    for fig_num in (m.num for m in fig_mngr):
+        # Set the fig_num figure as the current figure as we can't
+        # save a figure that's not the current figure.
+        plt.figure(fig_num)
+        plt.savefig(image_path % fig_num)
+        figure_list.append(image_fmt_str % fig_num)
+    return figure_list
 
 
 def mod_time(file_path):
