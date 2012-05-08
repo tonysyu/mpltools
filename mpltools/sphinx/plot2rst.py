@@ -20,6 +20,14 @@ The ``plot2rst`` extension accepts the following options:
     plot2rst_rcparams : dict
         Matplotlib configuration parameters. See
         http://matplotlib.sourceforge.net/users/customizing.html for details.
+
+    plot2rst_default_thumb : str
+        Path (relative to doc root) of default thumbnail image.
+
+    plot2rst_thumb_scale : float
+        Scale factor for thumbnail (e.g., 0.2 to scale plot to 1/5th the
+        original size).
+
 """
 import os
 import shutil
@@ -86,6 +94,7 @@ def setup(app):
                          ('../examples', 'auto_examples'), True)
     app.add_config_value('plot2rst_rcparams', {}, True)
     app.add_config_value('plot2rst_default_thumb', None, True)
+    app.add_config_value('plot2rst_thumb_scale', 0.2, True)
 
 def generate_rst_gallery(app):
     """Add list of examples and gallery to Sphinx app."""
@@ -342,7 +351,7 @@ def save_plot(src_path, image_path, thumb_path, cfg):
     # generate thumb file
     from matplotlib import image
     if os.path.exists(first_image_file):
-        image.thumbnail(first_image_file, thumb_path, 0.2)
+        image.thumbnail(first_image_file, thumb_path, cfg.plot2rst_thumb_scale)
 
     return figure_list
 
