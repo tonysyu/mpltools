@@ -248,6 +248,7 @@ texinfo_documents = [
 #texinfo_show_urls = 'footnote'
 
 # -- Options for plot2rst
+plot2rst_default_thumb = 'examples/default_thumb.png'
 plot2rst_rcparams = {'font.size': 9,
                      'font.family': 'serif',
                      'legend.loc': 'best',

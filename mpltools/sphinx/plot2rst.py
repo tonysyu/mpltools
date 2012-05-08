@@ -84,7 +84,7 @@ def setup(app):
     app.add_config_value('plot2rst_paths',
                          ('../examples', 'auto_examples'), True)
     app.add_config_value('plot2rst_rcparams', {}, True)
-
+    app.add_config_value('plot2rst_default_thumb', None, True)
 
 def generate_rst_gallery(app):
     """Add list of examples and gallery to Sphinx app."""
@@ -230,10 +230,11 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     figure_list = save_plot(src_path, image_path, thumb_path, cfg)
 
     if not os.path.exists(thumb_path):
-        # create something to stand in for the thumbnail
-        # TODO: figure out a way that doesn't require storing an image.
-        #shutil.copy('source/auto_examples/images/blank_image.png', thumb_path)
-        pass
+        if cfg.plot2rst_default_thumb is None:
+            print "WARNING: No plots found and default thumbnail not defined."
+            print "Specify 'plot2rst_default_thumb' in Sphinx config file."
+        else:
+            shutil.copy(cfg.plot2rst_default_thumb, thumb_path)
 
     blocks = split_code_and_text(example_file)
     first_text_block = [b for b in blocks if b[0] == 'text'][0]
