@@ -28,6 +28,7 @@ import glob
 
 import matplotlib
 matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 
 plot_rst_template = """
@@ -329,7 +330,6 @@ def save_plot(src_path, image_path, thumb_path, cfg):
                     mod_time(first_image_file) <= mod_time(src_path))
     if needs_replot:
         print 'plotting %s' % src_name
-        import matplotlib.pyplot as plt
         plt.rcdefaults()
         plt.rcParams.update(cfg.plot2rst_rcparams)
         plt.close('all')
