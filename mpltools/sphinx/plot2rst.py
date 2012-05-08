@@ -95,8 +95,7 @@ def setup(app):
     app.add_config_value('plot2rst_rcparams', {}, True)
     app.add_config_value('plot2rst_default_thumb', None, True)
     app.add_config_value('plot2rst_thumb_scale', 0.2, True)
-    app.add_config_value('plot2rst_inline_command',
-                         'PLOT2RST.current_figure', True)
+    app.add_config_value('plot2rst_inline_tag', 'PLOT2RST.current_figure', True)
 
 def generate_rst_gallery(app):
     """Add list of examples and gallery to Sphinx app."""
@@ -241,7 +240,7 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
 
     blocks = split_code_and_text(example_file)
 
-    plot_inline = any(b for b in blocks if cfg.plot2rst_inline_command in b[2])
+    plot_inline = any(b for b in blocks if cfg.plot2rst_inline_tag in b[2])
     if plot_inline:
         pass
     else:
