@@ -333,18 +333,8 @@ def save_plot(src_path, image_path, thumb_path, cfg):
         plt.rcdefaults()
         plt.rcParams.update(cfg.plot2rst_rcparams)
         plt.close('all')
-        cwd = os.getcwd()
-        try:
-            # Plot example in source directory.
-            os.chdir(src_dir)
-            execfile(src_name, {})
-        except:
-            print 80*'_'
-            print '%s is not compiling:' % src_name
-            traceback.print_exc()
-            print 80*'_'
-        finally:
-            os.chdir(cwd)
+
+        exec_source_in_dir(src_name, src_dir)
 
         fig_mngr = matplotlib._pylab_helpers.Gcf.get_all_fig_managers()
         # Save every figure by looping over all open figures.
@@ -364,6 +354,22 @@ def save_plot(src_path, image_path, thumb_path, cfg):
         image.thumbnail(first_image_file, thumb_path, 0.2)
 
     return figure_list
+
+
+def exec_source_in_dir(source_file, source_path):
+    """Execute source file in source directory and capture & print errors."""
+    cwd = os.getcwd()
+    try:
+        # Plot example in source directory.
+        os.chdir(source_path)
+        execfile(source_file, {})
+    except:
+        print 80*'_'
+        print '%s is not compiling:' % source_file
+        traceback.print_exc()
+        print 80*'_'
+    finally:
+        os.chdir(cwd)
 
 
 def mod_time(file_path):
