@@ -218,6 +218,12 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     example_file = os.path.join(rst_dir, src_name)
     shutil.copyfile(src_path, example_file)
 
+    blocks = split_code_and_text(example_file)
+    first_text_block = [b for b in blocks if b[0] == 'text'][0]
+    label, (start, end), content = first_text_block
+    info['docstring'] = content.strip().strip('"""')
+    info['end_row'] = end + 1
+
     image_dir = os.path.join(rst_dir, 'images')
     thumb_dir = os.path.join(image_dir, 'thumb')
     if not os.path.exists(image_dir):
@@ -235,12 +241,6 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
             print "Specify 'plot2rst_default_thumb' in Sphinx config file."
         else:
             shutil.copy(cfg.plot2rst_default_thumb, thumb_path)
-
-    blocks = split_code_and_text(example_file)
-    first_text_block = [b for b in blocks if b[0] == 'text'][0]
-    label, (start, end), content = first_text_block
-    info['docstring'] = content.strip().strip('"""')
-    info['end_row'] = end + 1
 
     # Depending on whether we have one or more figures, we're using a
     # horizontal list or a single rst call to 'image'.
