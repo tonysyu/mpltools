@@ -242,13 +242,8 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
         else:
             shutil.copy(cfg.plot2rst_default_thumb, thumb_path)
 
-    # Depending on whether we have one or more figures, we're using a
-    # horizontal list or a single rst call to 'image'.
-
-    image_rst_directives = []
-    for figure_name in figure_list:
-        image_rst_directives.append(IMAGE_TEMPLATE % figure_name.lstrip('/'))
-    info['image_list'] = ''.join(image_rst_directives)
+    image_rst_blocks = [IMAGE_TEMPLATE % f.lstrip('/') for f in figure_list]
+    info['image_list'] = ''.join(image_rst_blocks)
 
     basename, py_ext = os.path.splitext(src_name)
     f = open(os.path.join(rst_dir, basename + cfg.source_suffix),'w')
