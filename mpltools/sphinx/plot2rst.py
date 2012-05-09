@@ -292,7 +292,7 @@ def split_code_and_text(source_file):
         # Add 1 to convert list indices to line numbers, which start at 1.
         blocks.append((label, (i+1, j+1), ''.join(source_lines[i:j])))
         i = j
-        if i == last_line:
+        if i >= last_line:
             break
     return blocks
 
