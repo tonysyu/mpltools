@@ -240,8 +240,8 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
 
     blocks = split_code_and_text(example_file)
 
-    plot_inline = any(b for b in blocks if cfg.plot2rst_inline_tag in b[2])
-    if plot_inline:
+    has_inline_plots = any(cfg.plot2rst_inline_tag in b[2] for b in blocks)
+    if has_inline_plots:
         pass
     else:
         first_text_block = [b for b in blocks if b[0] == 'text'][0]
