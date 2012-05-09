@@ -55,6 +55,17 @@ plot_rst_template = """
 
 """
 
+tutorial_rst_template = """
+.. _example_%(short_filename)s:
+
+%(rst)s
+
+**Python source code:** :download:`%(src_name)s <%(src_name)s>`
+(generated using ``mpltools`` |version|)
+
+"""
+
+
 toctree_template = """
 .. toctree::
    :hidden:
@@ -239,10 +250,18 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     image_path = os.path.join(image_dir, image_fmt_str)
 
     blocks = split_code_and_text(example_file)
+    if blocks[0][2].startswith('#!'):
+        blocks.pop(0) # don't add shebang line to rst file.
 
     has_inline_plots = any(cfg.plot2rst_inline_tag in b[2] for b in blocks)
     if has_inline_plots:
-        pass
+        figure_list, rst = process_blocks(blocks, src_path, image_path, cfg)
+        info['rst'] = rst
+        basename, py_ext = os.path.splitext(src_name)
+        f = open(os.path.join(rst_dir, basename + cfg.source_suffix),'w')
+        f.write(tutorial_rst_template % info)
+        f.flush()
+
     else:
         first_text_block = [b for b in blocks if b[0] == 'text'][0]
         label, (start, end), content = first_text_block
@@ -280,6 +299,8 @@ def split_code_and_text(source_file):
         List where each element is a tuple with the label ('text' or 'code'),
         the (start, end+1) line numbers, and content string of block.
     """
+    #TODO: triple-quoted strings **in code** are going to cause problems
+    #      probably need to go back to using `tokenize` functions.
     with open(source_file) as f:
         source_lines = f.readlines()
     blocks = []
@@ -317,7 +338,89 @@ def start_of_text(line):
     return line.startswith('"""') or line.startswith("'''")
 
 
-def save_plot(src_path, image_path, thumb_path, cfg):
+def process_blocks(blocks, src_path, image_path, cfg):
+    """Run source, save plots as images, and convert blocks to rst.
+
+    Parameters
+    ----------
+    blocks : list of block tuples
+        Code and text blocks from python file. See `split_code_and_text`.
+    src_path : str
+        Path to example file.
+    image_path : str
+        Path where plots are saved (format string which accepts figure number).
+    cfg : config object
+        Sphinx config object created by Sphinx.
+
+    Returns
+    -------
+    figure_list : list
+        List of figure names saved by the example.
+    rst_text : str
+        Text with code wrapped code-block directives.
+    """
+    src_dir, src_name = os.path.split(src_path)
+    if not src_name.startswith('plot'):
+        return [], ''
+
+    # index of blocks which have inline plots
+    inline_tag = cfg.plot2rst_inline_tag
+    idx_inline_plot = [i for i, b in enumerate(blocks)
+                       if inline_tag in b[2]]
+
+    image_dir, image_fmt_str = os.path.split(image_path)
+
+    #TODO: `needs_replot` needs to be fixed (`rst_text` needs to be generated).
+    #first_image_file = image_path % 1
+    #needs_replot = (not os.path.exists(first_image_file) or
+                    #mod_time(first_image_file) <= mod_time(src_path))
+    #if not needs_replot:
+        #figure_list = [f[len(image_dir):]
+                        #for f in glob.glob(image_path % '[1-9]')]
+        #return figure_list
+
+    figure_list = []
+    plt.rcdefaults()
+    plt.rcParams.update(cfg.plot2rst_rcparams)
+    plt.close('all')
+
+    example_globals = {}
+    rst_blocks = []
+    pending_code_blocks = []
+    fig_num = 1
+    for i, (blabel, brange, bcontent) in enumerate(blocks):
+        if blabel == 'code':
+            pending_code_blocks.append(bcontent)
+            rst_blocks.append(codestr2rst(bcontent))
+        else:
+            if i in idx_inline_plot:
+                plot_code = ''.join(pending_code_blocks)
+                exec(plot_code, example_globals)
+                plt.savefig(image_path % fig_num)
+                figure_name = image_fmt_str % fig_num
+                fig_num += 1
+                figure_list.append(figure_name)
+                figure_link = os.path.join('images', figure_name)
+                bcontent = bcontent.replace(inline_tag, figure_link)
+                pending_code_blocks = []
+            rst_blocks.append(docstr2rst(bcontent))
+    return figure_list, '\n'.join(rst_blocks)
+
+
+def codestr2rst(codestr):
+    """Return reStructuredText code block from code string"""
+    code_directive = ".. code-block:: python\n\n"
+    indented_block = '\t' + codestr.replace('\n', '\n\t')
+    return code_directive + indented_block
+
+
+def docstr2rst(docstr):
+    """Return reStructuredText from docstring"""
+    quotes = docstr[:3]
+    return docstr.strip().strip(quotes)
+
+
+def save_plot(src_path, image_path, cfg):
     """Save plots as images.
 
     Parameters
