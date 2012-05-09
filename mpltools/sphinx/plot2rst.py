@@ -37,6 +37,7 @@ import glob
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from matplotlib import image
 
 
 plot_rst_template = """
@@ -235,7 +236,6 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
         os.makedirs(image_dir)
     if not os.path.exists(thumb_dir):
         os.makedirs(thumb_dir)
-    thumb_path = os.path.join(thumb_dir, src_name[:-3] + '.png')
     image_path = os.path.join(image_dir, image_fmt_str)
 
     blocks = split_code_and_text(example_file)
@@ -248,7 +248,7 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
         label, (start, end), content = first_text_block
         info['docstring'] = content.strip().strip('"""')
         info['end_row'] = end + 1
-        figure_list = save_plot(src_path, image_path, thumb_path, cfg)
+        figure_list = save_plot(src_path, image_path, cfg)
 
         rst_blocks = [IMAGE_TEMPLATE % f.lstrip('/') for f in figure_list]
         info['image_list'] = ''.join(rst_blocks)
@@ -258,6 +258,10 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
         f.write(plot_rst_template % info)
         f.flush()
 
+    thumb_path = os.path.join(thumb_dir, src_name[:-3] + '.png')
+    first_image_file = os.path.join(image_dir, figure_list[0].lstrip('/'))
+    if os.path.exists(first_image_file):
+        image.thumbnail(first_image_file, thumb_path, cfg.plot2rst_thumb_scale)
 
     if not os.path.exists(thumb_path):
         if cfg.plot2rst_default_thumb is None:
@@ -265,6 +269,7 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
             print "Specify 'plot2rst_default_thumb' in Sphinx config file."
         else:
             shutil.copy(cfg.plot2rst_default_thumb, thumb_path)
+
 
 def split_code_and_text(source_file):
     """Return list with source file separated into code and text blocks.
@@ -321,8 +326,6 @@ def save_plot(src_path, image_path, thumb_path, cfg):
         Path to example file.
     image_path : str
         Path where plots are saved (format string which accepts figure number).
-    thumbpath : str
-        Path where thumbnails of plots are saved.
     cfg : config object
         Sphinx config object created by Sphinx.
 
@@ -352,12 +355,6 @@ def save_plot(src_path, image_path, thumb_path, cfg):
     else:
         figure_list = [f[len(image_dir):]
                         for f in glob.glob(image_path % '[1-9]')]
-
-    # generate thumb file
-    from matplotlib import image
-    if os.path.exists(first_image_file):
-        image.thumbnail(first_image_file, thumb_path, cfg.plot2rst_thumb_scale)
-
     return figure_list
 
 
