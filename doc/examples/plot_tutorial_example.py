@@ -14,6 +14,10 @@ import matplotlib.pyplot as plt
 x = np.linspace(0, 2*np.pi)
 plt.plot(x, np.sin(x))
 
+def dummy():
+    """Dummy docstring"""
+    pass
+
 """
 .. image:: PLOT2RST.current_figure
 
@@ -30,7 +34,7 @@ plt.imshow(np.random.random(size=(20, 20)))
 """
 
 string = """
-Fake out
+Triple-quoted string which tries to break parser.
 """
 plt.show()
 
