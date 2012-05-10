@@ -33,7 +33,10 @@ import os
 import shutil
 import traceback
 import glob
+import token
+import tokenize
 
+import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -299,27 +302,33 @@ def split_code_and_text(source_file):
         List where each element is a tuple with the label ('text' or 'code'),
         the (start, end+1) line numbers, and content string of block.
     """
-    #TODO: triple-quoted strings **in code** are going to cause problems
-    #      probably need to go back to using `tokenize` functions.
+    text_line_nums = []
+    with open(source_file) as f:
+        token_iter = tokenize.generate_tokens(f.readline)
+        for token_tuple in token_iter:
+            t_id, t_str, (srow, scol), (erow, ecol), src_line = token_tuple
+            if (token.tok_name[t_id] == 'STRING' and scol == 0):
+                # Add one point to line after text (for later slicing)
+                text_line_nums.extend((srow, erow+1))
     with open(source_file) as f:
         source_lines = f.readlines()
+    idx_first_text_block = 0
+    # when example doesn't start with text block.
+    if not text_line_nums[0]== 1:
+        text_line_nums.insert(0, 1)
+        idx_first_text_block = 1
+    # Every other block should be a text block
+    idx_text_block = np.arange(idx_first_text_block, len(text_line_nums), 2)
+    # when example doesn't end with text block.
+    if not text_line_nums[-1] == len(source_lines):
+        text_line_nums.append(len(source_lines))
     blocks = []
-    i = 0
-    last_line = len(source_lines)
-    while True:
-        if start_of_text(source_lines[i]):
-            label = 'text'
-            token = source_lines[i][:3] + '\n' # either """\n or '''\n
-            j = _end_index(i, lambda k: source_lines[k].endswith(token))
-            j += 1 # set j to line after text block
-        else:
-            label = 'code'
-            j = _end_index(i, lambda k: start_of_text(source_lines[k]))
-        # Add 1 to convert list indices to line numbers, which start at 1.
-        blocks.append((label, (i+1, j+1), ''.join(source_lines[i:j])))
-        i = j
-        if i >= last_line:
-            break
+    slice_ranges = zip(text_line_nums[:-1], text_line_nums[1:])
+    for i, (start, end) in enumerate(slice_ranges):
+        block_label = 'text' if i in idx_text_block else 'code'
+        # subtract 1 from indices b/c line numbers start at 1, not 0
+        content = ''.join(source_lines[start-1:end-1])
+        blocks.append((block_label, (start, end), content))
     return blocks
 
 
@@ -416,8 +425,14 @@ def codestr2rst(codestr):
 
 def docstr2rst(docstr):
     """Return reStructuredText from docstring"""
-    quotes = docstr[:3]
-    return docstr.strip().strip(quotes)
+    if docstr[1] == docstr[0]:
+        quotes = docstr[:3]
+    else:
+        quotes = docstr[0]
+    docstr_without_trailing_whitespace = docstr.rstrip()
+    idx_whitespace = len(docstr_without_trailing_whitespace) - len(docstr)
+    whitespace = docstr[idx_whitespace:]
+    return docstr_without_trailing_whitespace.strip(quotes) + whitespace
 
 
 def save_plot(src_path, image_path, cfg):
