@@ -27,7 +27,6 @@ So here's a line plot:
 import numpy as np
 import matplotlib.pyplot as plt
 
-plt.figure(figsize=(4, 3))
 x = np.linspace(0, 2*np.pi)
 plt.plot(x, np.sin(x))
 
@@ -37,10 +36,10 @@ This plot can be displayed inline with a call the ``current_figure`` tag:
 .. image:: PLOT2RST.current_figure
 
 
-And here's a second plot
+And here's a second plot in a *new figure*:
 """
 
-plt.figure(figsize=(3, 3))
+plt.figure()
 plt.imshow(np.random.random(size=(20, 20)))
 
 """

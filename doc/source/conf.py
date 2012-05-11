@@ -249,10 +249,12 @@ texinfo_documents = [
 
 # -- Options for plot2rst
 plot2rst_default_thumb = 'examples/default_thumb.png'
+plot2rst_thumb_scale = 0.4
 plot2rst_rcparams = {'font.size': 9,
                      'font.family': 'serif',
                      'legend.loc': 'best',
                      'legend.numpoints': 1,
+                     'figure.figsize': (6, 5),
                      'axes.color_cycle' : ['r', 'k', 'b', 'y', 'g', 'm', 'c'],
                      'image.cmap' : 'gray',
                      'image.interpolation' : 'none'}
