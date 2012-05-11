@@ -252,6 +252,14 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
         os.makedirs(thumb_dir)
     image_path = os.path.join(image_dir, image_fmt_str)
 
+    basename, py_ext = os.path.splitext(src_name)
+    rst_path = os.path.join(rst_dir, basename + cfg.source_suffix)
+
+    if (plots_are_current(src_path, image_path) and
+        os.path.exists(rst_path)):
+        print "Plots are current, no need to replot:", src_path
+        return
+
     blocks = split_code_and_text(example_file)
     if blocks[0][2].startswith('#!'):
         blocks.pop(0) # don't add shebang line to rst file.
@@ -260,8 +268,7 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     if has_inline_plots:
         figure_list, rst = process_blocks(blocks, src_path, image_path, cfg)
         info['rst'] = rst
-        basename, py_ext = os.path.splitext(src_name)
-        f = open(os.path.join(rst_dir, basename + cfg.source_suffix),'w')
+        f = open(rst_path,'w')
         f.write(tutorial_rst_template % info)
         f.flush()
 
@@ -274,9 +281,7 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
 
         rst_blocks = [IMAGE_TEMPLATE % f.lstrip('/') for f in figure_list]
         info['image_list'] = ''.join(rst_blocks)
-
-        basename, py_ext = os.path.splitext(src_name)
-        f = open(os.path.join(rst_dir, basename + cfg.source_suffix),'w')
+        f = open(rst_path,'w')
         f.write(plot_rst_template % info)
         f.flush()
 
@@ -291,6 +296,17 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
             print "Specify 'plot2rst_default_thumb' in Sphinx config file."
         else:
             shutil.copy(cfg.plot2rst_default_thumb, thumb_path)
+
+
+def plots_are_current(src_path, image_path):
+    first_image_file = image_path % 1
+    needs_replot = (not os.path.exists(first_image_file) or
+                    mod_time(first_image_file) <= mod_time(src_path))
+    return not needs_replot
+
+
+def mod_time(file_path):
+    return os.stat(file_path).st_mtime
 
 
 def split_code_and_text(source_file):
@@ -378,15 +394,6 @@ def process_blocks(blocks, src_path, image_path, cfg):
                        if inline_tag in b[2]]
 
     image_dir, image_fmt_str = os.path.split(image_path)
-
-    #TODO: `needs_replot` needs to be fixed (`rst_text` needs to be generated).
-    #first_image_file = image_path % 1
-    #needs_replot = (not os.path.exists(first_image_file) or
-                    #mod_time(first_image_file) <= mod_time(src_path))
-    #if not needs_replot:
-        #figure_list = [f[len(image_dir):]
-                        #for f in glob.glob(image_path % '[1-9]')]
-        #return figure_list
 
     figure_list = []
     plt.rcdefaults()
@@ -510,8 +517,4 @@ def save_all_figures(image_path):
         plt.savefig(image_path % fig_num)
         figure_list.append(image_fmt_str % fig_num)
     return figure_list
-
-
-def mod_time(file_path):
-    return os.stat(file_path).st_mtime
 
