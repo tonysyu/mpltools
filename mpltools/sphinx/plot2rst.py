@@ -255,9 +255,7 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     basename, py_ext = os.path.splitext(src_name)
     rst_path = os.path.join(rst_dir, basename + cfg.source_suffix)
 
-    if (plots_are_current(src_path, image_path) and
-        os.path.exists(rst_path)):
-        print "Plots are current, no need to replot:", src_path
+    if plots_are_current(src_path, image_path) and os.path.exists(rst_path):
         return
 
     blocks = split_code_and_text(example_file)
