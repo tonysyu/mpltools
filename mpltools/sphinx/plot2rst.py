@@ -361,21 +361,6 @@ def get_block_edges(source_file):
     return block_edges, idx_first_text_block
 
 
-def _end_index(i, stop_condition):
-    j = i
-    while True:
-        j += 1
-        try:
-            if stop_condition(j):
-                return j
-        except IndexError:
-            return j
-
-
-def start_of_text(line):
-    return line.startswith('"""') or line.startswith("'''")
-
-
 def process_blocks(blocks, src_path, image_path, cfg):
     """Run source, save plots as images, and convert blocks to rst.
 
