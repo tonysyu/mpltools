@@ -14,22 +14,18 @@ figure, ``plt.figaspect`` will change the *width* of the figure.  In contrast,
 convenient if you have a fixed-width requirement (e.g., the width of columns in
 a journal page or the width of a web page).
 
-In this example, ``layout.figaspect`` creates a figure that doesn't fit comfortably onto the page, while ``plt.figaspect`` does not.
+In this example, ``layout.figaspect`` creates a figure that fits comfortably
+onto the page, while ``plt.figaspect`` does not.
 
 
 
 
-.. rst-class:: multi-image
+.. image:: images/plot_figaspect_1.png
+    :align: center
 
 
-
-      .. image:: images/plot_figaspect_1.png
-          :align: center
-
-
-
-      .. image:: images/plot_figaspect_2.png
-          :align: center
+.. image:: images/plot_figaspect_2.png
+    :align: center
 
 
 
@@ -37,5 +33,5 @@ In this example, ``layout.figaspect`` creates a figure that doesn't fit comforta
 (generated using ``mpltools`` |version|)
 
 .. literalinclude:: plot_figaspect.py
-    :lines: 17-
+    :lines: 19-
 

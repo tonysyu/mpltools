@@ -22,5 +22,5 @@ a function that maps a parameter value to an RGBA color in a color map.
 (generated using ``mpltools`` |version|)
 
 .. literalinclude:: plot_color_mapper.py
-    :lines: 11-
+    :lines: 12-
 

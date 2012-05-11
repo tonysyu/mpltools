@@ -19,5 +19,5 @@ When you have continuous data measurement and errors associated with every data 
 (generated using ``mpltools`` |version|)
 
 .. literalinclude:: plot_errorfill.py
-    :lines: 8-
+    :lines: 9-
 

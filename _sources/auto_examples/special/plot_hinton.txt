@@ -37,5 +37,5 @@ a similar situation.
 (generated using ``mpltools`` |version|)
 
 .. literalinclude:: plot_hinton.py
-    :lines: 26-
+    :lines: 27-
 

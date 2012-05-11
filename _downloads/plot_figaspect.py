@@ -11,7 +11,8 @@ figure, ``plt.figaspect`` will change the *width* of the figure.  In contrast,
 convenient if you have a fixed-width requirement (e.g., the width of columns in
 a journal page or the width of a web page).
 
-In this example, ``layout.figaspect`` creates a figure that doesn't fit comfortably onto the page, while ``plt.figaspect`` does not.
+In this example, ``layout.figaspect`` creates a figure that fits comfortably
+onto the page, while ``plt.figaspect`` does not.
 
 """
 import numpy as np

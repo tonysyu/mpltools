@@ -114,6 +114,29 @@ Examples
 
 
 
+`sphinx` module
+---------------
+
+
+
+.. toctree::
+   :hidden:
+
+   sphinx/plot_plot2rst
+
+.. figure:: sphinx/images/thumb/plot_plot2rst.png
+   :figclass: gallery
+   :target: ./sphinx/plot_plot2rst.html
+
+   :ref:`example_sphinx_plot_plot2rst.py`
+
+
+.. raw:: html
+
+    <div style="clear: both"></div>
+
+
+
 `style` module
 --------------
 
