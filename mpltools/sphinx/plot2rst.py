@@ -268,22 +268,21 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     if has_inline_plots:
         figure_list, rst = process_blocks(blocks, src_path, image_path, cfg)
         info['rst'] = rst
-        f = open(rst_path,'w')
-        f.write(tutorial_rst_template % info)
-        f.flush()
-
+        example_rst = tutorial_rst_template % info
     else:
+        # print first block of text, display all plots, then display code.
         first_text_block = [b for b in blocks if b[0] == 'text'][0]
         label, (start, end), content = first_text_block
         info['docstring'] = content.strip().strip('"""')
         info['end_row'] = end + 1
         figure_list = save_plot(src_path, image_path, cfg)
-
         rst_blocks = [IMAGE_TEMPLATE % f.lstrip('/') for f in figure_list]
         info['image_list'] = ''.join(rst_blocks)
-        f = open(rst_path,'w')
-        f.write(plot_rst_template % info)
-        f.flush()
+        example_rst = plot_rst_template % info
+
+    f = open(rst_path,'w')
+    f.write(example_rst)
+    f.flush()
 
     thumb_path = os.path.join(thumb_dir, src_name[:-3] + '.png')
     first_image_file = os.path.join(image_dir, figure_list[0].lstrip('/'))
