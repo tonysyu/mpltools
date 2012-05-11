@@ -315,34 +315,50 @@ def split_code_and_text(source_file):
         List where each element is a tuple with the label ('text' or 'code'),
         the (start, end+1) line numbers, and content string of block.
     """
-    text_line_nums = []
-    with open(source_file) as f:
-        token_iter = tokenize.generate_tokens(f.readline)
-        for token_tuple in token_iter:
-            t_id, t_str, (srow, scol), (erow, ecol), src_line = token_tuple
-            if (token.tok_name[t_id] == 'STRING' and scol == 0):
-                # Add one point to line after text (for later slicing)
-                text_line_nums.extend((srow, erow+1))
+    block_edges, idx_first_text_block = get_block_edges(source_file)
+
     with open(source_file) as f:
         source_lines = f.readlines()
-    idx_first_text_block = 0
-    # when example doesn't start with text block.
-    if not text_line_nums[0]== 1:
-        text_line_nums.insert(0, 1)
-        idx_first_text_block = 1
+
     # Every other block should be a text block
-    idx_text_block = np.arange(idx_first_text_block, len(text_line_nums), 2)
-    # when example doesn't end with text block.
-    if not text_line_nums[-1] == len(source_lines):
-        text_line_nums.append(len(source_lines))
+    idx_text_block = np.arange(idx_first_text_block, len(block_edges), 2)
     blocks = []
-    slice_ranges = zip(text_line_nums[:-1], text_line_nums[1:])
+    slice_ranges = zip(block_edges[:-1], block_edges[1:])
     for i, (start, end) in enumerate(slice_ranges):
         block_label = 'text' if i in idx_text_block else 'code'
         # subtract 1 from indices b/c line numbers start at 1, not 0
         content = ''.join(source_lines[start-1:end-1])
         blocks.append((block_label, (start, end), content))
     return blocks
+
+
+def get_block_edges(source_file):
+    """Return starting line numbers of code and text blocks
+
+    Returns
+    -------
+    block_edges : list of int
+        Line number for the start of each block. Note the
+    idx_first_text_block : {0 | 1}
+        0 if first block is text then, else 1 (second block better be text).
+    """
+    block_edges = []
+    with open(source_file) as f:
+        token_iter = tokenize.generate_tokens(f.readline)
+        for token_tuple in token_iter:
+            t_id, t_str, (srow, scol), (erow, ecol), src_line = token_tuple
+            if (token.tok_name[t_id] == 'STRING' and scol == 0):
+                # Add one point to line after text (for later slicing)
+                block_edges.extend((srow, erow+1))
+    idx_first_text_block = 0
+    # when example doesn't start with text block.
+    if not block_edges[0] == 1:
+        block_edges.insert(0, 1)
+        idx_first_text_block = 1
+    # when example doesn't end with text block.
+    if not block_edges[-1] == erow: # iffy: I'm using end state of loop
+        block_edges.append(erow)
+    return block_edges, idx_first_text_block
 
 
 def _end_index(i, stop_condition):
