@@ -53,9 +53,6 @@ plot_rst_template = """
 
 %(image_list)s
 
-**Python source code:** :download:`%(src_name)s <%(src_name)s>`
-(generated using ``mpltools`` |version|)
-
 .. literalinclude:: %(src_name)s
     :lines: %(end_row)s-
 
@@ -66,11 +63,14 @@ tutorial_rst_template = """
 
 %(rst)s
 
-**Python source code:** :download:`%(src_name)s <%(src_name)s>`
+"""
+
+CODE_LINK = """
+
+**Python source code:** :download:`{0} <{0}>`
 (generated using ``mpltools`` |version|)
 
 """
-
 
 toctree_template = """
 .. toctree::
@@ -271,11 +271,13 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
         first_text_block = [b for b in blocks if b[0] == 'text'][0]
         label, (start, end), content = first_text_block
         info['docstring'] = content.strip().strip('"""')
-        info['end_row'] = end + 1
+        info['end_row'] = end + 1 # + 1 b/c lines start at 1, not 0.
         figure_list = save_plot(src_path, image_path, cfg)
         rst_blocks = [IMAGE_TEMPLATE % f.lstrip('/') for f in figure_list]
         info['image_list'] = ''.join(rst_blocks)
         example_rst = plot_rst_template % info
+
+    example_rst += CODE_LINK.format(src_name)
 
     f = open(rst_path,'w')
     f.write(example_rst)
