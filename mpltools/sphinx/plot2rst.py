@@ -13,21 +13,24 @@ Options
 -------
 The ``plot2rst`` extension accepts the following options:
 
-    plot2rst_paths : length-2 tuple
-        Paths to (python plot, generated rst) files, i.e. (source, destination).
-        Note that both paths are relative to Sphinx 'source' path.
+plot2rst_paths : length-2 tuple
+    Paths to (python plot, generated rst) files, i.e. (source, destination).
+    Note that both paths are relative to Sphinx 'source' path.
 
-    plot2rst_rcparams : dict
-        Matplotlib configuration parameters. See
-        http://matplotlib.sourceforge.net/users/customizing.html for details.
+plot2rst_rcparams : dict
+    Matplotlib configuration parameters. See
+    http://matplotlib.sourceforge.net/users/customizing.html for details.
 
-    plot2rst_default_thumb : str
-        Path (relative to doc root) of default thumbnail image.
+plot2rst_default_thumb : str
+    Path (relative to doc root) of default thumbnail image.
 
-    plot2rst_thumb_scale : float
-        Scale factor for thumbnail (e.g., 0.2 to scale plot to 1/5th the
-        original size).
+plot2rst_thumb_scale : float
+    Scale factor for thumbnail (e.g., 0.2 to scale plot to 1/5th the
+    original size).
 
+plot2rst_plot_tag : str
+    When this tag is found in the example file, the current plot is saved and
+    tag is replaced with plot path. Defaults to 'PLOT2RST.current_figure'.
 """
 import os
 import shutil
@@ -110,7 +113,7 @@ def setup(app):
     app.add_config_value('plot2rst_rcparams', {}, True)
     app.add_config_value('plot2rst_default_thumb', None, True)
     app.add_config_value('plot2rst_thumb_scale', 0.2, True)
-    app.add_config_value('plot2rst_inline_tag', 'PLOT2RST.current_figure', True)
+    app.add_config_value('plot2rst_plot_tag', 'PLOT2RST.current_figure', True)
 
 def generate_rst_gallery(app):
     """Add list of examples and gallery to Sphinx app."""
@@ -262,7 +265,7 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     if blocks[0][2].startswith('#!'):
         blocks.pop(0) # don't add shebang line to rst file.
 
-    has_inline_plots = any(cfg.plot2rst_inline_tag in b[2] for b in blocks)
+    has_inline_plots = any(cfg.plot2rst_plot_tag in b[2] for b in blocks)
     if has_inline_plots:
         figure_list, rst = process_blocks(blocks, src_path, image_path, cfg)
         info['rst'] = rst
@@ -387,7 +390,7 @@ def process_blocks(blocks, src_path, image_path, cfg):
         return [], ''
 
     # index of blocks which have inline plots
-    inline_tag = cfg.plot2rst_inline_tag
+    inline_tag = cfg.plot2rst_plot_tag
     idx_inline_plot = [i for i, b in enumerate(blocks)
                        if inline_tag in b[2]]
 
