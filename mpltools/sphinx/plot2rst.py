@@ -399,23 +399,19 @@ def process_blocks(blocks, src_path, image_path, cfg):
 
     example_globals = {}
     rst_blocks = []
-    pending_code_blocks = []
     fig_num = 1
     for i, (blabel, brange, bcontent) in enumerate(blocks):
         if blabel == 'code':
-            pending_code_blocks.append(bcontent)
+            exec(bcontent, example_globals)
             rst_blocks.append(codestr2rst(bcontent))
         else:
             if i in idx_inline_plot:
-                plot_code = ''.join(pending_code_blocks)
-                exec(plot_code, example_globals)
                 plt.savefig(image_path % fig_num)
                 figure_name = image_fmt_str % fig_num
                 fig_num += 1
                 figure_list.append(figure_name)
                 figure_link = os.path.join('images', figure_name)
                 bcontent = bcontent.replace(inline_tag, figure_link)
-                pending_code_blocks = []
             rst_blocks.append(docstr2rst(bcontent))
     return figure_list, '\n'.join(rst_blocks)
 
