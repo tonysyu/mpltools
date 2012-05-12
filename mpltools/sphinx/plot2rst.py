@@ -179,14 +179,7 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg, depth=0):
 
     if not os.path.exists(rst_dir):
         os.makedirs(rst_dir)
-
-    def sort_key(a):
-        # Elements that are not plots should be last.
-        if not valid_plot_script(a):
-            return 'zz' + a
-        return a
-
-    examples = [fname for fname in sorted(os.listdir(src_dir), key=sort_key)
+    examples = [fname for fname in sorted(os.listdir(src_dir), key=plots_first)
                       if fname.endswith('py')]
     ex_names = [ex[:-3] for ex in examples] # strip '.py' extension
     if depth == 0:
@@ -213,8 +206,11 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg, depth=0):
     write(CLEAR_SECTION) # clear at the end of the section
 
 
-def valid_plot_script(src_name):
-    return src_name.startswith('plot') and src_name.endswith('.py')
+def plots_first(fname):
+    """Decorate filename so that examples with plots are displayed first."""
+    if not (fname.startswith('plot') and fname.endswith('.py')):
+        return 'zz' + fname
+    return fname
 
 
 def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
