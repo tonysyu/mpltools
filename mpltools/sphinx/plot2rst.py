@@ -167,7 +167,7 @@ class Path(str):
 
 
 def setup(app):
-    app.connect('builder-inited', generate_rst_gallery)
+    app.connect('builder-inited', generate_rst_galleries)
 
     app.add_config_value('plot2rst_paths',
                          ('../examples', 'auto_examples'), True)
@@ -177,16 +177,22 @@ def setup(app):
     app.add_config_value('plot2rst_plot_tag', 'PLOT2RST.current_figure', True)
 
 
-def generate_rst_gallery(app):
-    """Add list of examples and gallery to Sphinx app."""
+def generate_rst_galleries(app):
     cfg = app.builder.config
 
     doc_src = Path(os.path.abspath(app.builder.srcdir)) # path/to/doc/source
 
-    plot_path, rst_path = [Path(p) for p in cfg.plot2rst_paths]
-    rst_dir = doc_src.pjoin(rst_path)
-    example_dir = doc_src.pjoin(plot_path)
+    if isinstance(cfg.plot2rst_paths, tuple):
+        cfg.plot2rst_paths = [cfg.plot2rst_paths]
+    for src_dest in cfg.plot2rst_paths:
+        plot_path, rst_path = [Path(p) for p in src_dest]
+        example_dir = doc_src.pjoin(plot_path)
+        rst_dir = doc_src.pjoin(rst_path)
+        generate_rst_gallery(example_dir, rst_dir, cfg)
 
+
+def generate_rst_gallery(example_dir, rst_dir, cfg):
+    """Generate rst from examples and create gallery to showcase examples."""
     if not example_dir.exists:
         print "No example directory found at", example_dir
         return

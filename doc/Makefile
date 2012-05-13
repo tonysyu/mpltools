@@ -41,7 +41,8 @@ help:
 clean:
 	-rm -rf $(BUILDDIR)/*
 	-rm -rf source/api
-	-find ./source/auto_examples/* -type f | grep -v blank | xargs rm -f
+	-find ./source/auto_examples/* -type f | xargs rm -f
+	-find ./source/auto_tutorials/* -type f | xargs rm -f
 
 api:
 	@mkdir -p source/api
