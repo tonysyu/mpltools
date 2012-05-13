@@ -104,6 +104,15 @@ Examples
 
 """
 
+GALLERY_IMAGE_TEMPLATE = """
+.. figure:: %(thumb)s
+   :figclass: gallery
+   :target: ./%(source)s.html
+
+   :ref:`example_%(link_name)s`
+
+"""
+
 
 class Path(str):
     """Path object for manipulating directory and file paths."""
@@ -228,21 +237,20 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg, depth=0):
         sub_dir = Path('/'.join(sub_dir_list) + '/')
     gallery_index.write(toctree_template % (sub_dir + '\n   '.join(ex_names)))
 
-    write = gallery_index.write
     for src_name in examples:
         rst_file_from_example(src_name, src_dir, rst_dir, cfg)
-        thumb = sub_dir.pjoin('images/thumb', src_name[:-3] + '.png')
-        gallery_index.write('.. figure:: %s\n' % thumb)
 
         link_name = sub_dir.pjoin(src_name)
         link_name = link_name.replace(os.path.sep, '_')
         if link_name.startswith('._'):
             link_name = link_name[2:]
 
-        write('   :figclass: gallery\n')
-        write('   :target: ./%s.html\n\n' % (sub_dir + src_name[:-3]))
-        write('   :ref:`example_%s`\n\n' % (link_name))
-    write(CLEAR_SECTION) # clear at the end of the section
+        info = {}
+        info['thumb'] = sub_dir.pjoin('images/thumb', src_name[:-3] + '.png')
+        info['source'] = sub_dir + src_name[:-3]
+        info['link_name'] = link_name
+        gallery_index.write(GALLERY_IMAGE_TEMPLATE % info)
+    gallery_index.write(CLEAR_SECTION) # clear at the end of the section
 
 
 def plots_first(fname):
