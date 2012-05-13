@@ -67,7 +67,7 @@ tutorial_rst_template = """
 
 CODE_LINK = """
 
-**Python source code:** :download:`{0} <{0}>`
+**Python source code:** :download:`download <{0}>`
 (generated using ``mpltools`` |version|)
 
 """
