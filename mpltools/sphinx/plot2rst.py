@@ -167,7 +167,7 @@ class Path(str):
 
 
 def setup(app):
-    app.connect('builder-inited', generate_rst_galleries)
+    app.connect('builder-inited', generate_example_galleries)
 
     app.add_config_value('plot2rst_paths',
                          ('../examples', 'auto_examples'), True)
@@ -177,7 +177,7 @@ def setup(app):
     app.add_config_value('plot2rst_plot_tag', 'PLOT2RST.current_figure', True)
 
 
-def generate_rst_galleries(app):
+def generate_example_galleries(app):
     cfg = app.builder.config
 
     doc_src = Path(os.path.abspath(app.builder.srcdir)) # path/to/doc/source
@@ -188,10 +188,10 @@ def generate_rst_galleries(app):
         plot_path, rst_path = [Path(p) for p in src_dest]
         example_dir = doc_src.pjoin(plot_path)
         rst_dir = doc_src.pjoin(rst_path)
-        generate_rst_gallery(example_dir, rst_dir, cfg)
+        generate_examples_and_gallery(example_dir, rst_dir, cfg)
 
 
-def generate_rst_gallery(example_dir, rst_dir, cfg):
+def generate_examples_and_gallery(example_dir, rst_dir, cfg):
     """Generate rst from examples and create gallery to showcase examples."""
     if not example_dir.exists:
         print "No example directory found at", example_dir
@@ -244,7 +244,7 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg, depth=0):
     gallery_index.write('\n\n%s\n\n' % gallery_description)
 
     rst_dir.makedirs()
-    examples = [fname for fname in sorted(src_dir.listdir(), key=plots_first)
+    examples = [fname for fname in sorted(src_dir.listdir(), key=_plots_first)
                       if fname.endswith('py')]
     ex_names = [ex[:-3] for ex in examples] # strip '.py' extension
     if depth == 0:
@@ -255,7 +255,7 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg, depth=0):
     gallery_index.write(toctree_template % (sub_dir + '\n   '.join(ex_names)))
 
     for src_name in examples:
-        rst_file_from_example(src_name, src_dir, rst_dir, cfg)
+        write_example(src_name, src_dir, rst_dir, cfg)
 
         link_name = sub_dir.pjoin(src_name)
         link_name = link_name.replace(os.path.sep, '_')
@@ -269,14 +269,14 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg, depth=0):
         gallery_index.write(GALLERY_IMAGE_TEMPLATE % info)
 
 
-def plots_first(fname):
+def _plots_first(fname):
     """Decorate filename so that examples with plots are displayed first."""
     if not (fname.startswith('plot') and fname.endswith('.py')):
         return 'zz' + fname
     return fname
 
 
-def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
+def write_example(src_name, src_dir, rst_dir, cfg):
     """Write rst file from a given python example.
 
     Parameters
@@ -314,10 +314,10 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     basename, py_ext = os.path.splitext(src_name)
     rst_path = rst_dir.pjoin(basename + cfg.source_suffix)
 
-    if plots_are_current(src_path, image_path) and rst_path.exists:
+    if _plots_are_current(src_path, image_path) and rst_path.exists:
         return
 
-    blocks = split_code_and_text(example_file)
+    blocks = split_code_and_text_blocks(example_file)
     if blocks[0][2].startswith('#!'):
         blocks.pop(0) # don't add shebang line to rst file.
 
@@ -356,18 +356,18 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
             shutil.copy(cfg.plot2rst_default_thumb, thumb_path)
 
 
-def plots_are_current(src_path, image_path):
+def _plots_are_current(src_path, image_path):
     first_image_file = Path(image_path.format(1))
     needs_replot = (not first_image_file.exists or
-                    mod_time(first_image_file) <= mod_time(src_path))
+                    _mod_time(first_image_file) <= _mod_time(src_path))
     return not needs_replot
 
 
-def mod_time(file_path):
+def _mod_time(file_path):
     return os.stat(file_path).st_mtime
 
 
-def split_code_and_text(source_file):
+def split_code_and_text_blocks(source_file):
     """Return list with source file separated into code and text blocks.
 
     Returns
@@ -428,7 +428,7 @@ def process_blocks(blocks, src_path, image_path, cfg):
     Parameters
     ----------
     blocks : list of block tuples
-        Code and text blocks from python file. See `split_code_and_text`.
+        Code and text blocks from example. See `split_code_and_text_blocks`.
     src_path : str
         Path to example file.
     image_path : str
