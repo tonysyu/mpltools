@@ -297,9 +297,9 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     if blocks[0][2].startswith('#!'):
         blocks.pop(0) # don't add shebang line to rst file.
 
+    figure_list, rst = process_blocks(blocks, src_path, image_path, cfg)
     has_inline_plots = any(cfg.plot2rst_plot_tag in b[2] for b in blocks)
     if has_inline_plots:
-        figure_list, rst = process_blocks(blocks, src_path, image_path, cfg)
         info['rst'] = rst
         example_rst = tutorial_rst_template % info
     else:
@@ -308,7 +308,7 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
         label, (start, end), content = first_text_block
         info['docstring'] = content.strip().strip('"""')
         info['end_row'] = end + 1 # + 1 b/c lines start at 1, not 0.
-        figure_list = save_plot(src_path, image_path, cfg)
+        figure_list = save_all_figures(image_path)
         rst_blocks = [IMAGE_TEMPLATE % f.lstrip('/') for f in figure_list]
         info['image_list'] = ''.join(rst_blocks)
         example_rst = plot_rst_template % info
@@ -471,63 +471,6 @@ def docstr2rst(docstr):
     idx_whitespace = len(docstr_without_trailing_whitespace) - len(docstr)
     whitespace = docstr[idx_whitespace:]
     return docstr_without_trailing_whitespace.strip(quotes) + whitespace
-
-
-def save_plot(src_path, image_path, cfg):
-    """Save plots as images.
-
-    Parameters
-    ----------
-    src_path : str
-        Path to example file.
-    image_path : str
-        Path where plots are saved (format string which accepts figure number).
-    cfg : config object
-        Sphinx config object created by Sphinx.
-
-    Returns
-    -------
-    figure_list : list
-        List of figure names saved by the example.
-    """
-
-    src_dir, src_name = src_path.psplit()
-    if not src_name.startswith('plot'):
-        return []
-
-    first_image_file = image_path.format(1)
-
-    needs_replot = (not os.path.exists(first_image_file) or
-                    mod_time(first_image_file) <= mod_time(src_path))
-    if needs_replot:
-        print 'plotting %s' % src_name
-        plt.rcdefaults()
-        plt.rcParams.update(cfg.plot2rst_rcparams)
-        plt.close('all')
-
-        exec_source_in_dir(src_name, src_dir)
-        figure_list = save_all_figures(image_path)
-    else:
-        image_dir, image_fmt_str = image_path.psplit()
-        figure_list = [f[len(image_dir):]
-                       for f in glob.glob(image_path.format('[1-9]'))]
-    return figure_list
-
-
-def exec_source_in_dir(source_file, source_path):
-    """Execute source file in source directory and capture & print errors."""
-    cwd = os.getcwd()
-    try:
-        # Plot example in source directory.
-        os.chdir(source_path)
-        execfile(source_file, {})
-    except:
-        print 80*'_'
-        print '%s is not compiling:' % source_file
-        traceback.print_exc()
-        print 80*'_'
-    finally:
-        os.chdir(cwd)
 
 
 def save_all_figures(image_path):
