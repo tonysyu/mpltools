@@ -4,8 +4,10 @@ Example generation from python files.
 Generate the rst files for the examples by iterating over the python
 example files. Files that generate images should start with 'plot'.
 
-To generate your own examples, just add ``'mpltools.sphinx.plot2rst'``` to the
-list of ``extensions``in your Sphinx configuration file.
+To generate your own examples, add ``'mpltools.sphinx.plot2rst'``` to the list
+of ``extensions``in your Sphinx configuration file. In addition, make sure the
+example directory(ies) in `plot2rst_paths` (see below) points to a directory
+with examples named `plot_*.py` and include an `index.rst` file.
 
 This code was adapted from scikits-image, which took it from scikits-learn.
 
@@ -13,9 +15,10 @@ Options
 -------
 The ``plot2rst`` extension accepts the following options:
 
-plot2rst_paths : length-2 tuple
-    Paths to (python plot, generated rst) files, i.e. (source, destination).
-    Note that both paths are relative to Sphinx 'source' path.
+plot2rst_paths : length-2 tuple, or list of tuples
+    Tuple or list of tuples of paths to (python plot, generated rst) files,
+    i.e. (source, destination).  Note that both paths are relative to Sphinx
+    'source' directory. Defaults to ('../examples', 'auto_examples')
 
 plot2rst_rcparams : dict
     Matplotlib configuration parameters. See
@@ -113,15 +116,6 @@ IMAGE_TEMPLATE = """
 
 """
 
-GALLERY_HEADER = """
-
-Examples
-========
-
-.. _examples-index:
-
-"""
-
 GALLERY_IMAGE_TEMPLATE = """
 .. figure:: %(thumb)s
    :figclass: gallery
@@ -200,7 +194,6 @@ def generate_rst_gallery(app):
 
     # we create an index.rst with all examples
     gallery_index = file(rst_dir.pjoin('index'+cfg.source_suffix), 'w')
-    gallery_index.write(GALLERY_HEADER)
 
     # Here we don't use an os.walk, but we recurse only twice: flat is
     # better than nested.
