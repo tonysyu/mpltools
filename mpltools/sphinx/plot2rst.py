@@ -31,6 +31,35 @@ plot2rst_thumb_scale : float
 plot2rst_plot_tag : str
     When this tag is found in the example file, the current plot is saved and
     tag is replaced with plot path. Defaults to 'PLOT2RST.current_figure'.
+
+
+Suggested CSS definitions
+-------------------------
+
+    div.body h2 {
+        border-bottom: 1px solid #BBB;
+        clear: left;
+    }
+
+    /*---- example gallery ----*/
+
+    .gallery.figure {
+        float: left;
+        margin: 1em;
+    }
+
+    .gallery.figure img{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 200px;
+    }
+
+    .gallery.figure .caption {
+        width: 200px;
+        text-align: center !important;
+    }
+
 """
 import os
 import shutil
@@ -77,15 +106,6 @@ toctree_template = """
    %s
 
 """
-
-
-CLEAR_SECTION = """
-.. raw:: html
-
-    <div style="clear: both"></div>
-
-"""
-
 
 IMAGE_TEMPLATE = """
 .. image:: images/%s
@@ -248,7 +268,6 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg, depth=0):
         info['source'] = sub_dir + src_name[:-3]
         info['link_name'] = link_name
         gallery_index.write(GALLERY_IMAGE_TEMPLATE % info)
-    gallery_index.write(CLEAR_SECTION) # clear at the end of the section
 
 
 def plots_first(fname):
