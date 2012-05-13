@@ -34,8 +34,6 @@ plot2rst_plot_tag : str
 """
 import os
 import shutil
-import traceback
-import glob
 import token
 import tokenize
 
