@@ -268,8 +268,6 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     cfg : config object
         Sphinx config object created by Sphinx.
     """
-    base_image_name = os.path.splitext(src_name)[0]
-
     last_dir = src_dir.split()[-1]
     # to avoid leading . in file names, and wrong names in links
     if last_dir == '.' or last_dir == 'examples':
@@ -287,6 +285,8 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     thumb_dir = image_dir.join('thumb')
     image_dir.makedirs()
     thumb_dir.makedirs()
+
+    base_image_name = os.path.splitext(src_name)[0]
     image_path = image_dir.join(base_image_name + '_{0}.png')
 
     basename, py_ext = os.path.splitext(src_name)
