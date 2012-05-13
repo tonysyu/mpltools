@@ -106,11 +106,7 @@ Examples
 
 
 class Path(str):
-    """Path object for manipulating directory and file paths.
-
-    Since this subclasses ``str``, this object, unfortunately, overrides some
-    methods (specifically, ``join`` and ``split``).
-    """
+    """Path object for manipulating directory and file paths."""
 
     def __init__(self, path):
         super(Path, self).__init__(path)
@@ -124,10 +120,12 @@ class Path(str):
         """Return True if path exists"""
         return os.path.exists(self)
 
-    def join(self, *args):
+    def pjoin(self, *args):
+        """Join paths. `p` prefix prevents confusion with string method."""
         return self.__class__(os.path.join(self, *args))
 
-    def split(self):
+    def psplit(self):
+        """Split paths. `p` prefix prevents confusion with string method."""
         return [self.__class__(p) for p in os.path.split(self)]
 
     def makedirs(self):
@@ -165,8 +163,8 @@ def generate_rst_gallery(app):
     doc_src = Path(os.path.abspath(app.builder.srcdir)) # path/to/doc/source
 
     plot_path, rst_path = [Path(p) for p in cfg.plot2rst_paths]
-    rst_dir = doc_src.join(rst_path)
-    example_dir = doc_src.join(plot_path)
+    rst_dir = doc_src.pjoin(rst_path)
+    example_dir = doc_src.pjoin(plot_path)
 
     if not example_dir.exists:
         print "No example directory found at", example_dir
@@ -174,16 +172,16 @@ def generate_rst_gallery(app):
     rst_dir.makedirs()
 
     # we create an index.rst with all examples
-    gallery_index = file(rst_dir.join('index'+cfg.source_suffix), 'w')
+    gallery_index = file(rst_dir.pjoin('index'+cfg.source_suffix), 'w')
     gallery_index.write(GALLERY_HEADER)
 
     # Here we don't use an os.walk, but we recurse only twice: flat is
     # better than nested.
     write_gallery(gallery_index, example_dir, rst_dir, cfg)
     for d in sorted(example_dir.listdir()):
-        example_sub = example_dir.join(d)
+        example_sub = example_dir.pjoin(d)
         if example_sub.isdir:
-            rst_sub = rst_dir.join(d)
+            rst_sub = rst_dir.pjoin(d)
             rst_sub.makedirs()
             write_gallery(gallery_index, example_sub, rst_sub, cfg, depth=1)
     gallery_index.flush()
@@ -206,7 +204,7 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg, depth=0):
         Sphinx config object created by Sphinx.
     """
     index_name = 'index' + cfg.source_suffix
-    gallery_template = src_dir.join(index_name)
+    gallery_template = src_dir.pjoin(index_name)
     if not os.path.exists(gallery_template):
         print src_dir
         print 80*'_'
@@ -226,17 +224,17 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg, depth=0):
     if depth == 0:
         sub_dir = Path('')
     else:
-        sub_dir_list = src_dir.split()[-depth:]
+        sub_dir_list = src_dir.psplit()[-depth:]
         sub_dir = Path('/'.join(sub_dir_list) + '/')
     gallery_index.write(toctree_template % (sub_dir + '\n   '.join(ex_names)))
 
     write = gallery_index.write
     for src_name in examples:
         rst_file_from_example(src_name, src_dir, rst_dir, cfg)
-        thumb = sub_dir.join('images/thumb', src_name[:-3] + '.png')
+        thumb = sub_dir.pjoin('images/thumb', src_name[:-3] + '.png')
         gallery_index.write('.. figure:: %s\n' % thumb)
 
-        link_name = sub_dir.join(src_name)
+        link_name = sub_dir.pjoin(src_name)
         link_name = link_name.replace(os.path.sep, '_')
         if link_name.startswith('._'):
             link_name = link_name[2:]
@@ -268,7 +266,7 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     cfg : config object
         Sphinx config object created by Sphinx.
     """
-    last_dir = src_dir.split()[-1]
+    last_dir = src_dir.psplit()[-1]
     # to avoid leading . in file names, and wrong names in links
     if last_dir == '.' or last_dir == 'examples':
         last_dir = Path('')
@@ -277,20 +275,20 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
 
     info = dict(src_name=src_name)
     info['short_filename'] = last_dir + src_name # dir_subdir_srcname
-    src_path = src_dir.join(src_name)
-    example_file = rst_dir.join(src_name)
+    src_path = src_dir.pjoin(src_name)
+    example_file = rst_dir.pjoin(src_name)
     shutil.copyfile(src_path, example_file)
 
-    image_dir = rst_dir.join('images')
-    thumb_dir = image_dir.join('thumb')
+    image_dir = rst_dir.pjoin('images')
+    thumb_dir = image_dir.pjoin('thumb')
     image_dir.makedirs()
     thumb_dir.makedirs()
 
     base_image_name = os.path.splitext(src_name)[0]
-    image_path = image_dir.join(base_image_name + '_{0}.png')
+    image_path = image_dir.pjoin(base_image_name + '_{0}.png')
 
     basename, py_ext = os.path.splitext(src_name)
-    rst_path = rst_dir.join(basename + cfg.source_suffix)
+    rst_path = rst_dir.pjoin(basename + cfg.source_suffix)
 
     if plots_are_current(src_path, image_path) and rst_path.exists:
         return
@@ -321,8 +319,8 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
     f.write(example_rst)
     f.flush()
 
-    thumb_path = thumb_dir.join(src_name[:-3] + '.png')
-    first_image_file = image_dir.join(figure_list[0].lstrip('/'))
+    thumb_path = thumb_dir.pjoin(src_name[:-3] + '.png')
+    first_image_file = image_dir.pjoin(figure_list[0].lstrip('/'))
     if first_image_file.exists:
         image.thumbnail(first_image_file, thumb_path, cfg.plot2rst_thumb_scale)
 
@@ -421,7 +419,7 @@ def process_blocks(blocks, src_path, image_path, cfg):
     rst_text : str
         Text with code wrapped code-block directives.
     """
-    src_dir, src_name = src_path.split()
+    src_dir, src_name = src_path.psplit()
     if not src_name.startswith('plot'):
         return [], ''
 
@@ -430,7 +428,7 @@ def process_blocks(blocks, src_path, image_path, cfg):
     idx_inline_plot = [i for i, b in enumerate(blocks)
                        if inline_tag in b[2]]
 
-    image_dir, image_fmt_str = image_path.split()
+    image_dir, image_fmt_str = image_path.psplit()
 
     figure_list = []
     plt.rcdefaults()
@@ -493,7 +491,7 @@ def save_plot(src_path, image_path, cfg):
         List of figure names saved by the example.
     """
 
-    src_dir, src_name = src_path.split()
+    src_dir, src_name = src_path.psplit()
     if not src_name.startswith('plot'):
         return []
 
@@ -510,7 +508,7 @@ def save_plot(src_path, image_path, cfg):
         exec_source_in_dir(src_name, src_dir)
         figure_list = save_all_figures(image_path)
     else:
-        image_dir, image_fmt_str = image_path.split()
+        image_dir, image_fmt_str = image_path.psplit()
         figure_list = [f[len(image_dir):]
                        for f in glob.glob(image_path.format('[1-9]'))]
     return figure_list
@@ -541,7 +539,7 @@ def save_all_figures(image_path):
         Path where plots are saved (format string which accepts figure number).
     """
     figure_list = []
-    image_dir, image_fmt_str = image_path.split()
+    image_dir, image_fmt_str = image_path.psplit()
     fig_mngr = matplotlib._pylab_helpers.Gcf.get_all_fig_managers()
     for fig_num in (m.num for m in fig_mngr):
         # Set the fig_num figure as the current figure as we can't
