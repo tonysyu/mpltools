@@ -131,7 +131,8 @@ class Path(str):
         return [self.__class__(p) for p in os.path.split(self)]
 
     def makedirs(self):
-        os.makedirs(self)
+        if not self.exists:
+            os.makedirs(self)
 
     def listdir(self):
         return os.listdir(self)
@@ -170,8 +171,7 @@ def generate_rst_gallery(app):
     if not example_dir.exists:
         print "No example directory found at", example_dir
         return
-    if not rst_dir.exists:
-        rst_dir.makedirs()
+    rst_dir.makedirs()
 
     # we create an index.rst with all examples
     gallery_index = file(rst_dir.join('index'+cfg.source_suffix), 'w')
@@ -184,8 +184,7 @@ def generate_rst_gallery(app):
         example_sub = example_dir.join(d)
         if example_sub.isdir:
             rst_sub = rst_dir.join(d)
-            if not rst_sub.exists:
-                rst_sub.makedirs()
+            rst_sub.makedirs()
             write_gallery(gallery_index, example_sub, rst_sub, cfg, depth=1)
     gallery_index.flush()
 
@@ -220,8 +219,7 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg, depth=0):
     gallery_description = file(gallery_template).read()
     gallery_index.write('\n\n%s\n\n' % gallery_description)
 
-    if not rst_dir.exists:
-        rst_dir.makedirs()
+    rst_dir.makedirs()
     examples = [fname for fname in sorted(src_dir.listdir(), key=plots_first)
                       if fname.endswith('py')]
     ex_names = [ex[:-3] for ex in examples] # strip '.py' extension
@@ -287,10 +285,8 @@ def rst_file_from_example(src_name, src_dir, rst_dir, cfg):
 
     image_dir = rst_dir.join('images')
     thumb_dir = image_dir.join('thumb')
-    if not image_dir.exists:
-        image_dir.makedirs()
-    if not thumb_dir.exists:
-        thumb_dir.makedirs()
+    image_dir.makedirs()
+    thumb_dir.makedirs()
     image_path = image_dir.join(base_image_name + '_{0}.png')
 
     basename, py_ext = os.path.splitext(src_name)
