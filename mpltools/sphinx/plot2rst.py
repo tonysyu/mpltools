@@ -162,6 +162,7 @@ def setup(app):
     app.add_config_value('plot2rst_default_thumb', None, True)
     app.add_config_value('plot2rst_thumb_scale', 0.2, True)
     app.add_config_value('plot2rst_plot_tag', 'PLOT2RST.current_figure', True)
+    app.add_config_value('plot2rst_index_name', 'index', True)
 
 
 def generate_example_galleries(app):
@@ -216,7 +217,7 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg, depth=0):
     cfg : config object
         Sphinx config object created by Sphinx.
     """
-    index_name = 'index' + cfg.source_suffix
+    index_name = cfg.plot2rst_index_name + cfg.source_suffix
     gallery_template = src_dir.pjoin(index_name)
     if not os.path.exists(gallery_template):
         print src_dir
