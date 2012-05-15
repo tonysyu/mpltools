@@ -89,7 +89,7 @@ CODE_LINK = """
 
 """
 
-toctree_template = """
+TOCTREE_TEMPLATE = """
 .. toctree::
    :hidden:
 
@@ -239,7 +239,7 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg, depth=0):
     else:
         sub_dir_list = src_dir.psplit()[-depth:]
         sub_dir = Path('/'.join(sub_dir_list) + '/')
-    gallery_index.write(toctree_template % (sub_dir + '\n   '.join(ex_names)))
+    gallery_index.write(TOCTREE_TEMPLATE % (sub_dir + '\n   '.join(ex_names)))
 
     for src_name in examples:
         write_example(src_name, src_dir, rst_dir, cfg)
