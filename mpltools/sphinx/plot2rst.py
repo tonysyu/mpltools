@@ -88,13 +88,6 @@ plot_rst_template = """
 
 """
 
-tutorial_rst_template = """
-.. _example_%(short_filename)s:
-
-%(rst)s
-
-"""
-
 CODE_LINK = """
 
 **Python source code:** :download:`download <{0}>`
@@ -321,11 +314,12 @@ def write_example(src_name, src_dir, rst_dir, cfg):
     if blocks[0][2].startswith('#!'):
         blocks.pop(0) # don't add shebang line to rst file.
 
+    rst_link = '.. _example_%s:' % (last_dir + src_name)
     figure_list, rst = process_blocks(blocks, src_path, image_path, cfg)
+
     has_inline_plots = any(cfg.plot2rst_plot_tag in b[2] for b in blocks)
     if has_inline_plots:
-        info['rst'] = rst
-        example_rst = tutorial_rst_template % info
+        example_rst = '\n\n'.join([rst_link, rst])
     else:
         # print first block of text, display all plots, then display code.
         first_text_block = [b for b in blocks if b[0] == 'text'][0]
