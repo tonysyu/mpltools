@@ -320,7 +320,7 @@ def write_example(src_name, src_dir, rst_dir, cfg):
         rst_blocks = [IMAGE_TEMPLATE % f.lstrip('/') for f in figure_list]
 
         example_rst = rst_link
-        example_rst += content.strip().strip('"""')
+        example_rst += eval(content)
         example_rst += ''.join(rst_blocks)
         code_info = dict(src_name=src_name, code_start=end)
         example_rst += LITERALINCLUDE.format(**code_info)
@@ -475,14 +475,9 @@ def codestr2rst(codestr):
 
 def docstr2rst(docstr):
     """Return reStructuredText from docstring"""
-    if docstr[1] == docstr[0]:
-        quotes = docstr[:3]
-    else:
-        quotes = docstr[0]
-    docstr_without_trailing_whitespace = docstr.rstrip()
-    idx_whitespace = len(docstr_without_trailing_whitespace) - len(docstr)
+    idx_whitespace = len(docstr.rstrip()) - len(docstr)
     whitespace = docstr[idx_whitespace:]
-    return docstr_without_trailing_whitespace.strip(quotes) + whitespace
+    return eval(docstr) + whitespace
 
 
 def save_all_figures(image_path):
