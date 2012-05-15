@@ -76,15 +76,9 @@ import matplotlib.pyplot as plt
 from matplotlib import image
 
 
-plot_rst_template = """
-.. _example_%(short_filename)s:
-
-%(docstring)s
-
-%(image_list)s
-
-.. literalinclude:: %(src_name)s
-    :lines: %(end_row)s-
+LITERALINCLUDE = """
+.. literalinclude:: {src_name}
+    :lines: {code_start}-
 
 """
 
@@ -290,8 +284,6 @@ def write_example(src_name, src_dir, rst_dir, cfg):
     else:
         last_dir += '_'
 
-    info = dict(src_name=src_name)
-    info['short_filename'] = last_dir + src_name # dir_subdir_srcname
     src_path = src_dir.pjoin(src_name)
     example_file = rst_dir.pjoin(src_name)
     shutil.copyfile(src_path, example_file)
@@ -314,22 +306,24 @@ def write_example(src_name, src_dir, rst_dir, cfg):
     if blocks[0][2].startswith('#!'):
         blocks.pop(0) # don't add shebang line to rst file.
 
-    rst_link = '.. _example_%s:' % (last_dir + src_name)
+    rst_link = '.. _example_%s:\n\n' % (last_dir + src_name)
     figure_list, rst = process_blocks(blocks, src_path, image_path, cfg)
 
     has_inline_plots = any(cfg.plot2rst_plot_tag in b[2] for b in blocks)
     if has_inline_plots:
-        example_rst = '\n\n'.join([rst_link, rst])
+        example_rst = ''.join([rst_link, rst])
     else:
         # print first block of text, display all plots, then display code.
         first_text_block = [b for b in blocks if b[0] == 'text'][0]
         label, (start, end), content = first_text_block
-        info['docstring'] = content.strip().strip('"""')
-        info['end_row'] = end + 1 # + 1 b/c lines start at 1, not 0.
         figure_list = save_all_figures(image_path)
         rst_blocks = [IMAGE_TEMPLATE % f.lstrip('/') for f in figure_list]
-        info['image_list'] = ''.join(rst_blocks)
-        example_rst = plot_rst_template % info
+
+        example_rst = rst_link
+        example_rst += content.strip().strip('"""')
+        example_rst += ''.join(rst_blocks)
+        code_info = dict(src_name=src_name, code_start=end + 1)
+        example_rst += LITERALINCLUDE.format(**code_info)
 
     example_rst += CODE_LINK.format(src_name)
 
