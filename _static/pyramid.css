@@ -203,6 +203,7 @@ div.body h6 { font-size: 100%; background-color: #ffffff; }
 
 div.body h2 {
     border-bottom: 1px solid #BBB;
+    clear: left;
 }
 
 a.headerlink {

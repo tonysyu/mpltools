@@ -1,4 +1,3 @@
-
 .. _example_color_plot_cycle_cmap.py:
 
 
@@ -11,16 +10,15 @@ intervals of a given colormap. By default, it alters the default color cycle,
 but if you pass it a plot axes, only the color cycle for the axes is altered.
 
 
-
-
 .. image:: images/plot_cycle_cmap_1.png
     :align: center
 
 
-
-**Python source code:** :download:`plot_cycle_cmap.py <plot_cycle_cmap.py>`
-(generated using ``mpltools`` |version|)
-
 .. literalinclude:: plot_cycle_cmap.py
     :lines: 12-
+
+
+
+**Python source code:** :download:`download <plot_cycle_cmap.py>`
+(generated using ``mpltools`` |version|)
 

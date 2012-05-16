@@ -1,4 +1,3 @@
-
 .. _example_layout_plot_figaspect.py:
 
 
@@ -18,8 +17,6 @@ In this example, ``layout.figaspect`` creates a figure that fits comfortably
 onto the page, while ``plt.figaspect`` does not.
 
 
-
-
 .. image:: images/plot_figaspect_1.png
     :align: center
 
@@ -28,10 +25,11 @@ onto the page, while ``plt.figaspect`` does not.
     :align: center
 
 
-
-**Python source code:** :download:`plot_figaspect.py <plot_figaspect.py>`
-(generated using ``mpltools`` |version|)
-
 .. literalinclude:: plot_figaspect.py
     :lines: 19-
+
+
+
+**Python source code:** :download:`download <plot_figaspect.py>`
+(generated using ``mpltools`` |version|)
 

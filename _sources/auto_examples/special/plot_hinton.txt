@@ -1,4 +1,3 @@
-
 .. _example_special_plot_hinton.py:
 
 
@@ -26,16 +25,15 @@ a similar situation.
 .. _Hinton demo: http://matplotlib.sourceforge.net/examples/api/hinton_demo.html
 
 
-
-
 .. image:: images/plot_hinton_1.png
     :align: center
 
 
-
-**Python source code:** :download:`plot_hinton.py <plot_hinton.py>`
-(generated using ``mpltools`` |version|)
-
 .. literalinclude:: plot_hinton.py
     :lines: 27-
+
+
+
+**Python source code:** :download:`download <plot_hinton.py>`
+(generated using ``mpltools`` |version|)
 

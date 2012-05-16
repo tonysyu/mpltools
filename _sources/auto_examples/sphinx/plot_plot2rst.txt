@@ -1,4 +1,3 @@
-
 .. _example_sphinx_plot_plot2rst.py:
 
 
@@ -109,6 +108,6 @@ directly will see the plots; this is not necessary for creating the docs.
 	
 	
 
-**Python source code:** :download:`plot_plot2rst.py <plot_plot2rst.py>`
+**Python source code:** :download:`download <plot_plot2rst.py>`
 (generated using ``mpltools`` |version|)
 
