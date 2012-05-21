@@ -119,24 +119,3 @@ def _slope_triangle(origin, dx, dy, ec='none', fc='0.8', **poly_kwargs):
     verts.append(verts[0] + (dx, dy))
     return plt.Polygon(verts, ec=ec, fc=fc, **poly_kwargs)
 
-
-if __name__ == '__main__':
-    plt.plot([0, 2], [0, 1])
-    slope_marker((1, 0.4), (1, 2))
-
-    x = np.logspace(0, 2)
-    fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2)
-
-    ax1.loglog(x, x**0.5)
-    slope_marker((10, 2), (1, 2), ax=ax1)
-
-    ax2.loglog(x, x**-0.5)
-    slope_marker((10, .4), (-1, 2), ax=ax2)
-
-    ax3.loglog(x, x**0.5)
-    slope_marker((10, 4), (1, 2), invert=True, ax=ax3)
-
-    ax4.loglog(x, x**0.5)
-    slope_marker((10, 2), 0.5, ax=ax4)
-
-    plt.show()
