@@ -5,7 +5,7 @@ import copy
 import matplotlib.pyplot as plt
 
 from .. import _config
-
+from configobj import ConfigObj
 
 __all__ = ['use', 'available', 'lib', 'baselib']
 
@@ -69,6 +69,31 @@ def update_user_library(base_library):
 
     return library
 
+def save_param_dict(rc_param_dict, filename):
+    """Save a RcParams class or similar dictionary to a style file
+
+    Parameters
+    -------------
+    rc_param_dict : :class:`matplotlib.RcParams` or dictionary
+        rc_params information
+
+    filename : string
+        ful path and filename to write config to
+
+    Examples
+    --------
+
+    To save current parameters from a ipython -pylab session 
+
+    >>> save_param_dict(rcParams, '/home/user/.mplstyle/my_param.rc')
+    
+    """
+    current_config = ConfigObj(rc_param_dict)
+    config_file = open(filename, 'w')
+    current_config.write(config_file)
+    config_file.close()
+
+    
 
 baselib = load_base_library()
 lib = update_user_library(baselib)

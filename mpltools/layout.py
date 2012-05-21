@@ -166,6 +166,69 @@ def _calc_limits(axis, frac):
         pad = np.array([-mag*frac, mag*frac])
         return limits + pad
 
+def func_on_all_figs(func, *args, **kwargs):
+    """
+    runs a function after making all open figures current. 
+    
+    Parameters
+    ----------
+    func : function
+        function to call
+    \*args, \*\*kwargs : pased to func
+    
+    Examples
+    ----------
+    >>>rf.func_on_all_figs(grid,alpha=.3)
+    """
+    for fig_n in plt.get_fignums():
+        plt.figure(fig_n)
+        func(*args, **kwargs)
+        plt.draw()
+
+def save_all_figs(dir = './', format=['eps','pdf','png']):
+    """
+    Save all open Figures to disk.
+
+    Parameters
+    ------------
+    dir : string
+            path to save figures into
+    format : list of strings
+            the types of formats to save figures as. The elements of this
+            list are passed to :matplotlib:`savefig`. This is a list so that
+            you can save each figure in multiple formats.
+    """
+    if dir[-1] != '/':
+        dir = dir + '/'
+    for fignum in plb.get_fignums():
+        fileName = plb.figure(fignum).get_axes()[0].get_title()
+        if fileName == '':
+            fileName = 'unamedPlot'
+        for fmt in format:
+            plb.savefig(dir+fileName+'.'+fmt, format=fmt)
+            print (dir+fileName+'.'+fmt)
+
+def add_markers_to_lines(ax=None,marker_list=['o','D','s','+','x'], markevery=10):
+    """
+    adds markers to all lines of a plot, post facto.
+    
+    Parameters
+    -----------
+    ax : matplotlib.Axes
+        axis which to add markers to, defaults to gca()
+    marker_list : list of marker characters
+        see matplotlib.plot help for possible marker characters
+    markevery : int
+        markevery number of points with a marker.
+    
+    """
+    if ax is None:
+        ax=plb.gca()
+    lines = ax.get_lines()
+    if len(lines) > len (marker_list ):
+        marker_list *= 3
+    [k[0].set_marker(k[1]) for k in zip(lines, marker_list)]
+    [line.set_markevery(markevery) for line in lines]
 
 if __name__ == '__main__':
     from yutils.mpl.core import demo_plot
