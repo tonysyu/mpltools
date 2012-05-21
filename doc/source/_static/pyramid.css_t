@@ -201,6 +201,11 @@ div.body h4 { font-size: 110%; background-color: #ffffff; }
 div.body h5 { font-size: 100%; background-color: #ffffff; }
 div.body h6 { font-size: 100%; background-color: #ffffff; }
 
+div.body h2 {
+    border-bottom: 1px solid #BBB;
+    clear: left;
+}
+
 a.headerlink {
     color: #1a55a3;
     font-size: 0.8em;
@@ -224,6 +229,10 @@ div.highlight{
     background-color: white;
 }
 
+dt:target, .highlighted { /* used to highlight destination of internal links */
+    background-color: #FFF6BF;
+}
+
 div.note {
     border: 2px solid #7a9eec;
     border-right-style: none;
@@ -234,7 +243,6 @@ div.note {
 
 div.seealso {
     background: #fff6bf url(dialog-seealso.png) no-repeat 10px 8px;
-    border: 2px solid #ffd324;
     border-left-style: none;
     border-right-style: none;
     padding: 10px 20px 10px 60px;
@@ -281,6 +289,20 @@ tt {
     color: #222;
     font-size: 1.1em;
     font-family: monospace;
+}
+
+th {
+    width: 6em; /* fit "Parameters :" on a single line */
+}
+
+table.docutils td,
+table.docutils th {
+    padding: 10px;
+    border: 1px solid #DDD;
+}
+
+
+tr {
 }
 
 .viewcode-back {
@@ -340,5 +362,24 @@ div.body table.contentstable p {
 table.contentstable a {
     text-decoration: none;
     font-size: 120%;
+}
+
+/*---- example gallery ----*/
+
+.gallery.figure {
+    float: left;
+    margin: 1em;
+}
+
+.gallery.figure img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+}
+
+.gallery.figure .caption {
+    width: 200px;
+    text-align: center !important;
 }
 

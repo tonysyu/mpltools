@@ -1,7 +1,6 @@
 """Tools for Matplotlib
 
-The primary purpose of this package is to provide tools to use pre-configured
-styles with matplotlib.
+This package provides tools for tweaking plots generated with matplotlib.
 
 Subpackages
 ===========
@@ -9,29 +8,16 @@ style
     Library of styles and functions for setting the style.
 color
     Color choice and custom colors (e.g. parameter-based color choice).
-
-Utility functions
-=================
-figure
-    Create matplotlib figure with specified aspect ratio and scale.
-figsize
-    Calculate figure size based on aspect ratio and scale.
+layout
+    Alter visual layout of plots (e.g. figure size, crossed spines).
+special
+    Specialty plotting functions (e.g. Hinton diagram).
 
 Attributes
 ==========
-styles
-    Available matplotlib styles.
 config
     Dictionary of package configuration settings.
 
 """
-from util import *
-
 import _config
 config = _config.config
-
-import style
-styles = style.lib.keys()
-
-# clean up namespace
-del _config

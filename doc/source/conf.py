@@ -13,8 +13,6 @@
 
 import sys, os
 
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
@@ -33,11 +31,7 @@ sys.path.append(os.path.join(curpath, '..', 'ext'))
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.autosummary',
               'sphinx.ext.todo', 'sphinx.ext.coverage',
               'sphinx.ext.pngmath', 'sphinx.ext.mathjax',
-              'sphinx.ext.viewcode', 'numpydoc']
-
-if not on_rtd:
-    # Plots require matplotlib and can't be built by ReadTheDocs.
-    extensions.append('plot2rst')
+              'sphinx.ext.viewcode', 'numpydoc', 'mpltools.sphinx.plot2rst']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -253,33 +247,17 @@ texinfo_documents = [
 # How to display URL addresses: 'footnote', 'no', or 'inline'.
 #texinfo_show_urls = 'footnote'
 
-# -- Mock modules for building with ReadTheDocs.org
-
-
-class Mock(object):
-    def __init__(self, *args, **kwargs):
-        pass
-
-    def __call__(self, *args, **kwargs):
-        return Mock()
-
-    @classmethod
-    def __getattr__(self, name):
-        if name in ('__file__', '__path__'):
-            return '/dev/null'
-        elif name[0] == name[0].upper():
-            return type(name, (), {})
-        else:
-            return Mock()
-
-MOCK_MODULES = ['matplotlib', 'matplotlib.pyplot']
-
-if on_rtd:
-    for mod_name in MOCK_MODULES:
-        sys.modules[mod_name] = Mock()
-
 # -- Options for plot2rst
-plot2rst_rcparams = {'legend.loc': 'best',
+plot2rst_paths = [('../examples', 'auto_examples'),
+                  ('../tutorials', 'auto_tutorials')]
+plot2rst_default_thumb = 'examples/default_thumb.png'
+plot2rst_thumb_scale = 0.4
+plot2rst_rcparams = {'font.size': 9,
+                     'font.family': 'serif',
+                     'legend.loc': 'best',
                      'legend.numpoints': 1,
-                     'image.cmap' : 'gray'}
+                     'figure.figsize': (6, 5),
+                     'axes.color_cycle' : ['r', 'k', 'b', 'y', 'g', 'm', 'c'],
+                     'image.cmap' : 'gray',
+                     'image.interpolation' : 'none'}
 

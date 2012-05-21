@@ -41,7 +41,8 @@ help:
 clean:
 	-rm -rf $(BUILDDIR)/*
 	-rm -rf source/api
-	-find ./source/auto_examples/* -type f | grep -v blank | xargs rm -f
+	-find ./source/auto_examples/* -type f | xargs rm -f
+	-find ./source/auto_tutorials/* -type f | xargs rm -f
 
 api:
 	@mkdir -p source/api
@@ -50,8 +51,13 @@ api:
 
 html: api
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
+	# turn off jekyll processing on github.
+	touch $(BUILDDIR)/html/.nojekyll
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
+
+push: html
+	ghp-import -p $(BUILDDIR)/html/
 
 dirhtml:
 	$(SPHINXBUILD) -b dirhtml $(ALLSPHINXOPTS) $(BUILDDIR)/dirhtml

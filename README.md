@@ -29,13 +29,13 @@ Style names should be specified as sections in "mplstyle" files.  A simple
 `mpltools` searches the current working directory and your home directory for
 `mplstyle` files. To use a style, you just add:
 
-    >>> import mpltools
-    >>> mpltools.style.use('style1')
+    >>> from mpltools import style
+    >>> style.use('style1')
 
 There are a number of pre-defined styles located in `mpltools/style/`. To list
 all available styles, use:
 
-    >>> print mpltools.styles
+    >>> print style.available
 
 
 Documentation
@@ -79,5 +79,5 @@ Please read `LICENSE` in this directory.
 [1]: http://matplotlib.sourceforge.net/
 [2]: http://matplotlib.sourceforge.net/users/customizing.html
 [3]: http://www.voidspace.org.uk/python/configobj.html
-[4]: http://readthedocs.org/docs/mpltools/en/latest/
+[4]: http://tonysyu.github.com/mpltools
 

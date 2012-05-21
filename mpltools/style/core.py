@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from .. import _config
 from configobj import ConfigObj
 
-__all__ = ['use', 'lib', 'baselib']
+__all__ = ['use', 'available', 'lib', 'baselib']
 
 
 def use(name=None, use_baselib=False):
@@ -16,7 +16,7 @@ def use(name=None, use_baselib=False):
     Parameters
     ----------
     name : str
-        Name of style. For list of styles see `mpltools.styles`.
+        Name of style. For list of styles see `style.available`.
 
     use_baselib : bool
         If True, only use styles defined in `mpltools/style` (without user's
@@ -97,4 +97,6 @@ def save_param_dict(rc_param_dict, filename):
 
 baselib = load_base_library()
 lib = update_user_library(baselib)
+
+available = lib.keys()
 
