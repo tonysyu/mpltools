@@ -17,8 +17,8 @@ def slope_marker(origin, slope, invert=False, size_frac=0.1, pad_frac=0.2,
         Slope of marker. If float, a single slope label is printed; if tuple,
         you can specify the (rise, run) of the slope and 2 labels are printed.
     invert : bool
-        If True, hypotenuse is on the bottom(-left or -right; i.e. \| or |/).
-        If False, hypotenuse is on the top(-left or -right; i.e. /| or |\).
+        If True, hypotenuse is on the left (i.e. \| or /|).
+        If False, hypotenuse is on the right (i.e. |/ or |\).
     size_frac : float
         Fraction of the xaxis length used to determine the size of the slope
         marker. Should be less than 1.
