@@ -17,7 +17,7 @@ colors defined by an rc parameter.
 
 
 .. literalinclude:: plot_grayscale.py
-    :lines: 14-
+    :lines: 13-
 
 
 

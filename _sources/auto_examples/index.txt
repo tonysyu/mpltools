@@ -14,6 +14,26 @@ Examples
 
 
 
+`annotation` module
+-------------------
+
+
+
+
+.. toctree::
+   :hidden:
+
+   annotation/plot_slope_marker
+
+
+.. figure:: annotation/images/thumb/plot_slope_marker.png
+   :figclass: gallery
+   :target: ./annotation/plot_slope_marker.html
+
+   :ref:`example_annotation_plot_slope_marker.py`
+
+
+
 `color` module
 --------------
 

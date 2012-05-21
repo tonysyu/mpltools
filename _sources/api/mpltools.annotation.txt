@@ -1,0 +1,16 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+Module: :mod:`annotation`
+=========================
+.. automodule:: mpltools.annotation
+
+.. currentmodule:: mpltools.annotation
+.. autosummary::
+
+   mpltools.annotation.slope_marker
+
+slope_marker
+------------
+
+.. autofunction:: mpltools.annotation.slope_marker
+

@@ -30,7 +30,7 @@ a similar situation.
 
 
 .. literalinclude:: plot_hinton.py
-    :lines: 27-
+    :lines: 26-
 
 
 

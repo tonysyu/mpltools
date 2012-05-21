@@ -15,7 +15,7 @@ but if you pass it a plot axes, only the color cycle for the axes is altered.
 
 
 .. literalinclude:: plot_cycle_cmap.py
-    :lines: 12-
+    :lines: 11-
 
 
 

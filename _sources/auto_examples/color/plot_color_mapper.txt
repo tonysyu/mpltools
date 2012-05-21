@@ -15,7 +15,7 @@ a function that maps a parameter value to an RGBA color in a color map.
 
 
 .. literalinclude:: plot_color_mapper.py
-    :lines: 12-
+    :lines: 11-
 
 
 

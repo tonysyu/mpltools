@@ -15,7 +15,7 @@ attribute to eliminate the top and right spines from the plot.
 
 
 .. literalinclude:: plot_cross_spines.py
-    :lines: 12-
+    :lines: 11-
 
 
 

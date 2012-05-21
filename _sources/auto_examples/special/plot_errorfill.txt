@@ -12,7 +12,7 @@ When you have continuous data measurement and errors associated with every data 
 
 
 .. literalinclude:: plot_errorfill.py
-    :lines: 9-
+    :lines: 8-
 
 
 

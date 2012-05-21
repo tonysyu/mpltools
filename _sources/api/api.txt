@@ -6,6 +6,7 @@ API Reference
 .. toctree::
 
    mpltools.animation
+   mpltools.annotation
    mpltools.color
    mpltools.layout
    mpltools.special

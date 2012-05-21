@@ -1,0 +1,26 @@
+.. _example_annotation_plot_slope_marker.py:
+
+
+============
+Slope marker
+============
+
+When viewing data, it's often helpful to add a marker representing the
+predicted or measured slope. ``mpltools.annotation.slope_marker`` provides
+a simple way of adding a slope marker by specifying the origin of the marker
+(normally, the left-most corner of the marker, but, when ``invert=True``, it's
+the right-most corner) and the slope---either as a float value or a (rise, run)
+tuple.
+
+.. image:: images/plot_slope_marker_1.png
+    :align: center
+
+
+.. literalinclude:: plot_slope_marker.py
+    :lines: 13-
+
+
+
+**Python source code:** :download:`download <plot_slope_marker.py>`
+(generated using ``mpltools`` |version|)
+
