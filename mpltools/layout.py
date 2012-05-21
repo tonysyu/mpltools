@@ -166,6 +166,25 @@ def _calc_limits(axis, frac):
         pad = np.array([-mag*frac, mag*frac])
         return limits + pad
 
+def func_on_all_figs(func, *args, **kwargs):
+    """
+    runs a function after making all open figures current. 
+    
+    Parameters
+    ----------
+    func : function
+        function to call
+    \*args, \*\*kwargs : pased to func
+    
+    Examples
+    ----------
+    >>>rf.func_on_all_figs(grid,alpha=.3)
+    """
+    for fig_n in plt.get_fignums():
+        plt.figure(fig_n)
+        func(*args, **kwargs)
+        plt.draw()
+
 
 if __name__ == '__main__':
     from yutils.mpl.core import demo_plot
