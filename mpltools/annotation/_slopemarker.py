@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 __all__ = ['slope_marker']
 
 
-def slope_marker(origin, slope, invert=False, size_frac=0.1, pad_frac=0.2, 
-                 fontsize=None, ax=None):
+def slope_marker(origin, slope, invert=False, size_frac=0.1, pad_frac=0.2,
+                 text_kwargs=None, poly_kwargs=None, ax=None):
     """Plot triangular slope marker labeled with slope.
 
     Parameters
@@ -26,9 +26,14 @@ def slope_marker(origin, slope, invert=False, size_frac=0.1, pad_frac=0.2,
         Fraction of the slope marker size used to pad text labels.
     fontsize : float
         Font size of slope labels.
+    text_kwargs : dict
+        Keyword arguments passed to `matplotlib.text.Text`.
+    poly_kwargs : dict
+        Keyword arguments passed to `matplotlib.patches.Polygon`.
     """
-    if ax is None:
-        ax = plt.gca()
+    ax = ax if ax is not None else plt.gca()
+    text_kwargs = {} if text_kwargs is None else text_kwargs
+    poly_kwargs = {} if poly_kwargs is None else poly_kwargs
 
     if np.iterable(slope):
         rise, run = slope
@@ -71,15 +76,12 @@ def slope_marker(origin, slope, invert=False, size_frac=0.1, pad_frac=0.2,
     va = 'top' if y_pad > 0 else 'bottom'
     ha = 'left' if x_pad > 0 else 'right'
     if rise is not None:
-        ax.text(x_run, y_run, str(run), fontsize=fontsize,
-                va=va, ha='center')
-        ax.text(x_rise, y_rise, str(rise), fontsize=fontsize,
-                ha=ha, va='center')
+        ax.text(x_run, y_run, str(run), va=va, ha='center', **text_kwargs)
+        ax.text(x_rise, y_rise, str(rise), ha=ha, va='center', **text_kwargs)
     else:
-        ax.text(x_rise, y_rise, str(slope), fontsize=fontsize,
-                ha=ha, va='center')
+        ax.text(x_rise, y_rise, str(slope), ha=ha, va='center', **text_kwargs)
 
-    ax.add_patch(_slope_triangle(origin, dx, dy))
+    ax.add_patch(_slope_triangle(origin, dx, dy, **poly_kwargs))
 
 
 def log_displace(x0, dx_log):
@@ -107,15 +109,19 @@ def _text_position(x0, dx, scale='linear'):
         raise ValueError('Unknown value for `scale`: %s' % scale)
 
 
-def _slope_triangle(origin, dx, dy, ec='none', fc='0.8', **poly_kwargs):
+def _slope_triangle(origin, dx, dy, fc='0.8', **poly_kwargs):
     """Return Polygon representing slope.
           /|
          / | dy
         /__|
          dx
     """
+    if 'ec' not in poly_kwargs and 'edgecolor' not in poly_kwargs:
+        poly_kwargs['edgecolor'] = 'none'
+    if 'fc' not in poly_kwargs and 'facecolor' not in poly_kwargs:
+        poly_kwargs['facecolor'] = '0.8'
     verts = [np.asarray(origin)]
     verts.append(verts[0] + (dx, 0))
     verts.append(verts[0] + (dx, dy))
-    return plt.Polygon(verts, ec=ec, fc=fc, **poly_kwargs)
+    return plt.Polygon(verts, **poly_kwargs)
 

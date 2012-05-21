@@ -24,8 +24,10 @@ annotation.slope_marker((1, 0.6), (-1, 2), ax=ax1)
 ax1.set_title('linear, negative slope')
 
 ax2.loglog(x, x**0.5)
-annotation.slope_marker((10, 2), (1, 2), ax=ax2)
-ax2.set_title('loglog')
+annotation.slope_marker((10, 2), (1, 2), ax=ax2,
+                        text_kwargs={'color': 'cornflowerblue'},
+                        poly_kwargs={'facecolor': (0.73, 0.8, 1)})
+ax2.set_title('loglog, custom colors')
 
 ax3.loglog(x, x**0.5)
 annotation.slope_marker((10, 4), (1, 2), invert=True, ax=ax3)
