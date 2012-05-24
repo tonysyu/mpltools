@@ -68,6 +68,13 @@ class Animation(object):
         """
         raise NotImplementedError
 
+    def init_background(self):
+        """Initialize background artists.
+
+        Note: This method is passed to `FuncAnimation` as `init_func`.
+        """
+        pass
+
     def update(self):
         """Update frame.
 
@@ -94,25 +101,27 @@ class Animation(object):
             If True, use blitting to optimize drawing. Unsupported by some
             backends.
 
-        init_func : function
-            Function to draw a clear frame. If None, the results of drawing from
-            the first item in the frames sequence will be used.
+        init_background : function
+            If None, the results of drawing
+            from the first item in the frames sequence will be used. This can
+            also be added as a class method instead of passing to `animate`.
 
         save_count : int
             If saving a movie, `save_count` determines number of frames saved.
 
         """
         reusable_generator = lambda: iter(self.update())
+        kwargs['init_background'] = self.init_background
         self._ani = _GenAnimation(self.fig, reusable_generator, **kwargs)
 
 
 class _GenAnimation(_animation.FuncAnimation):
 
-    def __init__(self, fig, frames, init_func=None, save_count=None,
+    def __init__(self, fig, frames, init_background=None, save_count=None,
                  **kwargs):
         self._iter_gen = frames
 
-        self._init_func = init_func
+        self._init_func = init_background
         self.save_count = save_count if save_count is not None else 100
 
         # Dummy args and function for compatibility with FuncAnimation
