@@ -1,0 +1,26 @@
+.. _example_style_plot_dark_background.py:
+
+
+================
+Dark backgrounds
+================
+
+A key feature of ``mpltools`` is the ability to set "styles"---essentially,
+stylesheets that are similar to matplotlibrc files. This example demonstrates
+the "dark_background" style, which uses white for elements that are typically
+black (text, borders, etc). Note, however, that not all plot elements default
+to colors defined by an rc parameter.
+
+
+.. image:: images/plot_dark_background_1.png
+    :align: center
+
+
+.. literalinclude:: plot_dark_background.py
+    :lines: 13-
+
+
+
+**Python source code:** :download:`download <plot_dark_background.py>`
+(generated using ``mpltools`` |version|)
+

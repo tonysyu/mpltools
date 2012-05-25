@@ -124,6 +124,12 @@ animation.</p>
 <tr class="row-odd"><td><a class="reference internal" href="#mpltools.animation.Animation.animate" title="mpltools.animation.Animation.animate"><tt class="xref py py-obj docutils literal"><span class="pre">animate</span></tt></a>(**kwargs)</td>
 <td>Run animation.</td>
 </tr>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.animation.Animation.init_background" title="mpltools.animation.Animation.init_background"><tt class="xref py py-obj docutils literal"><span class="pre">init_background</span></tt></a>()</td>
+<td>Initialize background artists.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.animation.Animation.save" title="mpltools.animation.Animation.save"><tt class="xref py py-obj docutils literal"><span class="pre">save</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td></td>
+</tr>
 <tr class="row-even"><td><a class="reference internal" href="#mpltools.animation.Animation.update" title="mpltools.animation.Animation.update"><tt class="xref py py-obj docutils literal"><span class="pre">update</span></tt></a>()</td>
 <td>Update frame.</td>
 </tr>
@@ -162,10 +168,11 @@ that you must create a figure object assigned to <cite>self.fig</cite>.</p>
 <div><p>If True, use blitting to optimize drawing. Unsupported by some
 backends.</p>
 </div></blockquote>
-<p><strong>init_func</strong> : function</p>
+<p><strong>init_background</strong> : function</p>
 <blockquote>
-<div><p>Function to draw a clear frame. If None, the results of drawing from
-the first item in the frames sequence will be used.</p>
+<div><p>If None, the results of drawing
+from the first item in the frames sequence will be used. This can
+also be added as a class method instead of passing to <cite>animate</cite>.</p>
 </div></blockquote>
 <p><strong>save_count</strong> : int</p>
 <blockquote class="last">
@@ -176,6 +183,18 @@ the first item in the frames sequence will be used.</p>
 </tbody>
 </table>
 </dd></dl>
+
+<dl class="method">
+<dt id="mpltools.animation.Animation.init_background">
+<tt class="descname">init_background</tt><big>(</big><big>)</big><a class="headerlink" href="#mpltools.animation.Animation.init_background" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize background artists.</p>
+<p>Note: This method is passed to <cite>FuncAnimation</cite> as <cite>init_func</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpltools.animation.Animation.save">
+<tt class="descname">save</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#mpltools.animation.Animation.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="mpltools.animation.Animation.update">

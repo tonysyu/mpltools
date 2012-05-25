@@ -142,7 +142,15 @@ Examples
 .. toctree::
    :hidden:
 
-   style/plot_grayscale
+   style/plot_dark_background
+   plot_grayscale
+
+
+.. figure:: style/images/thumb/plot_dark_background.png
+   :figclass: gallery
+   :target: ./style/plot_dark_background.html
+
+   :ref:`example_style_plot_dark_background.py`
 
 
 .. figure:: style/images/thumb/plot_grayscale.png
