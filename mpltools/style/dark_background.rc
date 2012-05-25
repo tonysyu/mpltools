@@ -1,0 +1,23 @@
+# Set black background default line colors to white.
+
+
+lines.color = 'white'
+patch.edgecolor = 'white'
+
+text.color = 'white'
+
+axes.facecolor = 'black'
+axes.edgecolor = 'white'
+axes.labelcolor = 'white'
+
+xtick.color = 'white'
+ytick.color = 'white'
+
+grid.color = 'white'
+
+figure.facecolor = 'black'
+figure.edgecolor = 'black'
+
+savefig.facecolor = 'black'
+savefig.edgecolor = 'black'
+
