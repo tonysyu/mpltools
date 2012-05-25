@@ -9,6 +9,7 @@ text.color = 'white'
 axes.facecolor = 'black'
 axes.edgecolor = 'white'
 axes.labelcolor = 'white'
+axes.color_cycle = ['b', 'g', 'r', 'c', 'm', 'y', 'w']
 
 xtick.color = 'white'
 ytick.color = 'white'
