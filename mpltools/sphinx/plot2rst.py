@@ -76,12 +76,6 @@ import matplotlib.pyplot as plt
 from matplotlib import image
 
 
-LITERALINCLUDE = """
-.. literalinclude:: {src_name}
-    :lines: {code_start}-
-
-"""
-
 CODE_LINK = """
 
 **Python source code:** :download:`download <{0}>`
@@ -311,28 +305,21 @@ def write_example(src_name, src_dir, rst_dir, cfg):
     if blocks[0][2].startswith('#!'):
         blocks.pop(0) # don't add shebang line to rst file.
 
-    rst_link = '.. _example_%s:\n\n' % (last_dir + src_name)
+    # Note that `process_blocks` executes the source, so plots are now 'active'
     figure_list, rst = process_blocks(blocks, src_path, image_path, cfg)
 
-    has_inline_plots = any(cfg.plot2rst_plot_tag in b[2] for b in blocks)
-    if has_inline_plots:
-        example_rst = ''.join([rst_link, rst])
-    else:
-        # display first block of text, all plots, and code---in that order.
-        first_text_block = [b for b in blocks if b[0] == 'text'][0]
-        label, (start, end), content = first_text_block
-        example_rst = rst_link
-        example_rst += eval(content)
+    rst_link = '.. _example_%s:\n\n' % (last_dir + src_name)
+    example_rst = ''.join([rst_link, rst])
 
+    has_inline_plots = any(cfg.plot2rst_plot_tag in b[2] for b in blocks)
+    if not has_inline_plots:
+        # Show all plots at the end of the example
         if flags['show']:
             figure_list = save_all_figures(image_path)
             img_blocks = [IMAGE_TEMPLATE % f.lstrip('/') for f in figure_list]
             example_rst += ''.join(img_blocks)
         else:
             figure_list = []
-
-        code_info = dict(src_name=src_name, code_start=end)
-        example_rst += LITERALINCLUDE.format(**code_info)
 
     example_rst += CODE_LINK.format(src_name)
 
