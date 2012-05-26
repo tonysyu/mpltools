@@ -112,6 +112,7 @@ GALLERY_IMAGE_TEMPLATE = """
 
 """
 
+FLAG_PREFIX = '#PLOT2RST:'
 
 class Path(str):
     """Path object for manipulating directory and file paths."""
@@ -163,6 +164,7 @@ def setup(app):
     app.add_config_value('plot2rst_thumb_scale', 0.2, True)
     app.add_config_value('plot2rst_plot_tag', 'PLOT2RST.current_figure', True)
     app.add_config_value('plot2rst_index_name', 'index', True)
+    app.add_config_value('plot2rst_flags', {'show': True}, True)
 
 
 def generate_example_galleries(app):
@@ -303,7 +305,9 @@ def write_example(src_name, src_dir, rst_dir, cfg):
     if _plots_are_current(src_path, image_path) and rst_path.exists:
         return
 
-    blocks = split_code_and_text_blocks(example_file)
+    flags = cfg.plot2rst_flags.copy()
+    blocks, new_flags = split_code_and_text_blocks(example_file)
+    flags.update(new_flags)
     if blocks[0][2].startswith('#!'):
         blocks.pop(0) # don't add shebang line to rst file.
 
@@ -314,15 +318,19 @@ def write_example(src_name, src_dir, rst_dir, cfg):
     if has_inline_plots:
         example_rst = ''.join([rst_link, rst])
     else:
-        # print first block of text, display all plots, then display code.
+        # display first block of text, all plots, and code---in that order.
         first_text_block = [b for b in blocks if b[0] == 'text'][0]
         label, (start, end), content = first_text_block
-        figure_list = save_all_figures(image_path)
-        rst_blocks = [IMAGE_TEMPLATE % f.lstrip('/') for f in figure_list]
-
         example_rst = rst_link
         example_rst += eval(content)
-        example_rst += ''.join(rst_blocks)
+
+        if flags['show']:
+            figure_list = save_all_figures(image_path)
+            img_blocks = [IMAGE_TEMPLATE % f.lstrip('/') for f in figure_list]
+            example_rst += ''.join(img_blocks)
+        else:
+            figure_list = []
+
         code_info = dict(src_name=src_name, code_start=end)
         example_rst += LITERALINCLUDE.format(**code_info)
 
@@ -333,9 +341,11 @@ def write_example(src_name, src_dir, rst_dir, cfg):
     f.flush()
 
     thumb_path = thumb_dir.pjoin(src_name[:-3] + '.png')
-    first_image_file = image_dir.pjoin(figure_list[0].lstrip('/'))
-    if first_image_file.exists:
-        image.thumbnail(first_image_file, thumb_path, cfg.plot2rst_thumb_scale)
+    if figure_list:
+        first_image_file = image_dir.pjoin(figure_list[0].lstrip('/'))
+        if first_image_file.exists:
+            thumb_scale = cfg.plot2rst_thumb_scale
+            image.thumbnail(first_image_file, thumb_path, thumb_scale)
 
     if not thumb_path.exists:
         if cfg.plot2rst_default_thumb is None:
@@ -364,8 +374,10 @@ def split_code_and_text_blocks(source_file):
     blocks : list of (label, (start, end+1), content)
         List where each element is a tuple with the label ('text' or 'code'),
         the (start, end+1) line numbers, and content string of block.
+    flags : dict
+        Option flags for plot2rst that were found in the source file.
     """
-    block_edges, idx_first_text_block = get_block_edges(source_file)
+    block_edges, idx_first_text_block, flags = analyze_blocks(source_file)
 
     with open(source_file) as f:
         source_lines = f.readlines()
@@ -379,10 +391,10 @@ def split_code_and_text_blocks(source_file):
         # subtract 1 from indices b/c line numbers start at 1, not 0
         content = ''.join(source_lines[start-1:end-1])
         blocks.append((block_label, (start, end), content))
-    return blocks
+    return blocks, flags
 
 
-def get_block_edges(source_file):
+def analyze_blocks(source_file):
     """Return starting line numbers of code and text blocks
 
     Returns
@@ -391,15 +403,25 @@ def get_block_edges(source_file):
         Line number for the start of each block. Note the
     idx_first_text_block : {0 | 1}
         0 if first block is text then, else 1 (second block better be text).
+    flags : dict
+        Option flags for plot2rst that were found in the source file.
     """
+    flags = {}
     block_edges = []
     with open(source_file) as f:
         token_iter = tokenize.generate_tokens(f.readline)
         for token_tuple in token_iter:
             t_id, t_str, (srow, scol), (erow, ecol), src_line = token_tuple
-            if (token.tok_name[t_id] == 'STRING' and scol == 0):
+            tok_name = token.tok_name[t_id]
+            if tok_name == 'STRING' and scol == 0:
                 # Add one point to line after text (for later slicing)
                 block_edges.extend((srow, erow+1))
+            elif tok_name == 'COMMENT' and t_str.startswith(FLAG_PREFIX):
+                flag_args = t_str.lstrip(FLAG_PREFIX).split('=')
+                if not len(flag_args) == 2:
+                    raise ValueError("Flags must be key-value pairs.")
+                key = flag_args[0].strip()
+                flags[key] = eval(flag_args[1])
     idx_first_text_block = 0
     # when example doesn't start with text block.
     if not block_edges[0] == 1:
@@ -408,7 +430,7 @@ def get_block_edges(source_file):
     # when example doesn't end with text block.
     if not block_edges[-1] == erow: # iffy: I'm using end state of loop
         block_edges.append(erow)
-    return block_edges, idx_first_text_block
+    return block_edges, idx_first_text_block, flags
 
 
 def process_blocks(blocks, src_path, image_path, cfg):
