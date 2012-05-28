@@ -17,6 +17,7 @@ with different interface for:
 
 
 """
+import warnings
 import matplotlib.animation as _animation
 
 
@@ -39,11 +40,12 @@ class Animation(object):
                self.fig, self.ax = plt.subplots()
                self.width = width
                self.ax.axis([0, width, 0, width])
+               self.num_frames = 20
 
            def update(self):
                artists = []
                self.ax.lines = [] # Clean up plot when repeating animation.
-               for i in np.arange(20):
+               for i in np.arange(self.num_frames):
                    x, y = np.random.uniform(0, self.width, size=2)
                    artists.append(self.ax.plot(x, y, 'ro'))
                    yield artists
@@ -108,11 +110,67 @@ class Animation(object):
 
         save_count : int
             If saving a movie, `save_count` determines number of frames saved.
-
+            If not defined, use `num_frames` attribute (if defined); otherwise,
+            set to 100 frames.
         """
         reusable_generator = lambda: iter(self.update())
         kwargs['init_background'] = self.init_background
+
+        self._warn_num_frames = False
+        if hasattr(self, 'num_frames') and 'save_count' not in kwargs:
+            kwargs['save_count'] = self.num_frames
+        if 'save_count' not in kwargs:
+            kwargs['save_count'] = 100
+            self._warn_num_frames = True
+
         self._ani = _GenAnimation(self.fig, reusable_generator, **kwargs)
+
+    def save(self, filename, **kwargs):
+        """Saves a movie file by drawing every frame.
+
+        Parameters
+        ----------
+        filename : str
+            The output filename.
+
+        writer : :class:`matplotlib.animation.MovieWriter` or str
+            Class for writing movie from animation. If string, must be 'ffmpeg'
+            or 'mencoder', which identifies the MovieWriter class used.
+            If None, use 'animation.writer' rcparam.
+
+        fps : float
+            The frames per second in the movie. If None, use the animation's
+            specified `interval` to set the frames per second.
+
+        dpi : int
+            Dots per inch for the movie frames.
+
+        codec :
+            Video codec to be used. Not all codecs are supported by a given
+            writer. If None, use 'animation.codec' rcparam.
+
+        bitrate : int
+            Kilobits per seconds in the movie compressed movie. A higher
+            value gives a higher quality movie, but at the cost of increased
+            file size. If None, use `animation.bitrate` rcparam.
+
+        extra_args : list
+            List of extra string arguments passed to the underlying movie
+            utility. If None, use 'animation.extra_args' rcParam.
+
+        metadata : dict
+            Metadata to include in the output file. Some keys that may be of
+            use include: title, artist, genre, subject, copyright, comment.
+
+        """
+
+        if not hasattr(self, '_ani'):
+            raise RuntimeError("Run `animate` method before calling `save`!")
+            return
+        if self._warn_num_frames:
+            msg = "%s `num_frames` attribute. Animation may be truncated."
+            warnings.warn(msg % self.__class__.__name__)
+        self._ani.save(filename, **kwargs)
 
 
 class _GenAnimation(_animation.FuncAnimation):
