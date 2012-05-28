@@ -4,19 +4,21 @@ Getting Started
 ===============
 
 `mpltools` provides tools for Matplotlib_ that make it easier to adjust the
-style, choose colors, make specialized plots, etc.
+style, choose colors, make specialized plots, etc. For the most part, these
+tools are only loosely-connected in functionality, so the best way to get
+started is to look at the `example gallery`_.
 
 
 Styles
 ======
 
-A key feature of `mpltools` is the idea of "styles"---essentially stylesheets
-that are similar to matplotlibrc_ files. Unfortunately, the syntax for
-a "mplstyle" file is slightly different than `matplotlibrc` files because
+This package got its start by implementing plotting "styles"---essentially
+stylesheets that are similar to matplotlibrc_ files. Unfortunately, the syntax
+for an ``mplstyle`` file is slightly different than matplotlibrc_ files because
 we use ConfigObj_ to parse them.
 
 Style names should be specified as sections in "mplstyle" files.  A simple
-`mplstyle` file would look like::
+``mplstyle`` file would look like::
 
     [style1]
 
@@ -28,14 +30,14 @@ Style names should be specified as sections in "mplstyle" files.  A simple
     text.fontsize = 10
     font.family = 'serif'
 
-`mpltools` searches the current working directory and your home directory for
-"mplstyle" files. To use a style, you just add::
+``mpltools`` searches the current working directory and your home directory for
+``mplstyle`` files. To use a style, you just add::
 
     >>> from mpltools import style
     >>> style.use('style1')
 
-There are a number of pre-defined styles located in `mpltools/style/`. To list
-all available styles, use::
+There are a number of pre-defined styles located in ``mpltools/style/``. To
+list all available styles, use::
 
     >>> print style.available
 

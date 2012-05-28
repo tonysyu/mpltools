@@ -13,7 +13,7 @@ Styles
 
 This package got its start by implementing plotting "styles"---essentially
 stylesheets that are similar to matplotlibrc_ files. Unfortunately, the syntax
-for a ``mplstyle`` file is slightly different than matplotlibrc_ files because
+for an ``mplstyle`` file is slightly different than matplotlibrc_ files because
 we use ConfigObj_ to parse them.
 
 Style names should be specified as sections in a "mplstyle" file.  A simple
