@@ -83,5 +83,5 @@ New BSD (a.k.a. Modified BSD). See `LICENSE` in this directory for details.
 .. _example gallery: http://tonysyu.github.com/mpltools/auto_examples/index.html
 .. _matplotlibrc: http://matplotlib.sourceforge.net/users/customizing.html
 .. _ConfigObj: http://www.voidspace.org.uk/python/configobj.html
-.. _mpltools: http://tonysyu.github.com/mpltools
+.. _mpltools documentation: http://tonysyu.github.com/mpltools
 
