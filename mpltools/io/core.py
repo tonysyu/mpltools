@@ -25,21 +25,17 @@ def save_all_figs(directory='./', fmt=None, default_name='untitled%i'):
     """
     for fignum in plt.get_fignums():
         try:
-            # try to get title of figure(fignum)
             filename = plt.figure(fignum).get_axes()[0].get_title()
 
-            # create filename if title doesnt exist
             if filename == '':
                 filename = default_name % fignum
 
             savename = os.path.join(directory, filename)
 
             if fmt is None:
-                # get default format from rcParams
                 fmt = plt.rcParams.get('savefig.extension','png')
 
             if isinstance(fmt, basestring):
-                # force string into list of strings
                 fmt = [fmt]
 
             for a_fmt in fmt:
@@ -47,6 +43,5 @@ def save_all_figs(directory='./', fmt=None, default_name='untitled%i'):
                 print ('Saved \'%s\' '% (savename + '.' + a_fmt))
 
         except(IndexError):
-            # figure has no axes to get, dont save it
             pass
 
