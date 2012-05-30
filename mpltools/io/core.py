@@ -37,10 +37,7 @@ def save_all_figs(directory = './', fmt = None,
     
             if fmt is None:
                 # get default format from rcParams
-                ## FIX would prefer this but i couldnt find the correct key
-                # fmt = plt.rcParams['savefig.extension']
-                ## /FIX
-                fmt = 'png'
+                fmt = plt.rcParams.get('savefig.extension','png')
             
             if isinstance(fmt, basestring):
                 # force string into list of strings
