@@ -30,16 +30,16 @@ def save_all_figs(directory='./', fmt=None, default_name='untitled%i'):
     for fignum in plt.get_fignums():
         try:
             filename = plt.figure(fignum).get_axes()[0].get_title()
-            if filename == '':
-                filename = default_name % fignum
+        except IndexError:
+            continue
 
-            savepath = os.path.join(directory, filename)
+        if filename == '':
+            filename = default_name % fignum
 
-            for a_fmt in fmt:
-                savename = '%s.%s' % (savepath, a_fmt)
-                plt.savefig(savename)
-                print("Saved '%s'" % savename)
+        savepath = os.path.join(directory, filename)
 
-        except(IndexError):
-            pass
+        for a_fmt in fmt:
+            savename = '%s.%s' % (savepath, a_fmt)
+            plt.savefig(savename)
+            print("Saved '%s'" % savename)
 
