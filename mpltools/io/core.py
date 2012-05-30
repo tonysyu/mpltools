@@ -3,20 +3,20 @@ import matplotlib.pyplot as plt
 
 
 def save_all_figs(directory='./', fmt=None, default_name='untitled%i'):
-    """
-    Save all open Figures to a given directory, possbily in numerous
-    file formats
+    """Save all open figures.
+
+    Each figure is saved with the title of the plot, if possible.
 
     Parameters
     ------------
     directory : str
-        path to save figures into
-    fmt : str, list of strs, or None
-        the types of formats to save figures as. The elements of this
-        list are passed to matplotlib's `savefig`. see example.
+        Path where figures are saved.
+    fmt : str, list of str
+        Image format(s) of saved figures. If None, default to rc parameter
+        'savefig.extension'.
     default_name : str
-        the default filename to use if plot has no title. must contain
-        a '%i' for the figure number
+        Default filename to use if plot has no title. Must contain '%i' for the
+        figure number.
 
     Examples
     --------
