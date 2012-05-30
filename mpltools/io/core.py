@@ -23,24 +23,22 @@ def save_all_figs(directory='./', fmt=None, default_name='untitled%i'):
     >>> save_all_figs('plots/', fmt=['pdf','png'])
 
     """
+    fmt = fmt if fmt is not None else 'png'
+    if isinstance(fmt, basestring):
+        fmt = [fmt]
+
     for fignum in plt.get_fignums():
         try:
             filename = plt.figure(fignum).get_axes()[0].get_title()
-
             if filename == '':
                 filename = default_name % fignum
 
-            savename = os.path.join(directory, filename)
-
-            if fmt is None:
-                fmt = plt.rcParams.get('savefig.extension','png')
-
-            if isinstance(fmt, basestring):
-                fmt = [fmt]
+            savepath = os.path.join(directory, filename)
 
             for a_fmt in fmt:
-                plt.savefig(savename + '.' + a_fmt)
-                print ('Saved \'%s\' '% (savename + '.' + a_fmt))
+                savename = '%s.%s' % (savepath, a_fmt)
+                plt.savefig(savename)
+                print("Saved '%s'" % savename)
 
         except(IndexError):
             pass
