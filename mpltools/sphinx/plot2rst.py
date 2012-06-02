@@ -302,8 +302,13 @@ def write_example(src_name, src_dir, rst_dir, cfg):
     flags = cfg.plot2rst_flags.copy()
     blocks, new_flags = split_code_and_text_blocks(example_file)
     flags.update(new_flags)
-    if blocks[0][2].startswith('#!'):
-        blocks.pop(0) # don't add shebang line to rst file.
+
+    while True:
+        head = blocks[0][2]
+        if head.startswith('#!') or head.startswith(FLAG_PREFIX):
+            blocks.pop(0) # don't add shebangs or flags to rst file.
+        else:
+            break
 
     # Note that `process_blocks` executes the source, so plots are now 'active'
     figure_list, rst = process_blocks(blocks, src_path, image_path, cfg)
