@@ -312,14 +312,13 @@ def write_example(src_name, src_dir, rst_dir, cfg):
     example_rst = ''.join([rst_link, rst])
 
     has_inline_plots = any(cfg.plot2rst_plot_tag in b[2] for b in blocks)
-    if not has_inline_plots:
+    if not has_inline_plots and flags['show']:
         # Show all plots at the end of the example
-        if flags['show']:
+        if len(plt.get_fignums()) > 0:
             figure_list = save_all_figures(image_path)
             img_blocks = [IMAGE_TEMPLATE % f.lstrip('/') for f in figure_list]
             example_rst += ''.join(img_blocks)
-        else:
-            figure_list = []
+    plt.close('all')
 
     example_rst += CODE_LINK.format(src_name)
 
@@ -369,6 +368,10 @@ def split_code_and_text_blocks(source_file):
     with open(source_file) as f:
         source_lines = f.readlines()
 
+    if idx_first_text_block is None:
+        blocks = [('code', (1, len(source_lines)), ''.join(source_lines))]
+        return blocks, flags
+
     # Every other block should be a text block
     idx_text_block = np.arange(idx_first_text_block, len(block_edges), 2)
     blocks = []
@@ -410,13 +413,16 @@ def analyze_blocks(source_file):
                 key = flag_args[0].strip()
                 flags[key] = eval(flag_args[1])
     idx_first_text_block = 0
-    # when example doesn't start with text block.
-    if not block_edges[0] == 1:
-        block_edges.insert(0, 1)
-        idx_first_text_block = 1
-    # when example doesn't end with text block.
-    if not block_edges[-1] == erow: # iffy: I'm using end state of loop
-        block_edges.append(erow)
+    if not block_edges: # no text blocks
+        idx_first_text_block = None
+    else:
+        # when example doesn't start with text block.
+        if not block_edges[0] == 1:
+            block_edges.insert(0, 1)
+            idx_first_text_block = 1
+        # when example doesn't end with text block.
+        if not block_edges[-1] == erow: # iffy: I'm using end state of loop
+            block_edges.append(erow)
     return block_edges, idx_first_text_block, flags
 
 
@@ -443,7 +449,10 @@ def process_blocks(blocks, src_path, image_path, cfg):
     """
     src_dir, src_name = src_path.psplit()
     if not src_name.startswith('plot'):
-        return [], ''
+        convert_func = dict(code=codestr2rst, text=docstr2rst)
+        rst_blocks = [convert_func[blabel](bcontent)
+                      for i, (blabel, brange, bcontent) in enumerate(blocks)]
+        return [], '\n'.join(rst_blocks)
 
     # index of blocks which have inline plots
     inline_tag = cfg.plot2rst_plot_tag
