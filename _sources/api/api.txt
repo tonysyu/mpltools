@@ -8,6 +8,7 @@ API Reference
    mpltools.animation
    mpltools.annotation
    mpltools.color
+   mpltools.io
    mpltools.layout
    mpltools.special
    mpltools.style

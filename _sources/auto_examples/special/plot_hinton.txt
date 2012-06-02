@@ -25,12 +25,21 @@ a similar situation.
 .. _Hinton demo: http://matplotlib.sourceforge.net/examples/api/hinton_demo.html
 
 
+
+.. code-block:: python
+
+	import numpy as np
+	import matplotlib.pyplot as plt
+	
+	from mpltools import special
+	
+	
+	A = np.random.uniform(-1, 1, size=(20, 20))
+	special.hinton(A)
+	plt.show()
+	
 .. image:: images/plot_hinton_1.png
     :align: center
-
-
-.. literalinclude:: plot_hinton.py
-    :lines: 26-
 
 
 

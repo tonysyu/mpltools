@@ -1,0 +1,16 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+Module: :mod:`io`
+=================
+.. automodule:: mpltools.io
+
+.. currentmodule:: mpltools.io
+.. autosummary::
+
+   mpltools.io.save_all_figs
+
+save_all_figs
+-------------
+
+.. autofunction:: mpltools.io.save_all_figs
+

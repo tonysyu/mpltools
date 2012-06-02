@@ -95,11 +95,12 @@ the plot:</p>
         <span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_frames</span> <span class="o">=</span> <span class="mi">20</span>
 
     <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">artists</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span> <span class="c"># Clean up plot when repeating animation.</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_frames</span><span class="p">):</span>
             <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
             <span class="n">artists</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s">&#39;ro&#39;</span><span class="p">))</span>
             <span class="k">yield</span> <span class="n">artists</span>
@@ -127,8 +128,8 @@ animation.</p>
 <tr class="row-even"><td><a class="reference internal" href="#mpltools.animation.Animation.init_background" title="mpltools.animation.Animation.init_background"><tt class="xref py py-obj docutils literal"><span class="pre">init_background</span></tt></a>()</td>
 <td>Initialize background artists.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#mpltools.animation.Animation.save" title="mpltools.animation.Animation.save"><tt class="xref py py-obj docutils literal"><span class="pre">save</span></tt></a>(*args,&nbsp;**kwargs)</td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.animation.Animation.save" title="mpltools.animation.Animation.save"><tt class="xref py py-obj docutils literal"><span class="pre">save</span></tt></a>(filename,&nbsp;**kwargs)</td>
+<td>Saves a movie file by drawing every frame.</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#mpltools.animation.Animation.update" title="mpltools.animation.Animation.update"><tt class="xref py py-obj docutils literal"><span class="pre">update</span></tt></a>()</td>
 <td>Update frame.</td>
@@ -176,7 +177,9 @@ also be added as a class method instead of passing to <cite>animate</cite>.</p>
 </div></blockquote>
 <p><strong>save_count</strong> : int</p>
 <blockquote class="last">
-<div><p>If saving a movie, <cite>save_count</cite> determines number of frames saved.</p>
+<div><p>If saving a movie, <cite>save_count</cite> determines number of frames saved.
+If not defined, use <cite>num_frames</cite> attribute (if defined); otherwise,
+set to 100 frames.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -186,15 +189,64 @@ also be added as a class method instead of passing to <cite>animate</cite>.</p>
 
 <dl class="method">
 <dt id="mpltools.animation.Animation.init_background">
-<tt class="descname">init_background</tt><big>(</big><big>)</big><a class="headerlink" href="#mpltools.animation.Animation.init_background" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">init_background</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/mpltools/animation.html#Animation.init_background"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpltools.animation.Animation.init_background" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialize background artists.</p>
 <p>Note: This method is passed to <cite>FuncAnimation</cite> as <cite>init_func</cite>.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="mpltools.animation.Animation.save">
-<tt class="descname">save</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#mpltools.animation.Animation.save" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<tt class="descname">save</tt><big>(</big><em>filename</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/mpltools/animation.html#Animation.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpltools.animation.Animation.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves a movie file by drawing every frame.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
+<blockquote>
+<div><p>The output filename.</p>
+</div></blockquote>
+<p><strong>writer</strong> : <tt class="xref py py-class docutils literal"><span class="pre">matplotlib.animation.MovieWriter</span></tt> or str</p>
+<blockquote>
+<div><p>Class for writing movie from animation. If string, must be &#8216;ffmpeg&#8217;
+or &#8216;mencoder&#8217;, which identifies the MovieWriter class used.
+If None, use &#8216;animation.writer&#8217; rcparam.</p>
+</div></blockquote>
+<p><strong>fps</strong> : float</p>
+<blockquote>
+<div><p>The frames per second in the movie. If None, use the animation&#8217;s
+specified <cite>interval</cite> to set the frames per second.</p>
+</div></blockquote>
+<p><strong>dpi</strong> : int</p>
+<blockquote>
+<div><p>Dots per inch for the movie frames.</p>
+</div></blockquote>
+<p><strong>codec :</strong> :</p>
+<blockquote>
+<div><p>Video codec to be used. Not all codecs are supported by a given
+writer. If None, use &#8216;animation.codec&#8217; rcparam.</p>
+</div></blockquote>
+<p><strong>bitrate</strong> : int</p>
+<blockquote>
+<div><p>Kilobits per seconds in the movie compressed movie. A higher
+value gives a higher quality movie, but at the cost of increased
+file size. If None, use <cite>animation.bitrate</cite> rcparam.</p>
+</div></blockquote>
+<p><strong>extra_args</strong> : list</p>
+<blockquote>
+<div><p>List of extra string arguments passed to the underlying movie
+utility. If None, use &#8216;animation.extra_args&#8217; rcParam.</p>
+</div></blockquote>
+<p><strong>metadata</strong> : dict</p>
+<blockquote class="last">
+<div><p>Metadata to include in the output file. Some keys that may be of
+use include: title, artist, genre, subject, copyright, comment.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="mpltools.animation.Animation.update">

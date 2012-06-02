@@ -78,6 +78,7 @@
 
 
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">import</span> <span class="nn">matplotlib.animation</span> <span class="kn">as</span> <span class="nn">_animation</span>
 
 
@@ -100,11 +101,12 @@
 <span class="sd">               self.fig, self.ax = plt.subplots()</span>
 <span class="sd">               self.width = width</span>
 <span class="sd">               self.ax.axis([0, width, 0, width])</span>
+<span class="sd">               self.num_frames = 20</span>
 
 <span class="sd">           def update(self):</span>
 <span class="sd">               artists = []</span>
 <span class="sd">               self.ax.lines = [] # Clean up plot when repeating animation.</span>
-<span class="sd">               for i in np.arange(20):</span>
+<span class="sd">               for i in np.arange(self.num_frames):</span>
 <span class="sd">                   x, y = np.random.uniform(0, self.width, size=2)</span>
 <span class="sd">                   artists.append(self.ax.plot(x, y, &#39;ro&#39;))</span>
 <span class="sd">                   yield artists</span>
@@ -128,6 +130,13 @@
 <span class="sd">        that you must create a figure object assigned to `self.fig`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</div>
+<div class="viewcode-block" id="Animation.init_background"><a class="viewcode-back" href="../../api/mpltools.animation.html#mpltools.animation.Animation.init_background">[docs]</a>    <span class="k">def</span> <span class="nf">init_background</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize background artists.</span>
+
+<span class="sd">        Note: This method is passed to `FuncAnimation` as `init_func`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
 </div>
 <div class="viewcode-block" id="Animation.update"><a class="viewcode-back" href="../../api/mpltools.animation.html#mpltools.animation.Animation.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Update frame.</span>
@@ -155,25 +164,83 @@
 <span class="sd">            If True, use blitting to optimize drawing. Unsupported by some</span>
 <span class="sd">            backends.</span>
 
-<span class="sd">        init_func : function</span>
-<span class="sd">            Function to draw a clear frame. If None, the results of drawing from</span>
-<span class="sd">            the first item in the frames sequence will be used.</span>
+<span class="sd">        init_background : function</span>
+<span class="sd">            If None, the results of drawing</span>
+<span class="sd">            from the first item in the frames sequence will be used. This can</span>
+<span class="sd">            also be added as a class method instead of passing to `animate`.</span>
 
 <span class="sd">        save_count : int</span>
 <span class="sd">            If saving a movie, `save_count` determines number of frames saved.</span>
-
+<span class="sd">            If not defined, use `num_frames` attribute (if defined); otherwise,</span>
+<span class="sd">            set to 100 frames.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">reusable_generator</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">())</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;init_background&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_background</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_warn_num_frames</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;num_frames&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="s">&#39;save_count&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;save_count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_frames</span>
+        <span class="k">if</span> <span class="s">&#39;save_count&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s">&#39;save_count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_warn_num_frames</span> <span class="o">=</span> <span class="bp">True</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_ani</span> <span class="o">=</span> <span class="n">_GenAnimation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fig</span><span class="p">,</span> <span class="n">reusable_generator</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Animation.save"><a class="viewcode-back" href="../../api/mpltools.animation.html#mpltools.animation.Animation.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Saves a movie file by drawing every frame.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            The output filename.</span>
+
+<span class="sd">        writer : :class:`matplotlib.animation.MovieWriter` or str</span>
+<span class="sd">            Class for writing movie from animation. If string, must be &#39;ffmpeg&#39;</span>
+<span class="sd">            or &#39;mencoder&#39;, which identifies the MovieWriter class used.</span>
+<span class="sd">            If None, use &#39;animation.writer&#39; rcparam.</span>
+
+<span class="sd">        fps : float</span>
+<span class="sd">            The frames per second in the movie. If None, use the animation&#39;s</span>
+<span class="sd">            specified `interval` to set the frames per second.</span>
+
+<span class="sd">        dpi : int</span>
+<span class="sd">            Dots per inch for the movie frames.</span>
+
+<span class="sd">        codec :</span>
+<span class="sd">            Video codec to be used. Not all codecs are supported by a given</span>
+<span class="sd">            writer. If None, use &#39;animation.codec&#39; rcparam.</span>
+
+<span class="sd">        bitrate : int</span>
+<span class="sd">            Kilobits per seconds in the movie compressed movie. A higher</span>
+<span class="sd">            value gives a higher quality movie, but at the cost of increased</span>
+<span class="sd">            file size. If None, use `animation.bitrate` rcparam.</span>
+
+<span class="sd">        extra_args : list</span>
+<span class="sd">            List of extra string arguments passed to the underlying movie</span>
+<span class="sd">            utility. If None, use &#39;animation.extra_args&#39; rcParam.</span>
+
+<span class="sd">        metadata : dict</span>
+<span class="sd">            Metadata to include in the output file. Some keys that may be of</span>
+<span class="sd">            use include: title, artist, genre, subject, copyright, comment.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;_ani&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&quot;Run `animate` method before calling `save`!&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_warn_num_frames</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> `num_frames` attribute. Animation may be truncated.&quot;</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">msg</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ani</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 </div></div>
 <span class="k">class</span> <span class="nc">_GenAnimation</span><span class="p">(</span><span class="n">_animation</span><span class="o">.</span><span class="n">FuncAnimation</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">frames</span><span class="p">,</span> <span class="n">init_func</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">save_count</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="n">frames</span><span class="p">,</span> <span class="n">init_background</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">save_count</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                  <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_iter_gen</span> <span class="o">=</span> <span class="n">frames</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_init_func</span> <span class="o">=</span> <span class="n">init_func</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_func</span> <span class="o">=</span> <span class="n">init_background</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_count</span> <span class="o">=</span> <span class="n">save_count</span> <span class="k">if</span> <span class="n">save_count</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="mi">100</span>
 
         <span class="c"># Dummy args and function for compatibility with FuncAnimation</span>

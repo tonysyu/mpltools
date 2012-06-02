@@ -67,15 +67,17 @@
   <div class="section" id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
 <p><cite>mpltools</cite> provides tools for <a class="reference external" href="http://matplotlib.sourceforge.net/">Matplotlib</a> that make it easier to adjust the
-style, choose colors, make specialized plots, etc.</p>
+style, choose colors, make specialized plots, etc. For the most part, these
+tools are only loosely-connected in functionality, so the best way to get
+started is to look at the <a href="#id1"><span class="problematic" id="id2">`example gallery`_</span></a>.</p>
 <div class="section" id="styles">
 <h2>Styles<a class="headerlink" href="#styles" title="Permalink to this headline">¶</a></h2>
-<p>A key feature of <cite>mpltools</cite> is the idea of &#8220;styles&#8221;&#8212;essentially stylesheets
-that are similar to <a class="reference external" href="http://matplotlib.sourceforge.net/users/customizing.html">matplotlibrc</a> files. Unfortunately, the syntax for
-a &#8220;mplstyle&#8221; file is slightly different than <cite>matplotlibrc</cite> files because
+<p>This package got its start by implementing plotting &#8220;styles&#8221;&#8212;essentially
+stylesheets that are similar to <a class="reference external" href="http://matplotlib.sourceforge.net/users/customizing.html">matplotlibrc</a> files. Unfortunately, the syntax
+for an <tt class="docutils literal"><span class="pre">mplstyle</span></tt> file is slightly different than <a class="reference external" href="http://matplotlib.sourceforge.net/users/customizing.html">matplotlibrc</a> files because
 we use <a class="reference external" href="http://www.voidspace.org.uk/python/configobj.html">ConfigObj</a> to parse them.</p>
 <p>Style names should be specified as sections in &#8220;mplstyle&#8221; files.  A simple
-<cite>mplstyle</cite> file would look like:</p>
+<tt class="docutils literal"><span class="pre">mplstyle</span></tt> file would look like:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">style1</span><span class="p">]</span>
 
 <span class="n">text</span><span class="o">.</span><span class="n">fontsize</span> <span class="o">=</span> <span class="mi">12</span>
@@ -87,14 +89,14 @@ we use <a class="reference external" href="http://www.voidspace.org.uk/python/co
 <span class="n">font</span><span class="o">.</span><span class="n">family</span> <span class="o">=</span> <span class="s">&#39;serif&#39;</span>
 </pre></div>
 </div>
-<p><cite>mpltools</cite> searches the current working directory and your home directory for
-&#8220;mplstyle&#8221; files. To use a style, you just add:</p>
+<p><tt class="docutils literal"><span class="pre">mpltools</span></tt> searches the current working directory and your home directory for
+<tt class="docutils literal"><span class="pre">mplstyle</span></tt> files. To use a style, you just add:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">mpltools</span> <span class="kn">import</span> <span class="n">style</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">&#39;style1&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>There are a number of pre-defined styles located in <cite>mpltools/style/</cite>. To list
-all available styles, use:</p>
+<p>There are a number of pre-defined styles located in <tt class="docutils literal"><span class="pre">mpltools/style/</span></tt>. To
+list all available styles, use:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">style</span><span class="o">.</span><span class="n">available</span>
 </pre></div>
 </div>

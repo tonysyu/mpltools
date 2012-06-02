@@ -14,6 +14,25 @@ Examples
 
 
 
+`animation` module
+------------------
+
+
+
+.. toctree::
+   :hidden:
+
+   animation/plot_decaying_oscillation
+
+
+.. figure:: animation/images/thumb/plot_decaying_oscillation.png
+   :figclass: gallery
+   :target: ./animation/plot_decaying_oscillation.html
+
+   :ref:`example_animation_plot_decaying_oscillation.py`
+
+
+
 `annotation` module
 -------------------
 

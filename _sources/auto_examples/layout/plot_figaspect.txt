@@ -17,16 +17,35 @@ In this example, ``layout.figaspect`` creates a figure that fits comfortably
 onto the page, while ``plt.figaspect`` does not.
 
 
+
+.. code-block:: python
+
+	import numpy as np
+	import matplotlib.pyplot as plt
+	
+	from mpltools import layout
+	
+	
+	x, y = np.random.normal(size=(2, 20))
+	
+	aspect_functions = {'mpltools.layout.figaspect': layout.figaspect,
+	                    'matplotlib.pyplot.figaspect': plt.figaspect}
+	
+	for label, figaspect in aspect_functions.items():
+	    figsize = figaspect(0.5)
+	    fig, ax = plt.subplots(figsize=figsize)
+	
+	    ax.plot(x, y, 'ro')
+	    ax.set_title(label)
+	
+	plt.show()
+	
 .. image:: images/plot_figaspect_1.png
     :align: center
 
 
 .. image:: images/plot_figaspect_2.png
     :align: center
-
-
-.. literalinclude:: plot_figaspect.py
-    :lines: 18-
 
 
 
