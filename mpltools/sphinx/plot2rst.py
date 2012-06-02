@@ -36,6 +36,23 @@ plot2rst_plot_tag : str
     tag is replaced with plot path. Defaults to 'PLOT2RST.current_figure'.
 
 
+Flags
+-----
+You can add flags to example files by added a code comment with the prefix ``#PLOT2RST:`. Flags are specified as key-value pairs; for example::
+
+    #PLOT2RST: auto_plots = False
+
+The following flags are defined:
+
+auto_plots : bool
+    If no plot tags are found in the example, `auto_plots` adds all figures to
+    the end of the example.
+
+Note: If flags are added at the top of the file, then they are stripped from
+the resulting reStructureText output. If they appear after the first text or
+code block, then will show up in the generated example.
+
+
 Suggested CSS definitions
 -------------------------
 
@@ -158,7 +175,7 @@ def setup(app):
     app.add_config_value('plot2rst_thumb_scale', 0.2, True)
     app.add_config_value('plot2rst_plot_tag', 'PLOT2RST.current_figure', True)
     app.add_config_value('plot2rst_index_name', 'index', True)
-    app.add_config_value('plot2rst_flags', {'show': True}, True)
+    app.add_config_value('plot2rst_flags', {'auto_plots': True}, True)
 
 
 def generate_example_galleries(app):
@@ -317,7 +334,7 @@ def write_example(src_name, src_dir, rst_dir, cfg):
     example_rst = ''.join([rst_link, rst])
 
     has_inline_plots = any(cfg.plot2rst_plot_tag in b[2] for b in blocks)
-    if not has_inline_plots and flags['show']:
+    if not has_inline_plots and flags['auto_plots']:
         # Show all plots at the end of the example
         if len(plt.get_fignums()) > 0:
             figure_list = save_all_figures(image_path)
