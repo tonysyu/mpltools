@@ -162,6 +162,7 @@ Examples
    :hidden:
 
    style/plot_dark_background
+   plot_ggplot
    plot_grayscale
 
 
@@ -170,6 +171,13 @@ Examples
    :target: ./style/plot_dark_background.html
 
    :ref:`example_style_plot_dark_background.py`
+
+
+.. figure:: style/images/thumb/plot_ggplot.png
+   :figclass: gallery
+   :target: ./style/plot_ggplot.html
+
+   :ref:`example_style_plot_ggplot.py`
 
 
 .. figure:: style/images/thumb/plot_grayscale.png
