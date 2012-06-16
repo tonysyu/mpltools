@@ -33,7 +33,6 @@ ytick.direction = 'out'
 
 grid.color = 'white'
 grid.linestyle = '-'    # solid line
-grid.linewidth = 2
 
 figure.facecolor = 'white'
 figure.edgecolor = '0.50'
