@@ -7,7 +7,7 @@ patch.antialiased = True
 
 font.size = 10.0
 
-axes.facecolor = '#EEEEEE'
+axes.facecolor = '#E5E5E5'
 axes.edgecolor = 'white'
 axes.linewidth = 1
 axes.grid = True
