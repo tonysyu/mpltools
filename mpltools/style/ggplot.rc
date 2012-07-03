@@ -1,6 +1,6 @@
 # from http://www.huyng.com/posts/sane-color-scheme-for-matplotlib/
 
-patch.linewidth = '0.5'
+patch.linewidth = 0.5
 patch.facecolor = '#348ABD'  # blue
 patch.edgecolor = '#EEEEEE'
 patch.antialiased = True
