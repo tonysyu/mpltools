@@ -35,10 +35,14 @@ def use(name=None, use_baselib=False):
 
 def load_base_library():
     """Load style library from package"""
-
     library = dict()
-
     style_dir = os.path.abspath(os.path.dirname(__file__))
+    library.update(read_style_directory(style_dir))
+    return library
+
+
+def read_style_directory(style_dir):
+    styles = dict()
     library_glob = os.path.join(style_dir, '*.rc')
     style_files = glob.glob(library_glob)
 
@@ -46,9 +50,9 @@ def load_base_library():
         filename = os.path.basename(style_path)
         cfg = _config.read(style_path)
         # remove last three letters, which are '.rc'
-        library[filename[:-3]] = cfg.dict()
+        styles[filename[:-3]] = cfg.dict()
 
-    return library
+    return styles
 
 
 def update_user_library(base_library):
