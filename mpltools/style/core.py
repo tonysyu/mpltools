@@ -2,6 +2,7 @@ import os
 import glob
 import copy
 
+import numpy as np
 import matplotlib.pyplot as plt
 
 from .. import _config
@@ -15,17 +16,21 @@ def use(name=None, use_baselib=False):
 
     Parameters
     ----------
-    name : str
-        Name of style. For list of styles see `style.available`.
+    name : str or list of str
+        Name of style. For list of available styles see `style.available`.
+        If given a list, each style is applied from first to last in the list.
 
     use_baselib : bool
         If True, only use styles defined in `mpltools/style` (without user's
         customization).
     """
-    if use_baselib:
-        plt.rcParams.update(baselib[name])
-    else:
-        plt.rcParams.update(lib[name])
+    if np.isscalar(name):
+        name = [name]
+    for s in name:
+        if use_baselib:
+            plt.rcParams.update(baselib[s])
+        else:
+            plt.rcParams.update(lib[s])
 
 
 def load_base_library():
