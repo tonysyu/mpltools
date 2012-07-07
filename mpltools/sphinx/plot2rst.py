@@ -35,6 +35,8 @@ plot2rst_plot_tag : str
     When this tag is found in the example file, the current plot is saved and
     tag is replaced with plot path. Defaults to 'PLOT2RST.current_figure'.
 
+plot2rst_gallery_style : {'thumbnail' | 'list'}
+    Display examples as a thumbnail gallery or as a list of titles.
 
 Flags
 -----
@@ -123,6 +125,11 @@ GALLERY_IMAGE_TEMPLATE = """
 
 """
 
+GALLERY_LIST_TEMPLATE = """
+* :ref:`example_%(link_name)s`
+"""
+
+
 FLAG_PREFIX = '#PLOT2RST:'
 
 class Path(str):
@@ -176,6 +183,7 @@ def setup(app):
     app.add_config_value('plot2rst_plot_tag', 'PLOT2RST.current_figure', True)
     app.add_config_value('plot2rst_index_name', 'index', True)
     app.add_config_value('plot2rst_flags', {'auto_plots': True}, True)
+    app.add_config_value('plot2rst_gallery_style', 'thumbnail', True)
 
 
 def generate_example_galleries(app):
@@ -264,10 +272,16 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg, depth=0):
             link_name = link_name[2:]
 
         info = {}
-        info['thumb'] = sub_dir.pjoin('images/thumb', src_name[:-3] + '.png')
         info['source'] = sub_dir + src_name[:-3]
         info['link_name'] = link_name
-        gallery_index.write(GALLERY_IMAGE_TEMPLATE % info)
+        if cfg.plot2rst_gallery_style == 'thumbnail':
+            thumb_name = src_name[:-3] + '.png'
+            info['thumb'] = sub_dir.pjoin('images/thumb', thumb_name)
+            gallery_index.write(GALLERY_IMAGE_TEMPLATE % info)
+        elif cfg.plot2rst_gallery_style == 'list':
+            gallery_index.write(GALLERY_LIST_TEMPLATE % info)
+
+
 
 
 def _plots_first(fname):
