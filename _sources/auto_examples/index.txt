@@ -14,6 +14,8 @@ Examples
 
 
 
+.. plot2rst_gallery_style:: list
+
 `animation` module
 ------------------
 
@@ -25,12 +27,7 @@ Examples
    animation/plot_decaying_oscillation
 
 
-.. figure:: animation/images/thumb/plot_decaying_oscillation.png
-   :figclass: gallery
-   :target: ./animation/plot_decaying_oscillation.html
-
-   :ref:`example_animation_plot_decaying_oscillation.py`
-
+* :ref:`example_animation_plot_decaying_oscillation.py`
 
 
 `annotation` module
@@ -164,6 +161,7 @@ Examples
    style/plot_dark_background
    plot_ggplot
    plot_grayscale
+   plot_multiple_styles
 
 
 .. figure:: style/images/thumb/plot_dark_background.png
@@ -185,4 +183,11 @@ Examples
    :target: ./style/plot_grayscale.html
 
    :ref:`example_style_plot_grayscale.py`
+
+
+.. figure:: style/images/thumb/plot_multiple_styles.png
+   :figclass: gallery
+   :target: ./style/plot_multiple_styles.html
+
+   :ref:`example_style_plot_multiple_styles.py`
 
