@@ -89,18 +89,18 @@ Suggested CSS definitions
 
     .gallery.figure {
         float: left;
-        margin: 1em;
+        width: 200px;
+        height: 200px;
     }
 
     .gallery.figure img{
         display: block;
         margin-left: auto;
         margin-right: auto;
-        width: 200px;
+        width: 180px;
     }
 
     .gallery.figure .caption {
-        width: 200px;
         text-align: center !important;
     }
 
