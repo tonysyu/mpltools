@@ -7,6 +7,7 @@ font.family = 'serif'
 font.size = 9
 legend.fontsize = 9
 axes.titlesize = 9
+axes.labelsize = 9
 
 lines.linewidth = 0.5
 axes.linewidth = 0.5
@@ -15,7 +16,7 @@ lines.markersize = 3
 
 savefig.extension = 'pdf'
 
-figure.subplot.left = 0.17
+figure.subplot.left = 0.2
 figure.subplot.bottom = 0.16
 figure.subplot.right = 0.93
 figure.subplot.top = 0.93
