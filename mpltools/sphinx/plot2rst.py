@@ -37,13 +37,31 @@ plot2rst_plot_tag : str
     tag is replaced with plot path. Defaults to 'PLOT2RST.current_figure'.
 
 plot2rst_index_name : str
-    The basename for the Note that the reStructuredText extension (e.g., 'txt',
-    'rst') is taken from the default extension set for the Sphinx project.
-    Defaults to 'index'.
+    The basename for gallery index file. Each example directory should have an
+    index file---typically containing nothing more than a simple header. Note
+    that the reStructuredText extension (e.g., 'txt', 'rst') is taken from the
+    default extension set for the Sphinx project, so you should not specify
+    the extension as part of this name. Defaults to 'index'.
 
 plot2rst_flags : dict
     Flags that can be set in gallery indexes or python example files. See
     Flags_ section below for details.
+
+Flags
+-----
+You can add flags to example files by added a code comment with the prefix ``#PLOT2RST:`. Flags are specified as key-value pairs; for example::
+
+    #PLOT2RST: auto_plots = False
+
+There are also reStructuredText flags, which can be added like::
+
+    .. plot2rst_gallery_style:: list
+
+Some flags can only be defined in the python example file, while others can only be defined in the gallery index. The following flags are defined:
+
+auto_plots : bool
+    If no plot tags are found in the example, `auto_plots` adds all figures to
+    the end of the example. Defaults to True.
 
 plot2rst_gallery_style : {'thumbnail' | 'list'}
     Display examples as a thumbnail gallery or as a list of titles. This option
@@ -53,18 +71,6 @@ plot2rst_gallery_style : {'thumbnail' | 'list'}
 
     to the gallery index. Defaults to 'thumbnail'.
 
-
-Flags
------
-You can add flags to example files by added a code comment with the prefix ``#PLOT2RST:`. Flags are specified as key-value pairs; for example::
-
-    #PLOT2RST: auto_plots = False
-
-The following flags are defined:
-
-auto_plots : bool
-    If no plot tags are found in the example, `auto_plots` adds all figures to
-    the end of the example. Defaults to True.
 
 Note: If flags are added at the top of the file, then they are stripped from
 the resulting reStructureText output. If they appear after the first text or
@@ -198,12 +204,19 @@ def setup(app):
     app.add_config_value('plot2rst_thumb_scale', 0.2, True)
     app.add_config_value('plot2rst_plot_tag', 'PLOT2RST.current_figure', True)
     app.add_config_value('plot2rst_index_name', 'index', True)
-    app.add_config_value('plot2rst_flags', {'auto_plots': True}, True)
     app.add_config_value('plot2rst_gallery_style', 'thumbnail', True)
+    # NOTE: plot2rst_flags gets set with defaults later so that keys that are
+    # not set in config file still get set to the desired defaults.
+    app.add_config_value('plot2rst_flags', {}, True)
 
 
 def generate_example_galleries(app):
     cfg = app.builder.config
+
+    default_flags = {'auto_plots': True,
+                     'gallery_style': 'thumbnail'}
+    default_flags.update(cfg.plot2rst_flags)
+    cfg.plot2rst_flags = default_flags
 
     doc_src = Path(os.path.abspath(app.builder.srcdir)) # path/to/doc/source
 
@@ -293,7 +306,7 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg, depth=0):
         info['link_name'] = link_name
 
         gallery_style = flags.get('plot2rst_gallery_style',
-                                  cfg.plot2rst_gallery_style)
+                                  cfg.plot2rst_flags['gallery_style'])
         if gallery_style == 'thumbnail':
             thumb_name = src_name[:-3] + '.png'
             info['thumb'] = sub_dir.pjoin('images/thumb', thumb_name)
