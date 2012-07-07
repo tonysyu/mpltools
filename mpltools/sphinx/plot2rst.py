@@ -36,7 +36,12 @@ plot2rst_plot_tag : str
     tag is replaced with plot path. Defaults to 'PLOT2RST.current_figure'.
 
 plot2rst_gallery_style : {'thumbnail' | 'list'}
-    Display examples as a thumbnail gallery or as a list of titles.
+    Display examples as a thumbnail gallery or as a list of titles. This option
+    can also be set at the directory-level by adding::
+
+        .. plot2rst_gallery_style:: list
+
+    to the gallery index.
 
 Flags
 -----
@@ -248,6 +253,7 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg, depth=0):
         print 'Skipping this directory'
         print 80*'_'
         return
+    flags = get_flags_from_rst(gallery_template)
 
     gallery_description = file(gallery_template).read()
     gallery_index.write('\n\n%s\n\n' % gallery_description)
@@ -274,14 +280,33 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg, depth=0):
         info = {}
         info['source'] = sub_dir + src_name[:-3]
         info['link_name'] = link_name
-        if cfg.plot2rst_gallery_style == 'thumbnail':
+
+        gallery_style = flags.get('plot2rst_gallery_style',
+                                  cfg.plot2rst_gallery_style)
+        if gallery_style == 'thumbnail':
             thumb_name = src_name[:-3] + '.png'
             info['thumb'] = sub_dir.pjoin('images/thumb', thumb_name)
             gallery_index.write(GALLERY_IMAGE_TEMPLATE % info)
-        elif cfg.plot2rst_gallery_style == 'list':
+        elif gallery_style == 'list':
             gallery_index.write(GALLERY_LIST_TEMPLATE % info)
 
 
+def get_flags_from_rst(rst_file):
+    """Return dict of plot2rst flags found in reStructuredText file.
+
+    Flags should have the form:
+
+        .. plot2rst_*:: value
+
+    """
+    flags = {}
+    with open(rst_file) as f:
+        for line in f:
+            if line.startswith('.. plot2rst'):
+                line = line.lstrip('.. ')
+                k, v = [word.strip() for word in line.split('::')]
+                flags[k] = v
+    return flags
 
 
 def _plots_first(fname):

@@ -251,7 +251,6 @@ texinfo_documents = [
 plot2rst_paths = [('../examples', 'auto_examples'),
                   ('../tutorials', 'auto_tutorials')]
 plot2rst_default_thumb = 'examples/default_thumb.png'
-plot2rst_gallery_style = 'list'
 plot2rst_thumb_scale = 0.4
 plot2rst_rcparams = {'font.size': 9,
                      'font.family': 'serif',
