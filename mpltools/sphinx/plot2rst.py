@@ -1,5 +1,5 @@
 """
-Example generation from python files.
+Generate reStructuredText example from python files.
 
 Generate the rst files for the examples by iterating over the python
 example files. Files that generate images should start with 'plot'.
@@ -10,6 +10,7 @@ example directory(ies) in `plot2rst_paths` (see below) points to a directory
 with examples named `plot_*.py` and include an `index.rst` file.
 
 This code was adapted from scikits-image, which took it from scikits-learn.
+
 
 Options
 -------
@@ -28,12 +29,21 @@ plot2rst_default_thumb : str
     Path (relative to doc root) of default thumbnail image.
 
 plot2rst_thumb_scale : float
-    Scale factor for thumbnail (e.g., 0.2 to scale plot to 1/5th the
-    original size).
+    Scale factor for thumbnail. Defaults to 0.2, which scales the thumbnail to
+    1/5th the original size.
 
 plot2rst_plot_tag : str
     When this tag is found in the example file, the current plot is saved and
     tag is replaced with plot path. Defaults to 'PLOT2RST.current_figure'.
+
+plot2rst_index_name : str
+    The basename for the Note that the reStructuredText extension (e.g., 'txt',
+    'rst') is taken from the default extension set for the Sphinx project.
+    Defaults to 'index'.
+
+plot2rst_flags : dict
+    Flags that can be set in gallery indexes or python example files. See
+    Flags_ section below for details.
 
 plot2rst_gallery_style : {'thumbnail' | 'list'}
     Display examples as a thumbnail gallery or as a list of titles. This option
@@ -41,7 +51,8 @@ plot2rst_gallery_style : {'thumbnail' | 'list'}
 
         .. plot2rst_gallery_style:: list
 
-    to the gallery index.
+    to the gallery index. Defaults to 'thumbnail'.
+
 
 Flags
 -----
@@ -53,7 +64,7 @@ The following flags are defined:
 
 auto_plots : bool
     If no plot tags are found in the example, `auto_plots` adds all figures to
-    the end of the example.
+    the end of the example. Defaults to True.
 
 Note: If flags are added at the top of the file, then they are stripped from
 the resulting reStructureText output. If they appear after the first text or
