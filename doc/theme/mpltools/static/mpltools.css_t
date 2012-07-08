@@ -1,9 +1,10 @@
 /*
- * pylons.css_t
- * ~~~~~~~~~~~~
+ * mpltools.css_t
+ * ~~~~~~~~~~~~~~
  *
- * Sphinx stylesheet -- pylons theme.
+ * Sphinx stylesheet -- mpltools theme.
  *
+ * Based off of pyramid.css_t (which was based off of pylons.css_t)
  * :copyright: Copyright 2007-2010 by the Sphinx team, see AUTHORS.
  * :license: BSD, see LICENSE for details.
  *
@@ -40,9 +41,7 @@ div.document {
 }
 
 div.header {
-    width:100%;
-    background: #f4ad32 url(headerbg.png) repeat-x 0 top;
-    border-bottom: 2px solid #ffffff;
+    height: 140px;
 }
 
 div.logo {
@@ -363,6 +362,7 @@ table.contentstable a {
     text-decoration: none;
     font-size: 120%;
 }
+
 
 /*---- example gallery ----*/
 
