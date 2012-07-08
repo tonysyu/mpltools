@@ -1,9 +1,9 @@
 
-================================
-`mpltools`: Tools for Matplotlib
-================================
+==================================
+``mpltools``: Tools for Matplotlib
+==================================
 
-`mpltools` provides tools for Matplotlib_ that make it easier to adjust the
+``mpltools`` provides tools for Matplotlib_ that make it easier to adjust the
 style, choose colors, make specialized plots, etc.
 
 

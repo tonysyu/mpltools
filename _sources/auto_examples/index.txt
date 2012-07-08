@@ -1,8 +1,10 @@
 
 
 
-Examples
-========
+.. _example-gallery:
+
+Example Gallery
+===============
 
 
 
@@ -16,8 +18,8 @@ Examples
 
 .. plot2rst_gallery_style:: list
 
-`animation` module
-------------------
+``animation`` package
+---------------------
 
 
 
@@ -30,8 +32,8 @@ Examples
 * :ref:`example_animation_plot_decaying_oscillation.py`
 
 
-`annotation` module
--------------------
+``annotation`` package
+----------------------
 
 
 
@@ -50,8 +52,8 @@ Examples
 
 
 
-`color` module
---------------
+``color`` package
+-----------------
 
 
 
@@ -77,8 +79,8 @@ Examples
 
 
 
-`layout` module
----------------
+``layout`` package
+------------------
 
 
 
@@ -104,8 +106,8 @@ Examples
 
 
 
-`special` module
-----------------
+``special`` package
+-------------------
 
 
 
@@ -131,8 +133,8 @@ Examples
 
 
 
-`sphinx` module
----------------
+``sphinx`` package
+------------------
 
 
 
@@ -150,8 +152,8 @@ Examples
 
 
 
-`style` module
---------------
+``style`` package
+-----------------
 
 
 
