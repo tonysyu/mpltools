@@ -36,7 +36,7 @@ hr {
 }
 
 div.document {
-    background-color: #eee;
+    background-color: #EAE7E0;
 }
 
 div.header {
@@ -84,11 +84,11 @@ div.related {
     line-height: 30px;
     color: #373839;
     font-size: 0.8em;
-    background-color: #eee;
+    background-color: #EAE7E0;
 }
 
 div.related a {
-    color: #1a55a3;
+    color: #E37F00;
 }
 
 div.related ul {
@@ -172,7 +172,7 @@ p.sidebar-title {
 /* -- body styles ----------------------------------------------------------- */
 
 a, a .pre {
-    color: #1a55a3;
+    color: #D37700;
     text-decoration: none;
 }
 
