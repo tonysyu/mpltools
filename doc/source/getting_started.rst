@@ -157,6 +157,26 @@ Note: ``plot2rst`` was adapted from ``genrst.py`` in scikits-image_, which
 borrowed the implementation from scikit-learn_.
 
 
+Other tools
+===========
+
+The remaining tools are just small functions I've found useful over the years.
+They are organized into the following modules:
+
+``animation``
+   Defines a light wrapper-class for working with matplotlib.animation_
+``annotation``
+   Add annotations to your plots (e.g. slope marker).
+``color``
+   Color choice and custom colors (e.g. parameter-based color choice).
+``layout``
+   Alter visual layout of plots (e.g. figure size, crossed spines).
+``special``
+   Specialty plotting functions (e.g. Hinton diagram).
+
+See the `example gallery`_ for details.
+
+
 .. _Matplotlib: http://matplotlib.sourceforge.net/
 .. _matplotlibrc: http://matplotlib.sourceforge.net/users/customizing.html
 .. _ggplot: http://had.co.nz/ggplot/
@@ -166,4 +186,5 @@ borrowed the implementation from scikit-learn_.
 .. _reStructuredText: http://sphinx.pocoo.org/rest.html
 .. _scikits-image: http://scikits-image.org/
 .. _scikit-learn: http://scikit-learn.org/stable/
-
+.. _matplotlib.animation:
+    http://matplotlib.sourceforge.net/examples/animation/index.html#animation-examples-index
