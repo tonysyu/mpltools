@@ -1,3 +1,3 @@
-`annotation` module
--------------------
+``annotation`` package
+----------------------
 
