@@ -41,6 +41,23 @@ def load_base_library():
     return library
 
 
+def update_user_library(base_library):
+    """Update style library with user-defined rc files"""
+
+    library = copy.deepcopy(base_library)
+
+    stylelib_path = os.path.expanduser('~/.mplstylelib')
+    if os.path.exists(stylelib_path) and os.path.isdir(stylelib_path):
+        styles = read_style_directory(stylelib_path)
+        update_nested_dict(library, styles)
+
+    for cfg in _config.iter_paths(['~/.mplstyle', './mplstyle']):
+        styles = read_style_dict(cfg)
+        update_nested_dict(library, styles)
+    return library
+
+
+
 def read_style_directory(style_dir):
     styles = dict()
     library_glob = os.path.join(style_dir, '*.rc')
@@ -55,32 +72,40 @@ def read_style_directory(style_dir):
     return styles
 
 
-def update_user_library(base_library):
-    """Update style library with user-defined rc files"""
+def read_style_dict(cfg):
+    """Return dict of styles read from config dict.
 
-    library = copy.deepcopy(base_library)
-
-
-    for cfg in _config.iter_paths(['~/.mplstyle', './mplstyle']):
-
-        # update all styles with any global settings.
-        if 'global' in cfg:
-            cfg_global = cfg.pop('global')
-            for rc_dict in library.itervalues():
-                rc_dict.update(cfg_global)
-
-        # update named styles specified by user
-        for name, rc_dict in cfg.iteritems():
-            if name in library:
-                library[name].update(rc_dict)
-            else:
-                library[name] = rc_dict
-
-    return library
+    Sections in style file are set as top-level keys of the returned dict.
+    """
+    style = {}
+    # update all settings with any global settings.
+    if 'global' in cfg:
+        cfg_global = cfg.pop('global')
+        for rc_dict in style.itervalues():
+            rc_dict.update(cfg_global)
+    return update_nested_dict(style, cfg)
 
 
+def update_nested_dict(main_dict, new_dict):
+    """Update nested dict (only level of nesting) with new values.
+
+
+    Unlike dict.update, this assumes that the values of the parent dict are
+    dicts, so you shouldn't replace the nested dict if it already exists.
+    Instead you should update the sub-dict.
+    """
+    # update named styles specified by user
+    for name, rc_dict in new_dict.iteritems():
+        if name in main_dict:
+            main_dict[name].update(rc_dict)
+        else:
+            main_dict[name] = rc_dict
+    return main_dict
+
+
+# Load style libraries
+# ====================
 baselib = load_base_library()
 lib = update_user_library(baselib)
-
 available = lib.keys()
 

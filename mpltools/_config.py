@@ -23,6 +23,7 @@ def read(path):
     return ConfigObj(path, unrepr=True)
 
 
+# Set mpltools specific properties (i.e., not matplotlib properties).
 config = {}
 pkgdir = os.path.abspath(os.path.dirname(__file__))
 for cfg in iter_paths([os.path.join(pkgdir, 'mpltoolsrc'),
