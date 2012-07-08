@@ -4,8 +4,8 @@ Generate reStructuredText example from python files.
 Generate the rst files for the examples by iterating over the python
 example files. Files that generate images should start with 'plot'.
 
-To generate your own examples, add ``'mpltools.sphinx.plot2rst'``` to the list
-of ``extensions``in your Sphinx configuration file. In addition, make sure the
+To generate your own examples, add ``'mpltools.sphinx.plot2rst'`` to the list
+of ``extensions`` in your Sphinx configuration file. In addition, make sure the
 example directory(ies) in `plot2rst_paths` (see below) points to a directory
 with examples named `plot_*.py` and include an `index.rst` file.
 

@@ -80,9 +80,90 @@ So, if you define ``~/.mplstylelib/mystyle.rc`` and a section ``[mystyle]`` in
 overridden, but keys undefined in ``./mplstyle`` remain).
 
 
+``plot2rst`` Sphinx extension
+=============================
+
+The ``plot2rst`` Sphinx_ extension provides a simple way to generate
+reStructuredText_ (rst) examples from python files. As the name suggests,
+there's built-in handling of Matplotlib plots. Example python files will have
+their docstrings converted to rst, and python code will be placed in a Sphinx
+code-block. Check out the `example gallery`_ for details.
+
+To generate your own examples, add ``'mpltools.sphinx.plot2rst'`` to the list
+of ``extensions`` in your Sphinx configuration file. In addition, make sure the
+example directory(ies) in ``plot2rst_paths`` points to a directory with
+examples named ``plot_*.py`` and include an ``index.rst`` file. By default, the
+example path points to::
+
+   plot2rst_paths = ('../examples', 'auto_examples')
+
+The first directory specifies the location of the python files, and the
+second directory specifies where to save the rst examples. Note that the paths
+are relative to the Sphinx source directory (where ``conf.py`` lives); using
+these defaults, I would define my example gallery as follows (this is a snippet
+from the ``mpltools`` directory structure)::
+
+   doc/
+      source/
+         conf.py
+         ...
+      examples/
+         index.rst
+         layout/
+            index.rst
+            plot_cross_spines.py
+            plot_figaspect.py
+         ...
+      ...
+
+When building the docs, ``plot2rst`` will generate the ``auto_examples``
+directory, which will look something like::
+
+   doc/
+      source/
+         conf.py
+         auto_examples/
+            index.rst
+            layout/
+               images/
+                  <generated images>
+               plot_cross_spines.py
+               plot_cross_spines.rst
+               plot_figaspect.py
+               plot_figaspect.rst
+            ...
+         ...
+      examples/
+         <unchanged>
+      ...
+
+Note that python files are copied to the ``auto_examples`` directory (and later
+to the build directory) because a download link is added to the example.
+
+If you're wondering about all of the ``index.rst`` files in the ``examples``
+directory, these are used for custom markup. They could be blank files, but
+more likely you'd want to add headers and possibly, descriptive text. For
+example, the ``doc/examples/index.rst`` file in ``mpltools`` just has::
+
+   Examples
+   ========
+
+and ``doc/examples/layout/index.rst`` has::
+
+   ``layout`` module
+   -----------------
+
+Note: ``plot2rst`` was adapted from ``genrst.py`` in scikits-image_, which
+borrowed the implementation from scikit-learn_.
+
+
 .. _Matplotlib: http://matplotlib.sourceforge.net/
 .. _matplotlibrc: http://matplotlib.sourceforge.net/users/customizing.html
 .. _ggplot: http://had.co.nz/ggplot/
 .. _R: http://www.r-project.org/
 .. _ConfigObj: http://www.voidspace.org.uk/python/configobj.html
+.. _Sphinx: http://sphinx.pocoo.org/
+.. _reStructuredText: http://sphinx.pocoo.org/rest.html
+.. _scikits-image: http://scikits-image.org/
+.. _scikit-learn: http://scikit-learn.org/stable/
 
