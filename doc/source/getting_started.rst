@@ -6,7 +6,7 @@ Getting Started
 ``mpltools`` provides tools for Matplotlib_ that make it easier to adjust the
 element styles, choose colors, make specialized plots, etc. For the most part,
 these tools are only loosely-connected in functionality, so the best way to get
-started is to look at the `example gallery`_.
+started is to look at the :ref:`example-gallery`.
 
 
 Styles
@@ -87,7 +87,7 @@ The ``plot2rst`` Sphinx_ extension provides a simple way to generate
 reStructuredText_ (rst) examples from python files. As the name suggests,
 there's built-in handling of Matplotlib plots. Example python files will have
 their docstrings converted to rst, and python code will be placed in a Sphinx
-code-block. Check out the `example gallery`_ for details.
+code-block. Check out the :ref:`example-gallery` for details.
 
 To generate your own examples, add ``'mpltools.sphinx.plot2rst'`` to the list
 of ``extensions`` in your Sphinx configuration file. In addition, make sure the
@@ -145,10 +145,13 @@ directory, these are used for custom markup. They could be blank files, but
 more likely you'd want to add headers and possibly, descriptive text. For
 example, the ``doc/examples/index.rst`` file in ``mpltools`` just has::
 
-   Examples
-   ========
+   .. _example-gallery:
 
-and ``doc/examples/layout/index.rst`` has::
+   Example Gallery
+   ===============
+
+(the ``_example-gallery:`` markup is for `Sphinx cross-referencing`_) and ``doc/examples/layout/index.rst``
+has::
 
    ``layout`` module
    -----------------
@@ -174,7 +177,7 @@ They are organized into the following modules:
 ``special``
    Specialty plotting functions (e.g. Hinton diagram).
 
-See the `example gallery`_ for details.
+See the :ref:`example-gallery` for details.
 
 
 .. _Matplotlib: http://matplotlib.sourceforge.net/
@@ -184,6 +187,8 @@ See the `example gallery`_ for details.
 .. _ConfigObj: http://www.voidspace.org.uk/python/configobj.html
 .. _Sphinx: http://sphinx.pocoo.org/
 .. _reStructuredText: http://sphinx.pocoo.org/rest.html
+.. _Sphinx cross-referencing:
+   http://sphinx.pocoo.org/markup/inline.html#cross-referencing-arbitrary-locations
 .. _scikits-image: http://scikits-image.org/
 .. _scikit-learn: http://scikit-learn.org/stable/
 .. _matplotlib.animation:

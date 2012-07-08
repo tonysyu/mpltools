@@ -1,4 +1,6 @@
 
-Examples
-========
+.. _example-gallery:
+
+Example Gallery
+===============
 
