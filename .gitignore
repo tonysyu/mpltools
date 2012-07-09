@@ -1,5 +1,7 @@
 *.pyc
 build
+dist
+mpltools.egg-info
 examples/test*
 doc/source/auto_examples
 doc/source/api
