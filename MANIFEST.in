@@ -2,3 +2,6 @@ include README.rst
 include LICENSE
 include Makefile
 include requirements.txt
+
+include mpltools/mpltoolsrc
+include mpltools/style/*.rc
