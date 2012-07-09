@@ -21,3 +21,5 @@ config
 """
 import _config
 config = _config.config
+
+__version__ = 0.1

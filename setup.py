@@ -3,9 +3,11 @@ from distutils.core import setup
 
 import setuptools
 
+from mpltools import __version__
+
 
 setup(name='mpltools',
-      version='0.1',
+      version=__version__,
       description='Tools for Matplotlib',
       author='Tony S. Yu',
       author_email='tsyu80@gmail.com',
