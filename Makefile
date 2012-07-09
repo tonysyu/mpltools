@@ -6,5 +6,5 @@ all:
 clean:
 	rm -rf build
 	rm -rf examples/test_*
-	find . -name "*.pyc" -o -name "*.pyx.md5" | xargs rm -f
+	find . -name "*.pyc" | xargs rm -f
 
