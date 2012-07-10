@@ -6,9 +6,13 @@ import setuptools
 from mpltools import __version__
 
 
+with open('README.rst') as f:
+    long_description = f.read()
+
 setup(name='mpltools',
       version=__version__,
       description='Tools for Matplotlib',
+      long_description=long_description,
       author='Tony S. Yu',
       author_email='tsyu80@gmail.com',
       license='Modified BSD',
