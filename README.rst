@@ -45,6 +45,8 @@ Documentation
 =============
 
 For more details about use and installation, see the `mpltools documentation`_.
+If you're short on time, just check out the `Getting Started`_ section or the
+`example gallery`_.
 
 
 Requirements
@@ -84,4 +86,4 @@ New BSD (a.k.a. Modified BSD). See `LICENSE` in this directory for details.
 .. _matplotlibrc: http://matplotlib.sourceforge.net/users/customizing.html
 .. _ConfigObj: http://www.voidspace.org.uk/python/configobj.html
 .. _mpltools documentation: http://tonysyu.github.com/mpltools
-
+.. _Getting Started: http://tonysyu.github.com/mpltools/getting_started.html
