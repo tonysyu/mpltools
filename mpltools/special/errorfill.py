@@ -8,7 +8,7 @@ __all__ = ['errorfill']
 
 
 def errorfill(x, y, yerr=None, xerr=None, color=None, alpha=1, alpha_fill=0.3,
-              ax=None):
+              label='', label_fill='', ax=None):
     """Plot data with errors marked by a filled region.
 
     Parameters
@@ -25,6 +25,10 @@ def errorfill(x, y, yerr=None, xerr=None, color=None, alpha=1, alpha_fill=0.3,
     alpha_fill : float
         Opacity of filled region. Note: the actual opacity of the fill is
         `alpha * alpha_fill`.
+    label : str
+        Label for line.
+    label : str
+        Label for filled region.
     """
     ax = ax if ax is not None else plt.gca()
 
@@ -32,18 +36,19 @@ def errorfill(x, y, yerr=None, xerr=None, color=None, alpha=1, alpha_fill=0.3,
 
     if color is None:
         color = ax._get_lines.color_cycle.next()
-        ax.plot(x, y, color, alpha=alpha)
+        ax.plot(x, y, color, alpha=alpha, label=label)
 
     if yerr is not None and xerr is not None:
         msg = "Setting both `yerr` and `xerr` is not supported. Ignore `xerr`."
         warnings.warn(msg)
 
+    kwargs_fill = dict(color=color, alpha=alpha_fill, label=label_fill)
     if yerr is not None:
         ymin, ymax = extrema_from_error_input(y, yerr)
-        ax.fill_between(x, ymax, ymin, color=color, alpha=alpha_fill)
+        fill_between(x, ymax, ymin, ax=ax, **kwargs_fill)
     elif xerr is not None:
         xmin, xmax = extrema_from_error_input(x, xerr)
-        ax.fill_between_x(y, xmax, xmin, color=color, alpha=alpha_fill)
+        fill_between_x(y, xmax, xmin, ax=ax, **kwargs_fill)
 
 
 def extrema_from_error_input(z, zerr):
@@ -53,6 +58,20 @@ def extrema_from_error_input(z, zerr):
     elif len(zerr) == 2:
         zmin, zmax = zerr
     return zmin, zmax
+
+
+# Wrappers around `fill_between` and `fill_between_x` that create proxy artists
+# so that filled regions show up correctly legends.
+
+def fill_between(x, y1, y2=0, ax=None, **kwargs):
+    ax = ax if ax is not None else plt.gca()
+    ax.fill_between(x, y1, y2, **kwargs)
+    ax.add_patch(plt.Rectangle((0, 0), 0, 0, **kwargs))
+
+def fill_between_x(x, y1, y2=0, ax=None, **kwargs):
+    ax = ax if ax is not None else plt.gca()
+    ax.fill_betweenx(x, y1, y2, **kwargs)
+    ax.add_patch(plt.Rectangle((0, 0), 0, 0, **kwargs))
 
 
 if __name__ == '__main__':
