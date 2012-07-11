@@ -16,8 +16,8 @@ y_sin = np.sin(x)
 y_cos = np.cos(x)
 
 y_err = 0.2
-special.errorfill(x, y_sin, y_err, label='blue', label_fill='blue error')
-special.errorfill(x, y_cos, y_err, label='red', label_fill='red error',
+special.errorfill(x, y_sin, y_err, label='sin', label_fill='sin error')
+special.errorfill(x, y_cos, y_err, label='cos', label_fill='cos error',
                   alpha_fill=0.1)
 plt.legend()
 
