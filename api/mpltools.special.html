@@ -87,7 +87,7 @@
 <h2>errorfill<a class="headerlink" href="#errorfill" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="mpltools.special.errorfill">
-<tt class="descclassname">mpltools.special.</tt><tt class="descname">errorfill</tt><big>(</big><em>x</em>, <em>y</em>, <em>yerr=None</em>, <em>xerr=None</em>, <em>color=None</em>, <em>alpha=1</em>, <em>alpha_fill=0.29999999999999999</em>, <em>ax=None</em><big>)</big><a class="headerlink" href="#mpltools.special.errorfill" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">mpltools.special.</tt><tt class="descname">errorfill</tt><big>(</big><em>x</em>, <em>y</em>, <em>yerr=None</em>, <em>xerr=None</em>, <em>color=None</em>, <em>alpha=1</em>, <em>alpha_fill=0.29999999999999999</em>, <em>label=''</em>, <em>label_fill=''</em>, <em>ax=None</em><big>)</big><a class="headerlink" href="#mpltools.special.errorfill" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot data with errors marked by a filled region.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -111,9 +111,17 @@
 <div><p>Opacity used for plotting.</p>
 </div></blockquote>
 <p><strong>alpha_fill</strong> : float</p>
-<blockquote class="last">
+<blockquote>
 <div><p>Opacity of filled region. Note: the actual opacity of the fill is
 <cite>alpha * alpha_fill</cite>.</p>
+</div></blockquote>
+<p><strong>label</strong> : str</p>
+<blockquote>
+<div><p>Label for line.</p>
+</div></blockquote>
+<p><strong>label</strong> : str</p>
+<blockquote class="last">
+<div><p>Label for filled region.</p>
 </div></blockquote>
 </td>
 </tr>
