@@ -22,4 +22,4 @@ config
 import _config
 config = _config.config
 
-__version__ = 0.1
+__version__ = '0.2dev'
