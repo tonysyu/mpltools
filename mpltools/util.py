@@ -27,9 +27,12 @@ class deprecated(object):
 
     def __call__(self, func):
 
-        msg = "Call to deprecated function `%s`." % func.__name__
+        msg = "Call to deprecated function ``%s``." % func.__name__
+        alt_msg = ''
         if self.alt_func is not None:
-            msg = msg + " Use `%s` instead." % self.alt_func
+            alt_msg = " Use ``%s`` instead." % self.alt_func
+            msg = msg + alt_msg
+        func.__doc__ = "Deprecated." + alt_msg
 
         @functools.wraps(func)
         def wrapped(*args, **kwargs):
