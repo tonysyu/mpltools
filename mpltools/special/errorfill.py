@@ -56,7 +56,7 @@ def extrema_from_error_input(z, zerr):
         zmin = z - zerr
         zmax = z + zerr
     elif len(zerr) == 2:
-        zmin, zmax = zerr
+        zmin, zmax = z - zerr[0], z + zerr[1]
     return zmin, zmax
 
 
