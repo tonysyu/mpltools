@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 __all__ = ['errorfill']
 
 
-def errorfill(x, y, yerr=None, xerr=None, color=None, alpha=1, alpha_fill=0.3,
-              label='', label_fill='', ax=None):
+def errorfill(x, y, yerr=None, xerr=None, color=None, ls=None, lw=None,
+              alpha=1, alpha_fill=0.3, label='', label_fill='', ax=None):
     """Plot data with errors marked by a filled region.
 
     Parameters
@@ -20,6 +20,10 @@ def errorfill(x, y, yerr=None, xerr=None, color=None, alpha=1, alpha_fill=0.3,
         - If scalar, then filled region spans `y +/- yerr` or `x +/- xerr`.
     color : Matplotlib color
         Color of line and fill region.
+    ls : Matplotlib line style
+        Style of the line
+    lw : Matplotlib line width, float value in points
+        Width of the line
     alpha : float
         Opacity used for plotting.
     alpha_fill : float
@@ -29,6 +33,8 @@ def errorfill(x, y, yerr=None, xerr=None, color=None, alpha=1, alpha_fill=0.3,
         Label for line.
     label : str
         Label for filled region.
+    ax : Axis instance
+        The plot is drawn on axis `ax`. If `None` the current axis is used
     """
     ax = ax if ax is not None else plt.gca()
 
@@ -36,7 +42,11 @@ def errorfill(x, y, yerr=None, xerr=None, color=None, alpha=1, alpha_fill=0.3,
 
     if color is None:
         color = ax._get_lines.color_cycle.next()
-        ax.plot(x, y, color, alpha=alpha, label=label)
+    if ls is None:
+        ls = plt.rcParams['lines.linestyle']
+    if lw is None:
+        lw = plt.rcParams['lines.linewidth']
+    ax.plot(x, y, color, linestyle=ls, linewidth=lw, alpha=alpha, label=label)
 
     if yerr is not None and xerr is not None:
         msg = "Setting both `yerr` and `xerr` is not supported. Ignore `xerr`."
