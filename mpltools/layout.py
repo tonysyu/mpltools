@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
 
 
 __all__ = ['figure', 'figaspect', 'figimage',
@@ -113,13 +114,22 @@ def figimage(img, scale=1, dpi=None):
     return fig, ax
 
 
-def cross_spines(zero_cross=False, ax=None):
+def clip_zero_formatter(tick_val, tick_pos):
+    """Tick formatter that returns empty string for zero values."""
+    if tick_val == 0:
+        return ''
+    return tick_val
+
+
+def cross_spines(zero_cross=False, remove_zeros=True, ax=None):
     """Remove top and right spines from an axes.
 
     Parameters
     ----------
     zero_cross : bool
         If True, the spines are set so that they cross at zero.
+    remove_zeros : bool
+        If True **and `zero_cross` is True**, remove zero ticks.
     ax : :class:`~matplotlib.axes.Axes`
         Axes to modify. If None, use current axes.
     """
@@ -132,6 +142,10 @@ def cross_spines(zero_cross=False, ax=None):
     if zero_cross:
         ax.spines['bottom'].set_position('zero')
         ax.spines['left'].set_position('zero')
+        if remove_zeros:
+            formatter = mticker.FuncFormatter(clip_zero_formatter)
+            ax.xaxis.set_major_formatter(formatter)
+            ax.yaxis.set_major_formatter(formatter)
     return ax
 
 
