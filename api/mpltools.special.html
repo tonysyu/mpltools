@@ -87,7 +87,7 @@
 <h2>errorfill<a class="headerlink" href="#errorfill" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="mpltools.special.errorfill">
-<tt class="descclassname">mpltools.special.</tt><tt class="descname">errorfill</tt><big>(</big><em>x</em>, <em>y</em>, <em>yerr=None</em>, <em>xerr=None</em>, <em>color=None</em>, <em>alpha=1</em>, <em>alpha_fill=0.29999999999999999</em>, <em>label=''</em>, <em>label_fill=''</em>, <em>ax=None</em><big>)</big><a class="headerlink" href="#mpltools.special.errorfill" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">mpltools.special.</tt><tt class="descname">errorfill</tt><big>(</big><em>x</em>, <em>y</em>, <em>yerr=None</em>, <em>xerr=None</em>, <em>color=None</em>, <em>ls=None</em>, <em>lw=None</em>, <em>alpha=1</em>, <em>alpha_fill=0.29999999999999999</em>, <em>label=''</em>, <em>label_fill=''</em>, <em>ax=None</em><big>)</big><a class="headerlink" href="#mpltools.special.errorfill" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot data with errors marked by a filled region.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -106,6 +106,14 @@
 <blockquote>
 <div><p>Color of line and fill region.</p>
 </div></blockquote>
+<p><strong>ls</strong> : Matplotlib line style</p>
+<blockquote>
+<div><p>Style of the line</p>
+</div></blockquote>
+<p><strong>lw</strong> : Matplotlib line width, float value in points</p>
+<blockquote>
+<div><p>Width of the line</p>
+</div></blockquote>
 <p><strong>alpha</strong> : float</p>
 <blockquote>
 <div><p>Opacity used for plotting.</p>
@@ -120,8 +128,12 @@
 <div><p>Label for line.</p>
 </div></blockquote>
 <p><strong>label</strong> : str</p>
-<blockquote class="last">
+<blockquote>
 <div><p>Label for filled region.</p>
+</div></blockquote>
+<p><strong>ax</strong> : Axis instance</p>
+<blockquote class="last">
+<div><p>The plot is drawn on axis <cite>ax</cite>. If <cite>None</cite> the current axis is used</p>
 </div></blockquote>
 </td>
 </tr>

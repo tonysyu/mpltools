@@ -77,19 +77,22 @@
 <tr class="row-odd"><td><a class="reference internal" href="#mpltools.layout.clear_frame" title="mpltools.layout.clear_frame"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.layout.clear_frame</span></tt></a>([ax])</td>
 <td>Remove the frame (ticks and spines) from an axes.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#mpltools.layout.cross_spines" title="mpltools.layout.cross_spines"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.layout.cross_spines</span></tt></a>([zero_cross,&nbsp;ax])</td>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.layout.clip_zero_formatter" title="mpltools.layout.clip_zero_formatter"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.layout.clip_zero_formatter</span></tt></a>(...)</td>
+<td>Tick formatter that returns empty string for zero values.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.layout.cross_spines" title="mpltools.layout.cross_spines"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.layout.cross_spines</span></tt></a>([zero_cross,&nbsp;...])</td>
 <td>Remove top and right spines from an axes.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#mpltools.layout.figaspect" title="mpltools.layout.figaspect"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.layout.figaspect</span></tt></a>([aspect_ratio,&nbsp;...])</td>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.layout.figaspect" title="mpltools.layout.figaspect"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.layout.figaspect</span></tt></a>([aspect_ratio,&nbsp;...])</td>
 <td>Return figure size (width, height) in inches.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#mpltools.layout.figimage" title="mpltools.layout.figimage"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.layout.figimage</span></tt></a>(img[,&nbsp;scale,&nbsp;dpi])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.layout.figimage" title="mpltools.layout.figimage"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.layout.figimage</span></tt></a>(img[,&nbsp;scale,&nbsp;dpi])</td>
 <td>Return figure and axes with figure tightly surrounding image.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#mpltools.layout.figure" title="mpltools.layout.figure"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.layout.figure</span></tt></a>([aspect_ratio,&nbsp;...])</td>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.layout.figure" title="mpltools.layout.figure"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.layout.figure</span></tt></a>([aspect_ratio,&nbsp;...])</td>
 <td>Return matplotlib figure window.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#mpltools.layout.pad_limits" title="mpltools.layout.pad_limits"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.layout.pad_limits</span></tt></a>([pad_frac,&nbsp;ax])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.layout.pad_limits" title="mpltools.layout.pad_limits"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.layout.pad_limits</span></tt></a>([pad_frac,&nbsp;ax])</td>
 <td>Pad data limits to nicely accomodate data.</td>
 </tr>
 </tbody>
@@ -118,11 +121,20 @@ off the axis also removes the axes background and axis labels.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="clip-zero-formatter">
+<h2>clip_zero_formatter<a class="headerlink" href="#clip-zero-formatter" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mpltools.layout.clip_zero_formatter">
+<tt class="descclassname">mpltools.layout.</tt><tt class="descname">clip_zero_formatter</tt><big>(</big><em>tick_val</em>, <em>tick_pos</em><big>)</big><a class="headerlink" href="#mpltools.layout.clip_zero_formatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tick formatter that returns empty string for zero values.</p>
+</dd></dl>
+
+</div>
 <div class="section" id="cross-spines">
 <h2>cross_spines<a class="headerlink" href="#cross-spines" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="mpltools.layout.cross_spines">
-<tt class="descclassname">mpltools.layout.</tt><tt class="descname">cross_spines</tt><big>(</big><em>zero_cross=False</em>, <em>ax=None</em><big>)</big><a class="reference internal" href="../_modules/mpltools/layout.html#cross_spines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpltools.layout.cross_spines" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">mpltools.layout.</tt><tt class="descname">cross_spines</tt><big>(</big><em>zero_cross=False</em>, <em>remove_zeros=True</em>, <em>ax=None</em><big>)</big><a class="reference internal" href="../_modules/mpltools/layout.html#cross_spines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mpltools.layout.cross_spines" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove top and right spines from an axes.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -131,6 +143,10 @@ off the axis also removes the axes background and axis labels.</p>
 <tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>zero_cross</strong> : bool</p>
 <blockquote>
 <div><p>If True, the spines are set so that they cross at zero.</p>
+</div></blockquote>
+<p><strong>remove_zeros</strong> : bool</p>
+<blockquote>
+<div><p>If True <strong>and `zero_cross` is True</strong>, remove zero ticks.</p>
 </div></blockquote>
 <p><strong>ax</strong> : <tt class="xref py py-class docutils literal"><span class="pre">Axes</span></tt></p>
 <blockquote class="last">
@@ -301,6 +317,7 @@ is equivalent to calling plt.axis(&#8216;tight&#8217;).</p>
   <ul>
 <li><a class="reference internal" href="#">Module: <tt class="docutils literal"><span class="pre">layout</span></tt></a><ul>
 <li><a class="reference internal" href="#clear-frame">clear_frame</a></li>
+<li><a class="reference internal" href="#clip-zero-formatter">clip_zero_formatter</a></li>
 <li><a class="reference internal" href="#cross-spines">cross_spines</a></li>
 <li><a class="reference internal" href="#figaspect">figaspect</a></li>
 <li><a class="reference internal" href="#figimage">figimage</a></li>

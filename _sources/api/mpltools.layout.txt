@@ -8,6 +8,7 @@ Module: :mod:`layout`
 .. autosummary::
 
    mpltools.layout.clear_frame
+   mpltools.layout.clip_zero_formatter
    mpltools.layout.cross_spines
    mpltools.layout.figaspect
    mpltools.layout.figimage
@@ -18,6 +19,11 @@ clear_frame
 -----------
 
 .. autofunction:: mpltools.layout.clear_frame
+
+clip_zero_formatter
+-------------------
+
+.. autofunction:: mpltools.layout.clip_zero_formatter
 
 cross_spines
 ------------
