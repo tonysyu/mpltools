@@ -1,10 +1,64 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap
 
 from ._config import config
 
 
-__all__ = ['color_mapper', 'colors_from_cmap', 'cycle_cmap']
+__all__ = ['color_mapper', 'colors_from_cmap', 'cycle_cmap', 'LinearColormap']
+
+
+class LinearColormap(LinearSegmentedColormap):
+    """Create Matplotlib colormap with color values specified at key points.
+
+    This class simplifies the call signature of LinearSegmentedColormap. By
+    default, colors specified by `segmented_data` are equally spaced along the
+    colormap.
+
+    Parameters
+    ----------
+    name : str
+        Name of colormap.
+    segmented_data : dict
+        Dictionary of 'red', 'green', 'blue', and (optionally) 'alpha' values.
+        Each color key contains a list of `x`, `y` tuples. `x` must increase
+        monotonically from 0 to 1 and corresponds to input values for a mappable
+        object (e.g. an image). `y` corresponds to the color intensity.
+    index : list of floats (0, 1)
+        Note that these indices must match the length of `segmented_data`.
+        If None, colors in `segmented_data` are equally spaced in colormap.
+
+    Examples
+    --------
+    Linear colormap going from white to red
+    >>> white_red = LinearColormap('white_red', {'blue':  [1.0, 0.0],
+                                                 'green': [1.0, 0.0],
+                                                 'red':   [1.0, 0.8]})
+
+    Colormap going from blue to white to red
+    >>> bwr = LinearColormap('white_red',
+                             {'blue':  [0.4, 1.0, 0.1],
+                              'green': [0.2, 1.0, 0.0],
+                              'red':   [0.0, 1.0, 0.4]})
+
+    You can use a repeated index to get a segmented color.
+    - Blue below midpoint of colormap, red above mid point.
+    - Alpha maximum at the edges, minimum in the middle.
+    >>> bcr_spec = {'blue': [0.4, 0.4, 0.1, 0.1],
+                    'green': [0.2, 0.2, 0.0, 0.0],
+                    'red': [0.02, 0.02, 0.4, 0.4],
+                    'alpha': [1, 0.3, 0.3, 1]}
+    >>> blue_clear_red = LinearColormap('blue_clear_red', bcr_spec,
+                                        index=[0, 0.5, 0.5, 1])
+    """
+
+    def __init__(self, name, segmented_data, index=None, **kwargs):
+        if index is None:
+            # If index not given, RGB colors are evenly-spaced in colormap.
+            index = np.linspace(0, 1, len(segmented_data['red']))
+        segmented_data = dict((key, [(x, y, y) for x, y in zip(index, value)])
+                              for key, value in segmented_data.iteritems())
+        LinearSegmentedColormap.__init__(self, name, segmented_data, **kwargs)
 
 
 CMAP_RANGE = config['color']['cmap_range']
