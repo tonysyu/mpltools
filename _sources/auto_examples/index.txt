@@ -62,6 +62,7 @@ Example Gallery
 
    color/plot_color_mapper
    plot_cycle_cmap
+   plot_linear_colormap
 
 
 .. figure:: color/images/thumb/plot_color_mapper.png
@@ -76,6 +77,13 @@ Example Gallery
    :target: ./color/plot_cycle_cmap.html
 
    :ref:`example_color_plot_cycle_cmap.py`
+
+
+.. figure:: color/images/thumb/plot_linear_colormap.png
+   :figclass: gallery
+   :target: ./color/plot_linear_colormap.html
+
+   :ref:`example_color_plot_linear_colormap.py`
 
 
 

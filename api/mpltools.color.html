@@ -27,7 +27,6 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mpltools docs" href="../index.html" />
     <link rel="up" title="API Reference" href="api.html" />
-    <link rel="next" title="Module: io" href="mpltools.io.html" />
     <link rel="prev" title="Module: annotation" href="mpltools.annotation.html" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin" type="text/css" media="screen" charset="utf-8" />
@@ -51,9 +50,6 @@
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="mpltools.io.html" title="Module: io"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
           <a href="mpltools.annotation.html" title="Module: annotation"
              accesskey="P">previous</a> |</li>
         <li><a href="../index.html">mpltools docs</a> &raquo;</li>
@@ -66,8 +62,275 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="module-mpltools.color">
-<span id="module-color"></span><h1>Module: <tt class="xref py py-mod docutils literal"><span class="pre">color</span></tt><a class="headerlink" href="#module-mpltools.color" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-color">
+<h1>Module: <tt class="xref py py-mod docutils literal"><span class="pre">color</span></tt><a class="headerlink" href="#module-color" title="Permalink to this headline">¶</a></h1>
+<p>Inheritance diagram for <tt class="docutils literal"><span class="pre">mpltools.color</span></tt>:</p>
+<span class="target" id="module-mpltools.color"></span><div class="section" id="linearcolormap">
+<h2><a class="reference internal" href="#mpltools.color.LinearColormap" title="mpltools.color.LinearColormap"><tt class="xref py py-class docutils literal"><span class="pre">LinearColormap</span></tt></a><a class="headerlink" href="#linearcolormap" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mpltools.color.LinearColormap">
+<em class="property">class </em><tt class="descclassname">mpltools.color.</tt><tt class="descname">LinearColormap</tt><big>(</big><em>name</em>, <em>segmented_data</em>, <em>index=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#mpltools.color.LinearColormap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">matplotlib.colors.LinearSegmentedColormap</span></tt></p>
+<p>Create Matplotlib colormap with color values specified at key points.</p>
+<p>This class simplifies the call signature of LinearSegmentedColormap. By
+default, colors specified by <cite>segmented_data</cite> are equally spaced along the
+colormap.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters :</th><td class="field-body"><p class="first"><strong>name</strong> : str</p>
+<blockquote>
+<div><p>Name of colormap.</p>
+</div></blockquote>
+<p><strong>segmented_data</strong> : dict</p>
+<blockquote>
+<div><p>Dictionary of &#8216;red&#8217;, &#8216;green&#8217;, &#8216;blue&#8217;, and (optionally) &#8216;alpha&#8217; values.
+Each color key contains a list of <cite>x</cite>, <cite>y</cite> tuples. <cite>x</cite> must increase
+monotonically from 0 to 1 and corresponds to input values for a mappable
+object (e.g. an image). <cite>y</cite> corresponds to the color intensity.</p>
+</div></blockquote>
+<p><strong>index</strong> : list of floats (0, 1)</p>
+<blockquote class="last">
+<div><p>Note that these indices must match the length of <cite>segmented_data</cite>.
+If None, colors in <cite>segmented_data</cite> are equally spaced in colormap.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>Linear colormap going from white to red
+&gt;&gt;&gt; white_red = LinearColormap(&#8216;white_red&#8217;, {&#8216;blue&#8217;:  [1.0, 0.0],</p>
+<blockquote>
+<div>&#8216;green&#8217;: [1.0, 0.0],
+&#8216;red&#8217;:   [1.0, 0.8]})</div></blockquote>
+<p>Colormap going from blue to white to red
+&gt;&gt;&gt; bwr = LinearColormap(&#8216;white_red&#8217;,</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>{&#8216;blue&#8217;:  [0.4, 1.0, 0.1],</dt>
+<dd>&#8216;green&#8217;: [0.2, 1.0, 0.0],
+&#8216;red&#8217;:   [0.0, 1.0, 0.4]})</dd>
+</dl>
+</div></blockquote>
+<p>You can use a repeated index to get a segmented color.
+- Blue below midpoint of colormap, red above mid point.
+- Alpha maximum at the edges, minimum in the middle.
+&gt;&gt;&gt; bcr_spec = {&#8216;blue&#8217;: [0.4, 0.4, 0.1, 0.1],</p>
+<blockquote>
+<div>&#8216;green&#8217;: [0.2, 0.2, 0.0, 0.0],
+&#8216;red&#8217;: [0.02, 0.02, 0.4, 0.4],
+&#8216;alpha&#8217;: [1, 0.3, 0.3, 1]}</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">blue_clear_red</span> <span class="o">=</span> <span class="n">LinearColormap</span><span class="p">(</span><span class="s">&#39;blue_clear_red&#39;</span><span class="p">,</span> <span class="n">bcr_spec</span><span class="p">,</span>
+<span class="go">                                    index=[0, 0.5, 0.5, 1])</span>
+</pre></div>
+</div>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.color.LinearColormap.from_list" title="mpltools.color.LinearColormap.from_list"><tt class="xref py py-obj docutils literal"><span class="pre">from_list</span></tt></a>(name,&nbsp;colors[,&nbsp;N,&nbsp;gamma])</td>
+<td>Make a linear segmented colormap with <em>name</em> from a sequence of <em>colors</em> which evenly transitions from colors[0] at val=0 to colors[-1] at val=1.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.color.LinearColormap.is_gray" title="mpltools.color.LinearColormap.is_gray"><tt class="xref py py-obj docutils literal"><span class="pre">is_gray</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.color.LinearColormap.set_bad" title="mpltools.color.LinearColormap.set_bad"><tt class="xref py py-obj docutils literal"><span class="pre">set_bad</span></tt></a>([color,&nbsp;alpha])</td>
+<td>Set color to be used for masked values.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.color.LinearColormap.set_gamma" title="mpltools.color.LinearColormap.set_gamma"><tt class="xref py py-obj docutils literal"><span class="pre">set_gamma</span></tt></a>(gamma)</td>
+<td>Set a new gamma value and regenerate color map.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.color.LinearColormap.set_over" title="mpltools.color.LinearColormap.set_over"><tt class="xref py py-obj docutils literal"><span class="pre">set_over</span></tt></a>([color,&nbsp;alpha])</td>
+<td>Set color to be used for high out-of-range values.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.color.LinearColormap.set_under" title="mpltools.color.LinearColormap.set_under"><tt class="xref py py-obj docutils literal"><span class="pre">set_under</span></tt></a>([color,&nbsp;alpha])</td>
+<td>Set color to be used for low out-of-range values.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mpltools.color.LinearColormap.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>segmented_data</em>, <em>index=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#mpltools.color.LinearColormap.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="mpltools.color.LinearColormap.from_list">
+<em class="property">static </em><tt class="descname">from_list</tt><big>(</big><em>name</em>, <em>colors</em>, <em>N=256</em>, <em>gamma=1.0</em><big>)</big><a class="headerlink" href="#mpltools.color.LinearColormap.from_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a linear segmented colormap with <em>name</em> from a sequence
+of <em>colors</em> which evenly transitions from colors[0] at val=0
+to colors[-1] at val=1.  <em>N</em> is the number of rgb quantization
+levels.
+Alternatively, a list of (value, color) tuples can be given
+to divide the range unevenly.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpltools.color.LinearColormap.is_gray">
+<tt class="descname">is_gray</tt><big>(</big><big>)</big><a class="headerlink" href="#mpltools.color.LinearColormap.is_gray" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mpltools.color.LinearColormap.set_bad">
+<tt class="descname">set_bad</tt><big>(</big><em>color='k'</em>, <em>alpha=None</em><big>)</big><a class="headerlink" href="#mpltools.color.LinearColormap.set_bad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set color to be used for masked values.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpltools.color.LinearColormap.set_gamma">
+<tt class="descname">set_gamma</tt><big>(</big><em>gamma</em><big>)</big><a class="headerlink" href="#mpltools.color.LinearColormap.set_gamma" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a new gamma value and regenerate color map.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpltools.color.LinearColormap.set_over">
+<tt class="descname">set_over</tt><big>(</big><em>color='k'</em>, <em>alpha=None</em><big>)</big><a class="headerlink" href="#mpltools.color.LinearColormap.set_over" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set color to be used for high out-of-range values.
+Requires norm.clip = False</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpltools.color.LinearColormap.set_under">
+<tt class="descname">set_under</tt><big>(</big><em>color='k'</em>, <em>alpha=None</em><big>)</big><a class="headerlink" href="#mpltools.color.LinearColormap.set_under" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set color to be used for low out-of-range values.
+Requires norm.clip = False</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="linearsegmentedcolormap">
+<h2><a class="reference internal" href="#mpltools.color.LinearSegmentedColormap" title="mpltools.color.LinearSegmentedColormap"><tt class="xref py py-class docutils literal"><span class="pre">LinearSegmentedColormap</span></tt></a><a class="headerlink" href="#linearsegmentedcolormap" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mpltools.color.LinearSegmentedColormap">
+<em class="property">class </em><tt class="descclassname">mpltools.color.</tt><tt class="descname">LinearSegmentedColormap</tt><big>(</big><em>name</em>, <em>segmentdata</em>, <em>N=256</em>, <em>gamma=1.0</em><big>)</big><a class="headerlink" href="#mpltools.color.LinearSegmentedColormap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">matplotlib.colors.Colormap</span></tt></p>
+<p>Colormap objects based on lookup tables using linear segments.</p>
+<p>The lookup table is generated using linear interpolation for each
+primary color, with the 0-1 domain divided into any number of
+segments.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.color.LinearSegmentedColormap.from_list" title="mpltools.color.LinearSegmentedColormap.from_list"><tt class="xref py py-obj docutils literal"><span class="pre">from_list</span></tt></a>(name,&nbsp;colors[,&nbsp;N,&nbsp;gamma])</td>
+<td>Make a linear segmented colormap with <em>name</em> from a sequence of <em>colors</em> which evenly transitions from colors[0] at val=0 to colors[-1] at val=1.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.color.LinearSegmentedColormap.is_gray" title="mpltools.color.LinearSegmentedColormap.is_gray"><tt class="xref py py-obj docutils literal"><span class="pre">is_gray</span></tt></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.color.LinearSegmentedColormap.set_bad" title="mpltools.color.LinearSegmentedColormap.set_bad"><tt class="xref py py-obj docutils literal"><span class="pre">set_bad</span></tt></a>([color,&nbsp;alpha])</td>
+<td>Set color to be used for masked values.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.color.LinearSegmentedColormap.set_gamma" title="mpltools.color.LinearSegmentedColormap.set_gamma"><tt class="xref py py-obj docutils literal"><span class="pre">set_gamma</span></tt></a>(gamma)</td>
+<td>Set a new gamma value and regenerate color map.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#mpltools.color.LinearSegmentedColormap.set_over" title="mpltools.color.LinearSegmentedColormap.set_over"><tt class="xref py py-obj docutils literal"><span class="pre">set_over</span></tt></a>([color,&nbsp;alpha])</td>
+<td>Set color to be used for high out-of-range values.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.color.LinearSegmentedColormap.set_under" title="mpltools.color.LinearSegmentedColormap.set_under"><tt class="xref py py-obj docutils literal"><span class="pre">set_under</span></tt></a>([color,&nbsp;alpha])</td>
+<td>Set color to be used for low out-of-range values.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mpltools.color.LinearSegmentedColormap.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>segmentdata</em>, <em>N=256</em>, <em>gamma=1.0</em><big>)</big><a class="headerlink" href="#mpltools.color.LinearSegmentedColormap.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create color map from linear mapping segments</p>
+<p>segmentdata argument is a dictionary with a red, green and blue
+entries. Each entry should be a list of <em>x</em>, <em>y0</em>, <em>y1</em> tuples,
+forming rows in a table. Entries for alpha are optional.</p>
+<p>Example: suppose you want red to increase from 0 to 1 over
+the bottom half, green to do the same over the middle half,
+and blue over the top half.  Then you would use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">cdict</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;red&#39;</span><span class="p">:</span>   <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+                   <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+                   <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)],</span>
+
+         <span class="s">&#39;green&#39;</span><span class="p">:</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+                   <span class="p">(</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+                   <span class="p">(</span><span class="mf">0.75</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
+                   <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)],</span>
+
+         <span class="s">&#39;blue&#39;</span><span class="p">:</span>  <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+                   <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span>
+                   <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span>  <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)]}</span>
+</pre></div>
+</div>
+<p>Each row in the table for a given color is a sequence of
+<em>x</em>, <em>y0</em>, <em>y1</em> tuples.  In each sequence, <em>x</em> must increase
+monotonically from 0 to 1.  For any input value <em>z</em> falling
+between <em>x[i]</em> and <em>x[i+1]</em>, the output value of a given color
+will be linearly interpolated between <em>y1[i]</em> and <em>y0[i+1]</em>:</p>
+<div class="highlight-python"><pre>row i:   x  y0  y1
+               /
+              /
+row i+1: x  y0  y1</pre>
+</div>
+<p>Hence y0 in the first row and y1 in the last row are never used.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="#mpltools.color.LinearSegmentedColormap.from_list" title="mpltools.color.LinearSegmentedColormap.from_list"><tt class="xref py py-meth docutils literal"><span class="pre">LinearSegmentedColormap.from_list()</span></tt></a></dt>
+<dd>Static method; factory function for generating a
+smoothly-varying LinearSegmentedColormap.</dd>
+<dt><tt class="xref py py-func docutils literal"><span class="pre">makeMappingArray()</span></tt></dt>
+<dd>For information about making a mapping array.</dd>
+</dl>
+</div>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="mpltools.color.LinearSegmentedColormap.from_list">
+<em class="property">static </em><tt class="descname">from_list</tt><big>(</big><em>name</em>, <em>colors</em>, <em>N=256</em>, <em>gamma=1.0</em><big>)</big><a class="headerlink" href="#mpltools.color.LinearSegmentedColormap.from_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a linear segmented colormap with <em>name</em> from a sequence
+of <em>colors</em> which evenly transitions from colors[0] at val=0
+to colors[-1] at val=1.  <em>N</em> is the number of rgb quantization
+levels.
+Alternatively, a list of (value, color) tuples can be given
+to divide the range unevenly.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpltools.color.LinearSegmentedColormap.is_gray">
+<tt class="descname">is_gray</tt><big>(</big><big>)</big><a class="headerlink" href="#mpltools.color.LinearSegmentedColormap.is_gray" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mpltools.color.LinearSegmentedColormap.set_bad">
+<tt class="descname">set_bad</tt><big>(</big><em>color='k'</em>, <em>alpha=None</em><big>)</big><a class="headerlink" href="#mpltools.color.LinearSegmentedColormap.set_bad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set color to be used for masked values.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpltools.color.LinearSegmentedColormap.set_gamma">
+<tt class="descname">set_gamma</tt><big>(</big><em>gamma</em><big>)</big><a class="headerlink" href="#mpltools.color.LinearSegmentedColormap.set_gamma" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a new gamma value and regenerate color map.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpltools.color.LinearSegmentedColormap.set_over">
+<tt class="descname">set_over</tt><big>(</big><em>color='k'</em>, <em>alpha=None</em><big>)</big><a class="headerlink" href="#mpltools.color.LinearSegmentedColormap.set_over" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set color to be used for high out-of-range values.
+Requires norm.clip = False</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mpltools.color.LinearSegmentedColormap.set_under">
+<tt class="descname">set_under</tt><big>(</big><em>color='k'</em>, <em>alpha=None</em><big>)</big><a class="headerlink" href="#mpltools.color.LinearSegmentedColormap.set_under" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set color to be used for low out-of-range values.
+Requires norm.clip = False</p>
+</dd></dl>
+
+</dd></dl>
+
 <table border="1" class="longtable docutils">
 <colgroup>
 <col width="10%" />
@@ -85,6 +348,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <div class="section" id="color-mapper">
 <h2>color_mapper<a class="headerlink" href="#color-mapper" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -226,6 +490,12 @@ default color cycle.</p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Module: <tt class="docutils literal"><span class="pre">color</span></tt></a><ul>
+<li><a class="reference internal" href="#linearcolormap"><tt class="docutils literal"><span class="pre">LinearColormap</span></tt></a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#linearsegmentedcolormap"><tt class="docutils literal"><span class="pre">LinearSegmentedColormap</span></tt></a><ul>
+</ul>
+</li>
 <li><a class="reference internal" href="#color-mapper">color_mapper</a></li>
 <li><a class="reference internal" href="#colors-from-cmap">colors_from_cmap</a></li>
 <li><a class="reference internal" href="#cycle-cmap">cycle_cmap</a></li>
@@ -236,9 +506,6 @@ default color cycle.</p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="mpltools.annotation.html"
                         title="previous chapter">Module: <tt class="docutils literal docutils literal"><span class="pre">annotation</span></tt></a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="mpltools.io.html"
-                        title="next chapter">Module: <tt class="docutils literal"><span class="pre">io</span></tt></a></p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
@@ -268,9 +535,6 @@ default color cycle.</p>
         <li class="right" >
           <a href="../np-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="mpltools.io.html" title="Module: io"
-             >next</a> |</li>
         <li class="right" >
           <a href="mpltools.annotation.html" title="Module: annotation"
              >previous</a> |</li>
