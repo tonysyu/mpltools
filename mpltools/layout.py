@@ -111,6 +111,7 @@ def figimage(img, scale=1, dpi=None):
 
     ax.set_axis_off()
     ax.imshow(img)
+    ax.autoscale(enable=False)
     return fig, ax
 
 
