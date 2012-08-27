@@ -31,7 +31,7 @@ def errorfill(x, y, yerr=None, xerr=None, color=None, ls=None, lw=None,
         `alpha * alpha_fill`.
     label : str
         Label for line.
-    label : str
+    label_fill : str
         Label for filled region.
     ax : Axis instance
         The plot is drawn on axis `ax`. If `None` the current axis is used
