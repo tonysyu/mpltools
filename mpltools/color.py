@@ -19,11 +19,18 @@ class LinearColormap(LinearSegmentedColormap):
     ----------
     name : str
         Name of colormap.
-    color_data : dict
-        Dictionary of 'red', 'green', 'blue', and (optionally) 'alpha' values.
-        Each color key contains a list of `x`, `y` tuples. `x` must increase
-        monotonically from 0 to 1 and corresponds to input values for a mappable
-        object (e.g. an image). `y` corresponds to the color intensity.
+    color_data : list or dict
+        Colors at each index value. Two input types are supported:
+
+            List of RGB or RGBA tuples. For example, red and blue::
+
+                color_data = [(1, 0, 0), (0, 0, 1)]
+
+            Dict of 'red', 'green', 'blue', and (optionally) 'alpha' values.
+            For example, the following would give a red-to-blue gradient::
+
+                color_data = {'red': [1, 0], 'green': [0, 0], 'blue': [0, 1]}
+
     index : list of floats (0, 1)
         Note that these indices must match the length of `color_data`.
         If None, colors in `color_data` are equally spaced in colormap.
@@ -31,35 +38,47 @@ class LinearColormap(LinearSegmentedColormap):
     Examples
     --------
     Linear colormap going from white to red
-    >>> white_red = LinearColormap('white_red', {'blue':  [1.0, 0.0],
-                                                 'green': [1.0, 0.0],
-                                                 'red':   [1.0, 0.8]})
+
+    >>> white_red = LinearColormap('white_red', [(1, 1, 1), (0.8, 0, 0)])
 
     Colormap going from blue to white to red
-    >>> bwr = LinearColormap('white_red',
-                             {'blue':  [0.4, 1.0, 0.1],
-                              'green': [0.2, 1.0, 0.0],
-                              'red':   [0.0, 1.0, 0.4]})
+
+    >>> bwr = LinearColormap('blue_white_red', [(0.0, 0.2, 0.4),    # blue
+    ...                                         (1.0, 1.0, 1.0),    # white
+    ...                                         (0.4, 0.0, 0.1)])   # red
 
     You can use a repeated index to get a segmented color.
     - Blue below midpoint of colormap, red above mid point.
     - Alpha maximum at the edges, minimum in the middle.
-    >>> bcr_spec = {'blue': [0.4, 0.4, 0.1, 0.1],
-                    'green': [0.2, 0.2, 0.0, 0.0],
-                    'red': [0.02, 0.02, 0.4, 0.4],
-                    'alpha': [1, 0.3, 0.3, 1]}
-    >>> blue_clear_red = LinearColormap('blue_clear_red', bcr_spec,
-                                        index=[0, 0.5, 0.5, 1])
+
+    >>> bcr_rgba = [(0.02, 0.2, 0.4, 1),    # grayish blue, opaque
+    ...             (0.02, 0.2, 0.4, 0.3),  # grayish blue, transparent
+    ...             (0.4,  0.0, 0.1, 0.3),  # dark red, transparent
+    ...             (0.4,  0.0, 0.1, 1)]    # dark red, opaque
+    >>> blue_clear_red = color.LinearColormap('blue_clear_red', bcr_rgba,
+    ...                                       index=[0, 0.5, 0.5, 1])
+
     """
 
     def __init__(self, name, color_data, index=None, **kwargs):
+        if not hasattr(color_data, 'keys'):
+            color_data = rgb_list_to_colordict(color_data)
+
         if index is None:
             # If index not given, RGB colors are evenly-spaced in colormap.
             index = np.linspace(0, 1, len(color_data['red']))
+
         # Adapt color_data to the form expected by LinearSegmentedColormap.
         color_data = dict((key, [(x, y, y) for x, y in zip(index, value)])
                           for key, value in color_data.iteritems())
         LinearSegmentedColormap.__init__(self, name, color_data, **kwargs)
+
+
+def rgb_list_to_colordict(rgb_list):
+    colors_by_channel = zip(*rgb_list)
+    channels = ('red', 'green', 'blue', 'alpha')
+    return dict((color, value)
+                for color, value in zip(channels, colors_by_channel))
 
 
 CMAP_RANGE = config['color']['cmap_range']
