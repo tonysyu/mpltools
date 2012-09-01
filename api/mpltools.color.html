@@ -69,11 +69,11 @@
 <h2><a class="reference internal" href="#mpltools.color.LinearColormap" title="mpltools.color.LinearColormap"><tt class="xref py py-class docutils literal"><span class="pre">LinearColormap</span></tt></a><a class="headerlink" href="#linearcolormap" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="mpltools.color.LinearColormap">
-<em class="property">class </em><tt class="descclassname">mpltools.color.</tt><tt class="descname">LinearColormap</tt><big>(</big><em>name</em>, <em>segmented_data</em>, <em>index=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#mpltools.color.LinearColormap" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">mpltools.color.</tt><tt class="descname">LinearColormap</tt><big>(</big><em>name</em>, <em>color_data</em>, <em>index=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#mpltools.color.LinearColormap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">matplotlib.colors.LinearSegmentedColormap</span></tt></p>
 <p>Create Matplotlib colormap with color values specified at key points.</p>
 <p>This class simplifies the call signature of LinearSegmentedColormap. By
-default, colors specified by <cite>segmented_data</cite> are equally spaced along the
+default, colors specified by <cite>color_data</cite> are equally spaced along the
 colormap.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -83,47 +83,50 @@ colormap.</p>
 <blockquote>
 <div><p>Name of colormap.</p>
 </div></blockquote>
-<p><strong>segmented_data</strong> : dict</p>
+<p><strong>color_data</strong> : list or dict</p>
 <blockquote>
-<div><p>Dictionary of &#8216;red&#8217;, &#8216;green&#8217;, &#8216;blue&#8217;, and (optionally) &#8216;alpha&#8217; values.
-Each color key contains a list of <cite>x</cite>, <cite>y</cite> tuples. <cite>x</cite> must increase
-monotonically from 0 to 1 and corresponds to input values for a mappable
-object (e.g. an image). <cite>y</cite> corresponds to the color intensity.</p>
+<div><p>Colors at each index value. Two input types are supported:</p>
+<blockquote>
+<div><p>List of RGB or RGBA tuples. For example, red and blue:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">color_data</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>Dict of &#8216;red&#8217;, &#8216;green&#8217;, &#8216;blue&#8217;, and (optionally) &#8216;alpha&#8217; values.
+For example, the following would give a red-to-blue gradient:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">color_data</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;red&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="s">&#39;green&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="s">&#39;blue&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]}</span>
+</pre></div>
+</div>
+</div></blockquote>
 </div></blockquote>
 <p><strong>index</strong> : list of floats (0, 1)</p>
 <blockquote class="last">
-<div><p>Note that these indices must match the length of <cite>segmented_data</cite>.
-If None, colors in <cite>segmented_data</cite> are equally spaced in colormap.</p>
+<div><p>Note that these indices must match the length of <cite>color_data</cite>.
+If None, colors in <cite>color_data</cite> are equally spaced in colormap.</p>
 </div></blockquote>
 </td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<p>Linear colormap going from white to red
-&gt;&gt;&gt; white_red = LinearColormap(&#8216;white_red&#8217;, {&#8216;blue&#8217;:  [1.0, 0.0],</p>
-<blockquote>
-<div>&#8216;green&#8217;: [1.0, 0.0],
-&#8216;red&#8217;:   [1.0, 0.8]})</div></blockquote>
-<p>Colormap going from blue to white to red
-&gt;&gt;&gt; bwr = LinearColormap(&#8216;white_red&#8217;,</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>{&#8216;blue&#8217;:  [0.4, 1.0, 0.1],</dt>
-<dd>&#8216;green&#8217;: [0.2, 1.0, 0.0],
-&#8216;red&#8217;:   [0.0, 1.0, 0.4]})</dd>
-</dl>
-</div></blockquote>
+<p>Linear colormap going from white to red</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">white_red</span> <span class="o">=</span> <span class="n">LinearColormap</span><span class="p">(</span><span class="s">&#39;white_red&#39;</span><span class="p">,</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
+</pre></div>
+</div>
+<p>Colormap going from blue to white to red</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">bwr</span> <span class="o">=</span> <span class="n">LinearColormap</span><span class="p">(</span><span class="s">&#39;blue_white_red&#39;</span><span class="p">,</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">),</span>    <span class="c"># blue</span>
+<span class="gp">... </span>                                        <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>    <span class="c"># white</span>
+<span class="gp">... </span>                                        <span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)])</span>   <span class="c"># red</span>
+</pre></div>
+</div>
 <p>You can use a repeated index to get a segmented color.
 - Blue below midpoint of colormap, red above mid point.
-- Alpha maximum at the edges, minimum in the middle.
-&gt;&gt;&gt; bcr_spec = {&#8216;blue&#8217;: [0.4, 0.4, 0.1, 0.1],</p>
-<blockquote>
-<div>&#8216;green&#8217;: [0.2, 0.2, 0.0, 0.0],
-&#8216;red&#8217;: [0.02, 0.02, 0.4, 0.4],
-&#8216;alpha&#8217;: [1, 0.3, 0.3, 1]}</div></blockquote>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">blue_clear_red</span> <span class="o">=</span> <span class="n">LinearColormap</span><span class="p">(</span><span class="s">&#39;blue_clear_red&#39;</span><span class="p">,</span> <span class="n">bcr_spec</span><span class="p">,</span>
-<span class="go">                                    index=[0, 0.5, 0.5, 1])</span>
+- Alpha maximum at the edges, minimum in the middle.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">bcr_rgba</span> <span class="o">=</span> <span class="p">[(</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>    <span class="c"># grayish blue, opaque</span>
+<span class="gp">... </span>            <span class="p">(</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span>  <span class="c"># grayish blue, transparent</span>
+<span class="gp">... </span>            <span class="p">(</span><span class="mf">0.4</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span>  <span class="c"># dark red, transparent</span>
+<span class="gp">... </span>            <span class="p">(</span><span class="mf">0.4</span><span class="p">,</span>  <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>    <span class="c"># dark red, opaque</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">blue_clear_red</span> <span class="o">=</span> <span class="n">color</span><span class="o">.</span><span class="n">LinearColormap</span><span class="p">(</span><span class="s">&#39;blue_clear_red&#39;</span><span class="p">,</span> <span class="n">bcr_rgba</span><span class="p">,</span>
+<span class="gp">... </span>                                      <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
 <p class="rubric">Methods</p>
@@ -155,7 +158,7 @@ If None, colors in <cite>segmented_data</cite> are equally spaced in colormap.</
 </table>
 <dl class="method">
 <dt id="mpltools.color.LinearColormap.__init__">
-<tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>segmented_data</em>, <em>index=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#mpltools.color.LinearColormap.__init__" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">__init__</tt><big>(</big><em>name</em>, <em>color_data</em>, <em>index=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#mpltools.color.LinearColormap.__init__" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="staticmethod">
@@ -346,6 +349,9 @@ Requires norm.clip = False</p>
 <tr class="row-odd"><td><a class="reference internal" href="#mpltools.color.cycle_cmap" title="mpltools.color.cycle_cmap"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.color.cycle_cmap</span></tt></a>([length,&nbsp;cmap,&nbsp;...])</td>
 <td>Set default color cycle of matplotlib based on colormap.</td>
 </tr>
+<tr class="row-even"><td><a class="reference internal" href="#mpltools.color.rgb_list_to_colordict" title="mpltools.color.rgb_list_to_colordict"><tt class="xref py py-obj docutils literal"><span class="pre">mpltools.color.rgb_list_to_colordict</span></tt></a>(rgb_list)</td>
+<td></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -472,6 +478,14 @@ default color cycle.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="rgb-list-to-colordict">
+<h2>rgb_list_to_colordict<a class="headerlink" href="#rgb-list-to-colordict" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="mpltools.color.rgb_list_to_colordict">
+<tt class="descclassname">mpltools.color.</tt><tt class="descname">rgb_list_to_colordict</tt><big>(</big><em>rgb_list</em><big>)</big><a class="headerlink" href="#mpltools.color.rgb_list_to_colordict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
 </div>
 
 
@@ -499,6 +513,7 @@ default color cycle.</p>
 <li><a class="reference internal" href="#color-mapper">color_mapper</a></li>
 <li><a class="reference internal" href="#colors-from-cmap">colors_from_cmap</a></li>
 <li><a class="reference internal" href="#cycle-cmap">cycle_cmap</a></li>
+<li><a class="reference internal" href="#rgb-list-to-colordict">rgb_list_to_colordict</a></li>
 </ul>
 </li>
 </ul>

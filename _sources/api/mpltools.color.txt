@@ -39,6 +39,7 @@ Inheritance diagram for ``mpltools.color``:
    mpltools.color.color_mapper
    mpltools.color.colors_from_cmap
    mpltools.color.cycle_cmap
+   mpltools.color.rgb_list_to_colordict
 
 color_mapper
 ------------
@@ -54,4 +55,9 @@ cycle_cmap
 ----------
 
 .. autofunction:: mpltools.color.cycle_cmap
+
+rgb_list_to_colordict
+---------------------
+
+.. autofunction:: mpltools.color.rgb_list_to_colordict
 
