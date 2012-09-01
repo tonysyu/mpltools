@@ -37,7 +37,7 @@ hr {
 }
 
 div.document {
-    background-color: #EAE7E0;
+    background-color: #FAFAFA;
 }
 
 div.header {
@@ -54,7 +54,7 @@ div.body {
     color: #3E4349;
     padding: 0 30px 30px 30px;
     font-size: 1em;
-    border: 2px solid #ddd;
+    border: 1px solid #ddd;
     border-right-style: none;
     overflow: auto;
 }
@@ -83,7 +83,7 @@ div.related {
     line-height: 30px;
     color: #373839;
     font-size: 0.8em;
-    background-color: #EAE7E0;
+    background-color: #FAFAFA;
 }
 
 div.related a {
@@ -111,7 +111,7 @@ div.sphinxsidebar h4 {
     font-weight: normal;
     margin: 0;
     padding: 5px 10px;
-    border-bottom: 2px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 
 div.sphinxsidebar h4{
@@ -155,7 +155,7 @@ div.sphinxsidebar input[type=text]{
 
 div.sidebar {
     margin: 0 0 0.5em 1em;
-    border: 2px solid #c6d880;
+    border: 1px solid #c6d880;
     background-color: #e6efc2;
     width: 40%;
     float: right;
@@ -233,7 +233,7 @@ dt:target, .highlighted { /* used to highlight destination of internal links */
 }
 
 div.note {
-    border: 2px solid #7a9eec;
+    border: 1px solid #7a9eec;
     border-right-style: none;
     border-left-style: none;
     padding: 10px 20px 10px 60px;
@@ -249,7 +249,7 @@ div.seealso {
 
 div.topic {
     background: #eeeeee;
-    border: 2px solid #C6C9CB;
+    border: 1px solid #C6C9CB;
     padding: 10px 20px;
     border-right-style: none;
     border-left-style: none;
@@ -257,7 +257,7 @@ div.topic {
 
 div.warning {
     background: #fbe3e4 url(dialog-warning.png) no-repeat 10px 8px;
-    border: 2px solid #fbc2c4;
+    border: 1px solid #fbc2c4;
     border-right-style: none;
     border-left-style: none;
     padding: 10px 20px 10px 60px;
@@ -276,7 +276,7 @@ pre {
     background-color: #fafafa;
     color: #222;
     line-height: 1.2em;
-    border: 2px solid #C6C9CB;
+    border: 1px solid #C6C9CB;
     font-size: 1.1em;
     margin: 1.5em 0 1.5em 0;
     border-right-style: none;
@@ -310,7 +310,7 @@ tr {
 
 div.viewcode-block:target {
     background-color: #fff6bf;
-    border: 2px solid #ffd324;
+    border: 1px solid #ffd324;
     border-left-style: none;
     border-right-style: none;
     padding: 10px 20px;
