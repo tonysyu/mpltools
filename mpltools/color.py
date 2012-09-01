@@ -12,21 +12,21 @@ class LinearColormap(LinearSegmentedColormap):
     """Create Matplotlib colormap with color values specified at key points.
 
     This class simplifies the call signature of LinearSegmentedColormap. By
-    default, colors specified by `segmented_data` are equally spaced along the
+    default, colors specified by `color_data` are equally spaced along the
     colormap.
 
     Parameters
     ----------
     name : str
         Name of colormap.
-    segmented_data : dict
+    color_data : dict
         Dictionary of 'red', 'green', 'blue', and (optionally) 'alpha' values.
         Each color key contains a list of `x`, `y` tuples. `x` must increase
         monotonically from 0 to 1 and corresponds to input values for a mappable
         object (e.g. an image). `y` corresponds to the color intensity.
     index : list of floats (0, 1)
-        Note that these indices must match the length of `segmented_data`.
-        If None, colors in `segmented_data` are equally spaced in colormap.
+        Note that these indices must match the length of `color_data`.
+        If None, colors in `color_data` are equally spaced in colormap.
 
     Examples
     --------
@@ -52,13 +52,14 @@ class LinearColormap(LinearSegmentedColormap):
                                         index=[0, 0.5, 0.5, 1])
     """
 
-    def __init__(self, name, segmented_data, index=None, **kwargs):
+    def __init__(self, name, color_data, index=None, **kwargs):
         if index is None:
             # If index not given, RGB colors are evenly-spaced in colormap.
-            index = np.linspace(0, 1, len(segmented_data['red']))
-        segmented_data = dict((key, [(x, y, y) for x, y in zip(index, value)])
-                              for key, value in segmented_data.iteritems())
-        LinearSegmentedColormap.__init__(self, name, segmented_data, **kwargs)
+            index = np.linspace(0, 1, len(color_data['red']))
+        # Adapt color_data to the form expected by LinearSegmentedColormap.
+        color_data = dict((key, [(x, y, y) for x, y in zip(index, value)])
+                          for key, value in color_data.iteritems())
+        LinearSegmentedColormap.__init__(self, name, color_data, **kwargs)
 
 
 CMAP_RANGE = config['color']['cmap_range']
