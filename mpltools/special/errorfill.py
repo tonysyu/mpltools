@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 __all__ = ['errorfill']
 
 
-def errorfill(x, y, yerr=None, xerr=None, color=None, ls=None, lw=None,
+def errorfill(x, y, yerr=None, xerr=None, color=None, ls=None, lw=None, where=None,
               alpha=1, alpha_fill=0.3, label='', label_fill='', ax=None):
     """Plot data with errors marked by a filled region.
 
@@ -24,6 +24,10 @@ def errorfill(x, y, yerr=None, xerr=None, color=None, ls=None, lw=None,
         Style of the line
     lw : Matplotlib line width, float value in points
         Width of the line
+    where :
+	If None, default to fill between everywhere. If not None, it is an
+	N-length numpy boolean array and the fill will only happen over the
+	regions where where==True.
     alpha : float
         Opacity used for plotting.
     alpha_fill : float
@@ -46,7 +50,17 @@ def errorfill(x, y, yerr=None, xerr=None, color=None, ls=None, lw=None,
         ls = plt.rcParams['lines.linestyle']
     if lw is None:
         lw = plt.rcParams['lines.linewidth']
-    ax.plot(x, y, color, linestyle=ls, linewidth=lw, alpha=alpha, label=label)
+
+    if where is None:   #plot the all line if where is not set
+	ax.plot(x, y, color, linestyle=ls, linewidth=lw, alpha=alpha, label=label)
+    else:   #emulate the 'where' keyword in fill_between (from matplotlib/axes.py) 
+	import matplotlib.mlab as mlab
+	for ind0, ind1 in mlab.contiguous_regions(where):
+	    xslice = x[ind0:ind1]
+	    yslice = y[ind0:ind1]
+	    if not len(xslice):
+		continue
+	    ax.plot(xslice, yslice, color, linestyle=ls, linewidth=lw, alpha=alpha, label=label)
 
     if yerr is not None and xerr is not None:
         msg = "Setting both `yerr` and `xerr` is not supported. Ignore `xerr`."
@@ -55,10 +69,10 @@ def errorfill(x, y, yerr=None, xerr=None, color=None, ls=None, lw=None,
     kwargs_fill = dict(color=color, alpha=alpha_fill, label=label_fill)
     if yerr is not None:
         ymin, ymax = extrema_from_error_input(y, yerr)
-        fill_between(x, ymax, ymin, ax=ax, **kwargs_fill)
+        fill_between(x, ymax, ymin, ax=ax, where=where, **kwargs_fill)
     elif xerr is not None:
         xmin, xmax = extrema_from_error_input(x, xerr)
-        fill_between_x(y, xmax, xmin, ax=ax, **kwargs_fill)
+        fill_between_x(y, xmax, xmin, ax=ax, where=where, **kwargs_fill)
 
 
 def extrema_from_error_input(z, zerr):
@@ -73,14 +87,14 @@ def extrema_from_error_input(z, zerr):
 # Wrappers around `fill_between` and `fill_between_x` that create proxy artists
 # so that filled regions show up correctly legends.
 
-def fill_between(x, y1, y2=0, ax=None, **kwargs):
+def fill_between(x, y1, y2=0, ax=None, where=None, **kwargs):
     ax = ax if ax is not None else plt.gca()
-    ax.fill_between(x, y1, y2, **kwargs)
+    ax.fill_between(x, y1, y2, where=where, **kwargs)
     ax.add_patch(plt.Rectangle((0, 0), 0, 0, **kwargs))
 
-def fill_between_x(x, y1, y2=0, ax=None, **kwargs):
+def fill_between_x(x, y1, y2=0, ax=None, where=None, **kwargs):
     ax = ax if ax is not None else plt.gca()
-    ax.fill_betweenx(x, y1, y2, **kwargs)
+    ax.fill_betweenx(x, y1, y2, where=where, **kwargs)
     ax.add_patch(plt.Rectangle((0, 0), 0, 0, **kwargs))
 
 
