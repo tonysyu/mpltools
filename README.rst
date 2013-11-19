@@ -11,6 +11,8 @@ the best way to get started is to look at the `example gallery`_.
 Styles
 ======
 
+**Note:** Style-sheets have now been `implemented in matplotlib master<https://github.com/matplotlib/matplotlib/pull/2236>`__!
+
 This package got its start by implementing plotting "styles"---essentially
 stylesheets that are similar to matplotlibrc_ files. Unfortunately, the syntax
 for an ``mplstyle`` file is slightly different than matplotlibrc_ files because
