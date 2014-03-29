@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from .. import _config
 
 
-__all__ = ['use', 'available', 'lib', 'baselib']
+__all__ = ['use', 'available', 'lib', 'baselib', 'Style']
 
 
 def use(name=None, use_baselib=False):
@@ -33,6 +33,30 @@ def use(name=None, use_baselib=False):
             plt.rcParams.update(lib[s])
 
 
+class Style(object):
+    """ Context manager to apply a pre-defined plotting style.
+    """
+    def __init__(self, name=None, use_baselib=False):
+        """ See `style.use` for more information.
+        """
+        self._name = name
+        self._use_baselib = use_baselib
+
+    def __enter__(self):
+        self._rc_copy = plt.rcParams.copy()
+        use(self._name, self._use_baselib)
+        return self._rc_copy
+
+    def __exit__(self, *_):
+        plt.rcParams.clear()
+        plt.rcParams.update(self._rc_copy)
+        return False
+
+    activate = __enter__
+
+    deactivate = __exit__
+
+
 def load_base_library():
     """Load style library from package"""
     library = dict()
@@ -55,7 +79,6 @@ def update_user_library(base_library):
         styles = read_style_dict(cfg)
         update_nested_dict(library, styles)
     return library
-
 
 
 def read_style_directory(style_dir):
@@ -108,4 +131,3 @@ def update_nested_dict(main_dict, new_dict):
 baselib = load_base_library()
 lib = update_user_library(baselib)
 available = lib.keys()
-
