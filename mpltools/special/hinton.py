@@ -45,6 +45,8 @@ def hinton(inarray, max_value=None, ticklabels=None):
     max_value : float
         Any *absolute* value larger than `max_value` will be represented by a
         unit square.
+    ticklabels : array
+        Array of strings to use as label. Length should match inarray.
     """
 
     ax = plt.gca()
