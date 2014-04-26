@@ -5,9 +5,6 @@ from matplotlib import transforms
 from matplotlib import ticker
 
 
-__all__ = ['hinton']
-
-
 # TOOD: Add yutils.mpl._coll to mpltools and use that for square collection.
 class SquareCollection(collections.RegularPolyCollection):
     """Return a collection of squares."""
@@ -24,7 +21,7 @@ class SquareCollection(collections.RegularPolyCollection):
         return transforms.Affine2D().scale(scale_x, scale_y)
 
 
-def hinton(inarray, max_value=None):
+def hinton(inarray, max_value=None, ticklabels=None):
     """Plot Hinton diagram for visualizing the values of a 2D array.
 
     Plot representation of an array with positive and negative values
@@ -48,6 +45,7 @@ def hinton(inarray, max_value=None):
         Any *absolute* value larger than `max_value` will be represented by a
         unit square.
     """
+
     ax = plt.gca()
     ax.set_axis_bgcolor('gray')
     # make sure we're working with a numpy array, not a numpy matrix
@@ -74,9 +72,15 @@ def hinton(inarray, max_value=None):
     ax.set_xlim(-0.5, width-0.5)
     ax.set_ylim(height-0.5, -0.5)
 
-    ax.xaxis.set_major_locator(IndexLocator())
-    ax.yaxis.set_major_locator(IndexLocator())
-
+    if ticklabels is None:
+        ax.xaxis.set_major_locator(IndexLocator())
+        ax.yaxis.set_major_locator(IndexLocator())
+    else:
+        ax.set_yticks(np.arange(len(ticklabels)))
+        ax.set_xticks(np.arange(len(ticklabels)))
+    
+        ax.set_yticklabels(ticklabels)
+        ax.set_xticklabels(ticklabels, rotation=90)
 
 class IndexLocator(ticker.Locator):
 
@@ -91,5 +95,3 @@ class IndexLocator(ticker.Locator):
         else:
             step = np.ceil(dmax / self.max_ticks)
         return self.raise_if_exceeds(np.arange(0, dmax, step))
-
-
