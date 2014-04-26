@@ -4,6 +4,7 @@ from matplotlib import collections
 from matplotlib import transforms
 from matplotlib import ticker
 
+__all__ = ['hinton']
 
 # TOOD: Add yutils.mpl._coll to mpltools and use that for square collection.
 class SquareCollection(collections.RegularPolyCollection):
