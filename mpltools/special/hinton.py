@@ -22,7 +22,7 @@ class SquareCollection(collections.RegularPolyCollection):
         return transforms.Affine2D().scale(scale_x, scale_y)
 
 
-def hinton(inarray, max_value=None, ticklabels=None):
+def hinton(inarray, max_value=None, use_default_ticks=True):
     """Plot Hinton diagram for visualizing the values of a 2D array.
 
     Plot representation of an array with positive and negative values
@@ -75,15 +75,9 @@ def hinton(inarray, max_value=None, ticklabels=None):
     ax.set_xlim(-0.5, width-0.5)
     ax.set_ylim(height-0.5, -0.5)
 
-    if ticklabels is None:
+    if use_default_ticks:
         ax.xaxis.set_major_locator(IndexLocator())
         ax.yaxis.set_major_locator(IndexLocator())
-    else:
-        ax.set_yticks(np.arange(len(ticklabels)))
-        ax.set_xticks(np.arange(len(ticklabels)))
-    
-        ax.set_yticklabels(ticklabels)
-        ax.set_xticklabels(ticklabels, rotation=90)
 
 class IndexLocator(ticker.Locator):
 
