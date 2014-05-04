@@ -6,6 +6,7 @@ from matplotlib import ticker
 
 __all__ = ['hinton']
 
+
 # TOOD: Add yutils.mpl._coll to mpltools and use that for square collection.
 class SquareCollection(collections.RegularPolyCollection):
     """Return a collection of squares."""
@@ -45,8 +46,8 @@ def hinton(inarray, max_value=None, use_default_ticks=True):
     max_value : float
         Any *absolute* value larger than `max_value` will be represented by a
         unit square.
-    ticklabels : array
-        Array of strings to use as label. Length should match inarray.
+    use_default_ticks: boolean
+        Disable tick-generation and generate them outside this function.
     """
 
     ax = plt.gca()
@@ -78,6 +79,7 @@ def hinton(inarray, max_value=None, use_default_ticks=True):
     if use_default_ticks:
         ax.xaxis.set_major_locator(IndexLocator())
         ax.yaxis.set_major_locator(IndexLocator())
+
 
 class IndexLocator(ticker.Locator):
 
