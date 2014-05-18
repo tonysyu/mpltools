@@ -1,3 +1,2 @@
-mpltools
 matplotlib>=1.0
 configobj>=4.4.0
