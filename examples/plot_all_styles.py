@@ -9,6 +9,9 @@ import os
 import os.path as pth
 
 import numpy as np
+
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 
 from mpltools import style
