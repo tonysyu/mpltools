@@ -1,2 +1,2 @@
---index-url https://pypi.python.org/pypi/mpltools
--e .
+matplotlib>=1.0
+configobj>=4.4.0
