@@ -4,7 +4,6 @@ from matplotlib import collections
 from matplotlib import transforms
 from matplotlib import ticker
 
-
 __all__ = ['hinton']
 
 
@@ -24,7 +23,7 @@ class SquareCollection(collections.RegularPolyCollection):
         return transforms.Affine2D().scale(scale_x, scale_y)
 
 
-def hinton(inarray, max_value=None):
+def hinton(inarray, max_value=None, use_default_ticks=True):
     """Plot Hinton diagram for visualizing the values of a 2D array.
 
     Plot representation of an array with positive and negative values
@@ -47,7 +46,10 @@ def hinton(inarray, max_value=None):
     max_value : float
         Any *absolute* value larger than `max_value` will be represented by a
         unit square.
+    use_default_ticks: boolean
+        Disable tick-generation and generate them outside this function.
     """
+
     ax = plt.gca()
     ax.set_axis_bgcolor('gray')
     # make sure we're working with a numpy array, not a numpy matrix
@@ -74,8 +76,9 @@ def hinton(inarray, max_value=None):
     ax.set_xlim(-0.5, width-0.5)
     ax.set_ylim(height-0.5, -0.5)
 
-    ax.xaxis.set_major_locator(IndexLocator())
-    ax.yaxis.set_major_locator(IndexLocator())
+    if use_default_ticks:
+        ax.xaxis.set_major_locator(IndexLocator())
+        ax.yaxis.set_major_locator(IndexLocator())
 
 
 class IndexLocator(ticker.Locator):
@@ -91,5 +94,3 @@ class IndexLocator(ticker.Locator):
         else:
             step = np.ceil(dmax / self.max_ticks)
         return self.raise_if_exceeds(np.arange(0, dmax, step))
-
-
