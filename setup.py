@@ -21,5 +21,5 @@ setup(name='mpltools',
       packages=setuptools.find_packages(),
       package_data={'mpltools': ['mpltoolsrc', 'style/*.rc']},
       include_package_data=True,
-      install_requires=['matplotlib', 'configobj']
+      install_requires=['matplotlib>=1.0', 'configobj>=4.4.0']
      )
