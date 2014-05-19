@@ -7,7 +7,7 @@ with open('README.rst') as f:
     long_description = f.read()
 
 setup(name='mpltools',
-      version='0.2dev', # must be kept consistent with setup.py
+      version='0.2dev', # must be kept consistent with mpltools/__init__.py
       description='Tools for Matplotlib',
       long_description=long_description,
       author='Tony S. Yu',
