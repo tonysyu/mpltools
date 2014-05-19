@@ -3,14 +3,11 @@ from distutils.core import setup
 
 import setuptools
 
-from mpltools import __version__
-
-
 with open('README.rst') as f:
     long_description = f.read()
 
 setup(name='mpltools',
-      version=__version__,
+      version='0.2dev', # must be kept consistent with mpltools/__init__.py
       description='Tools for Matplotlib',
       long_description=long_description,
       author='Tony S. Yu',
@@ -21,4 +18,5 @@ setup(name='mpltools',
       packages=setuptools.find_packages(),
       package_data={'mpltools': ['mpltoolsrc', 'style/*.rc']},
       include_package_data=True,
+      install_requires=['matplotlib>=1.0', 'configobj>=4.4.0']
      )

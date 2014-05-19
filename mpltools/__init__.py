@@ -22,4 +22,4 @@ config
 import _config
 config = _config.config
 
-__version__ = '0.2dev'
+__version__ = '0.2dev' # must be kept consistent with setup.py
