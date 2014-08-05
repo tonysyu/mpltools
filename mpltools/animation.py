@@ -17,6 +17,7 @@ with different interface for:
 
 
 """
+from future.builtins import object
 import warnings
 import matplotlib.animation as _animation
 

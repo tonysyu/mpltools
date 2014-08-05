@@ -111,7 +111,7 @@ class Slider(mwidgets.Slider):
         if not self.eventson:
             return
 
-        for cid, func in self.observers.iteritems():
+        for cid, func in self.observers.items():
             func(value)
 
 

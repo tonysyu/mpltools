@@ -81,7 +81,7 @@ def read_style_dict(cfg):
     # update all settings with any global settings.
     if 'global' in cfg:
         cfg_global = cfg.pop('global')
-        for rc_dict in style.itervalues():
+        for rc_dict in style.values():
             rc_dict.update(cfg_global)
     return update_nested_dict(style, cfg)
 
@@ -95,7 +95,7 @@ def update_nested_dict(main_dict, new_dict):
     Instead you should update the sub-dict.
     """
     # update named styles specified by user
-    for name, rc_dict in new_dict.iteritems():
+    for name, rc_dict in new_dict.items():
         if name in main_dict:
             main_dict[name].update(rc_dict)
         else:
@@ -107,5 +107,5 @@ def update_nested_dict(main_dict, new_dict):
 # ====================
 baselib = load_base_library()
 lib = update_user_library(baselib)
-available = lib.keys()
+available = list(lib.keys())
 

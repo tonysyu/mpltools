@@ -1,3 +1,6 @@
+from __future__ import division
+from __future__ import print_function
+from future.builtins import object
 import functools
 import warnings
 
@@ -39,8 +42,8 @@ class deprecated(object):
             if self.behavior == 'warn':
                 warnings.warn_explicit(msg,
                     category=DeprecationWarning,
-                    filename=func.func_code.co_filename,
-                    lineno=func.func_code.co_firstlineno + 1)
+                    filename=func.__code__.co_filename,
+                    lineno=func.__code__.co_firstlineno + 1)
             elif self.behavior == 'raise':
                 raise DeprecationWarning(msg)
             return func(*args, **kwargs)
@@ -50,7 +53,7 @@ class deprecated(object):
 
 @deprecated('layout.figure')
 def figure(aspect_ratio=1.3, **kwargs):
-    print "NOTE: `layout.figure` uses inverse definition of `aspect_ratio`."
+    print("NOTE: `layout.figure` uses inverse definition of `aspect_ratio`.")
     aspect_ratio = 1.0 / aspect_ratio
     return layout.figure(aspect_ratio, **kwargs)
 
@@ -62,6 +65,6 @@ def figaspect(*args, **kwargs):
 
 @deprecated('layout.figaspect')
 def figsize(aspect_ratio=1.3, **kwargs):
-    print "NOTE: `layout.figaspect` uses inverse definition of `aspect_ratio`."
+    print("NOTE: `layout.figaspect` uses inverse definition of `aspect_ratio`.")
     return layout.figaspect(1./aspect_ratio, **kwargs)
 

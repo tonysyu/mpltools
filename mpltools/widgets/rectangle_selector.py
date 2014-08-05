@@ -1,3 +1,5 @@
+from __future__ import division
+from __future__ import print_function
 import numpy as np
 
 import matplotlib.widgets as mwidgets
@@ -67,7 +69,7 @@ class RectangleSelector(mwidgets.RectangleSelector):
 
         if onselect is None:
             def onselect(extents):
-                print "(xmin=%.3g, xmax=%.3g, ymin=%.3g, ymax=%.3g)" % extents
+                print("(xmin=%.3g, xmax=%.3g, ymin=%.3g, ymax=%.3g)" % extents)
         self.onenter = onselect
 
         handle_props = dict(mfc='none', mec='k', ls='none', alpha=0.7,
@@ -254,6 +256,6 @@ if __name__ == '__main__':
 
     rect_select = RectangleSelector(ax, useblit=True)
     plt.show()
-    print "Final selection:",
+    print("Final selection:", end=' ')
     rect_select.onenter(rect_select.extents)
 

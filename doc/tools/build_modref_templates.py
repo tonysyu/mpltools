@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """Script to auto-generate our API docs.
 """
+from __future__ import print_function
 # stdlib imports
 import os, sys
 
@@ -13,7 +14,7 @@ from distutils.version import LooseVersion as V
 #*****************************************************************************
 
 def abort(error):
-    print '*WARNING* API documentation not generated: %s'%error
+    print('*WARNING* API documentation not generated: %s'%error)
     exit()
 
 
@@ -47,7 +48,7 @@ if __name__ == '__main__':
 
     try:
         __import__(package)
-    except ImportError, e:
+    except ImportError as e:
         abort("Cannot import mpltools")
 
     #assert_source_and_install_match(package)
@@ -59,4 +60,4 @@ if __name__ == '__main__':
                                         ]
     docwriter.write_api_docs(outdir)
     docwriter.write_index(outdir, 'api', relative_to='source/api')
-    print '%d files written' % len(docwriter.written_modules)
+    print('%d files written' % len(docwriter.written_modules))

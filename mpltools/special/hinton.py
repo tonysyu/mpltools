@@ -1,3 +1,5 @@
+from __future__ import division
+from future.builtins import zip
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import collections
@@ -64,7 +66,7 @@ def hinton(inarray, max_value=None, use_default_ticks=True):
     neg = np.where(values < 0)
     for idx, color in zip([pos, neg], ['white', 'black']):
         if len(idx[0]) > 0:
-            xy = zip(cols[idx], rows[idx])
+            xy = list(zip(cols[idx], rows[idx]))
             circle_areas = np.pi / 2 * np.abs(values[idx])
             squares = SquareCollection(sizes=circle_areas,
                                        offsets=xy, transOffset=ax.transData,
