@@ -16,6 +16,8 @@ This is a modified version of a script originally shipped with the PyMVPA
 project, then adapted for use first in NIPY, then in skimage, and then in
 mpltools.
 """
+from __future__ import print_function
+from future.builtins import object
 
 # Stdlib imports
 import os
@@ -176,7 +178,7 @@ class ApiDocWriter(object):
         ''' Parse module defined in *uri* '''
         filename = self._uri2path(uri)
         if filename is None:
-            print filename, 'erk'
+            print(filename, 'erk')
             # nothing that we could handle here.
             return ([],[])
         f = open(filename, 'rt')
@@ -260,7 +262,7 @@ class ApiDocWriter(object):
         # get the names of all classes and functions
         functions, classes = self._parse_module_with_import(uri)
         if not len(functions) and not len(classes) and DEBUG:
-            print 'WARNING: Empty -', uri  # dbg
+            print('WARNING: Empty -', uri)  # dbg
             return ''
 
         # Make a shorter version of the uri that omits the package name for
@@ -488,7 +490,7 @@ class ApiDocWriter(object):
             relpath = (outdir + os.path.sep).replace(relative_to + os.path.sep, '')
         else:
             relpath = outdir
-        print "outdir: ", relpath
+        print("outdir: ", relpath)
         idx = open(path,'wt')
         w = idx.write
         w('.. AUTO-GENERATED FILE -- DO NOT EDIT!\n\n')

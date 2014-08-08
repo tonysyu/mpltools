@@ -20,10 +20,11 @@ lib
 baselib
     Style library defined by mpltools (i.e. before user definitions).
 """
+from __future__ import absolute_import
 
 from warnings import warn
 
-from core import *
+from .core import *
 
 
 deprecation_msg = ("The style module has been integrated into Matplotlib 1.4. "

@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 import matplotlib.pyplot as plt
 
@@ -23,7 +24,7 @@ def save_all_figs(directory='./', fmt='png', default_name='untitled%i'):
     >>> save_all_figs('plots/', fmt=['pdf','png'])
 
     """
-    if isinstance(fmt, basestring):
+    if isinstance(fmt, str):
         fmt = [fmt]
 
     for fignum in plt.get_fignums():
@@ -40,5 +41,5 @@ def save_all_figs(directory='./', fmt='png', default_name='untitled%i'):
         for a_fmt in fmt:
             savename = '%s.%s' % (savepath, a_fmt)
             plt.savefig(savename)
-            print("Saved '%s'" % savename)
+            print(("Saved '%s'" % savename))
 

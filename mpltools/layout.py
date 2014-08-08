@@ -1,3 +1,4 @@
+from __future__ import division
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
@@ -80,7 +81,7 @@ def clear_frame(ax=None):
 
     ax.xaxis.set_ticks([])
     ax.yaxis.set_ticks([])
-    for spine in ax.spines.itervalues():
+    for spine in ax.spines.values():
         spine.set_visible(False)
 
 

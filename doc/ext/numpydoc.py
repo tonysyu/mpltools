@@ -15,6 +15,8 @@ It will:
 .. [1] http://projects.scipy.org/numpy/wiki/CodingStyleGuidelines#docstring-standard
 
 """
+from future.builtins import str
+from future.builtins import object
 
 import re
 import pydoc
@@ -34,7 +36,7 @@ def mangle_docstrings(app, what, name, obj, options, lines,
         lines[:] = title_re.sub(u'', u"\n".join(lines)).split(u"\n")
     else:
         doc = get_doc_object(obj, what, u"\n".join(lines), config=cfg)
-        lines[:] = unicode(doc).split(u"\n")
+        lines[:] = str(doc).split(u"\n")
 
     if app.config.numpydoc_edit_link and hasattr(obj, '__name__') and \
            obj.__name__:
@@ -115,7 +117,7 @@ class ManglingDomainBase(object):
         self.wrap_mangling_directives()
 
     def wrap_mangling_directives(self):
-        for name, objtype in self.directive_mangling_map.items():
+        for name, objtype in list(self.directive_mangling_map.items()):
             self.directives[name] = wrap_mangling_directive(
                 self.directives[name], objtype)
 

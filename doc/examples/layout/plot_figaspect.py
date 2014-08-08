@@ -26,7 +26,7 @@ x, y = np.random.normal(size=(2, 20))
 aspect_functions = {'mpltools.layout.figaspect': layout.figaspect,
                     'matplotlib.pyplot.figaspect': plt.figaspect}
 
-for label, figaspect in aspect_functions.items():
+for label, figaspect in list(aspect_functions.items()):
     figsize = figaspect(0.5)
     fig, ax = plt.subplots(figsize=figsize)
 

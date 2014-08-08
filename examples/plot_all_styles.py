@@ -4,6 +4,7 @@ Save test plots for all styles defined in `mpltools.style`.
 Note that `test_artists_plot` calls `matplotlib.pyplot.tight_layout` so subplot
 spacing is not tested for this plot.
 """
+from __future__ import print_function
 
 import os
 import os.path as pth
@@ -72,13 +73,13 @@ def test_simple_plot():
 
 
 # Only show styles defined by package, not by user.
-base_styles = style.baselib.keys()
+base_styles = list(style.baselib.keys())
 for sty in base_styles:
     # reset matplotlib defaults before applying new style
     plt.rcdefaults()
 
     style.use(sty, use_baselib=True)
-    print "Plotting tests for '%s' style" % sty
+    print("Plotting tests for '%s' style" % sty)
 
     fig = test_artists_plot()
     fig.savefig(pth.join(PATH, 'test_artists_png', sty + '.png'))

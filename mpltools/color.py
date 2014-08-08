@@ -1,3 +1,5 @@
+from __future__ import division
+from future.builtins import zip
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
@@ -70,12 +72,12 @@ class LinearColormap(LinearSegmentedColormap):
 
         # Adapt color_data to the form expected by LinearSegmentedColormap.
         color_data = dict((key, [(x, y, y) for x, y in zip(index, value)])
-                          for key, value in color_data.iteritems())
+                          for key, value in color_data.items())
         LinearSegmentedColormap.__init__(self, name, color_data, **kwargs)
 
 
 def rgb_list_to_colordict(rgb_list):
-    colors_by_channel = zip(*rgb_list)
+    colors_by_channel = list(zip(*rgb_list))
     channels = ('red', 'green', 'blue', 'alpha')
     return dict((color, value)
                 for color, value in zip(channels, colors_by_channel))
@@ -107,7 +109,7 @@ def color_mapper(parameter_range, cmap=None, start=None, stop=None):
     """
     if cmap is None:
         cmap = config['color']['cmap']
-    if isinstance(cmap, basestring):
+    if isinstance(cmap, str):
         cmap = getattr(plt.cm, cmap)
 
     crange = list(CMAP_RANGE.get(cmap.name, (0, 1)))
@@ -160,7 +162,7 @@ def colors_from_cmap(length=50, cmap=None, start=None, stop=None):
     """
     if cmap is None:
         cmap = config['color']['cmap']
-    if isinstance(cmap, basestring):
+    if isinstance(cmap, str):
         cmap = getattr(plt.cm, cmap)
 
     crange = CMAP_RANGE.get(cmap.name, (0, 1))
