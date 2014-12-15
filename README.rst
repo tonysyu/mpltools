@@ -16,7 +16,8 @@ Styles
     The style-sheet functionality has been integrated into Matplotlib 1.4. As
     a result, this module will be removed in a future release.
     (See `PR 2236 <https://github.com/matplotlib/matplotlib/pull/2236>`__,
-    `matplotlib 1.4 release notes <>`__.)
+    `matplotlib 1.4 release notes
+    <http://matplotlib.org/users/whats_new.html#style-package-added>`__.)
 
 This package got its start by implementing plotting "styles"---essentially
 stylesheets that are similar to matplotlibrc_ files. Unfortunately, the syntax

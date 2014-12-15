@@ -9,7 +9,7 @@ from matplotlib import ticker
 __all__ = ['hinton']
 
 
-# TOOD: Add yutils.mpl._coll to mpltools and use that for square collection.
+# TODO: Add yutils.mpl._coll to mpltools and use that for square collection.
 class SquareCollection(collections.RegularPolyCollection):
     """Return a collection of squares."""
 

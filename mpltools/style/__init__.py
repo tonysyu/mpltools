@@ -27,6 +27,13 @@ from warnings import warn
 from .core import *
 
 
-deprecation_msg = ("The style module has been integrated into Matplotlib 1.4. "
-                   "This module will be removed in a future release.")
-warn(deprecation_msg)
+warn("""
+
+    The style-sheet functionality in mpltools has been integrated into
+    Matplotlib >= 1.4. This module will be removed in a future release.
+
+    Note that style-sheets used by `matplotlib.style` use the standard
+    Matplotlib rc-file syntax instead of the INI format used by `mpltools`.
+    This mostly means un-quoting strings and changing '=' to ':'.
+
+""", FutureWarning)
