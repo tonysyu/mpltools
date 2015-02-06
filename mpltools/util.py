@@ -40,10 +40,12 @@ class deprecated(object):
         @functools.wraps(func)
         def wrapped(*args, **kwargs):
             if self.behavior == 'warn':
-                warnings.warn_explicit(msg,
+                warnings.warn_explicit(
+                    msg,
                     category=DeprecationWarning,
                     filename=func.__code__.co_filename,
-                    lineno=func.__code__.co_firstlineno + 1)
+                    lineno=func.__code__.co_firstlineno + 1
+                )
             elif self.behavior == 'raise':
                 raise DeprecationWarning(msg)
             return func(*args, **kwargs)
@@ -65,6 +67,6 @@ def figaspect(*args, **kwargs):
 
 @deprecated('layout.figaspect')
 def figsize(aspect_ratio=1.3, **kwargs):
-    print("NOTE: `layout.figaspect` uses inverse definition of `aspect_ratio`.")
+    print("NOTE: `layout.figaspect` uses inverse definition of "
+          "`aspect_ratio`.")
     return layout.figaspect(1./aspect_ratio, **kwargs)
-

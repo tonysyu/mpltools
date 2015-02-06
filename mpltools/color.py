@@ -122,6 +122,7 @@ def color_mapper(parameter_range, cmap=None, start=None, stop=None):
     assert 0 <= stop <= 1
 
     pmin, pmax = parameter_range
+
     def map_color(val):
         """Return color based on parameter value `val`."""
         assert pmin <= val <= pmax
@@ -214,4 +215,3 @@ def cycle_cmap(length=50, cmap=None, start=None, stop=None, ax=None):
         plt.rc('axes', color_cycle=color_cycle.tolist())
     else:
         ax.set_color_cycle(color_cycle)
-

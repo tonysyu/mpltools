@@ -191,4 +191,3 @@ class _GenAnimation(_animation.FuncAnimation):
         _animation.TimedAnimation.__init__(self, fig, **kwargs)
         # Clear saved seq since TimedAnimation.__init__ adds a single frame.
         self._save_seq = []
-

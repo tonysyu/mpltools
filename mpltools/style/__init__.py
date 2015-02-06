@@ -24,7 +24,10 @@ from __future__ import absolute_import
 
 from warnings import warn
 
-from .core import *
+from .core import available, baselib, lib, use
+
+
+__all__ = ['available', 'baselib', 'lib', 'use']
 
 
 warn("""

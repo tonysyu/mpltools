@@ -126,4 +126,3 @@ def _slope_triangle(origin, dx, dy, fc='0.8', **poly_kwargs):
     verts.append(verts[0] + (dx, 0))
     verts.append(verts[0] + (dx, dy))
     return plt.Polygon(verts, **poly_kwargs)
-

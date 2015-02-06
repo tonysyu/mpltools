@@ -30,5 +30,3 @@ for cfg in iter_paths([os.path.join(pkgdir, 'mpltoolsrc'),
                        '~/.mpltoolsrc',
                        './mpltoolsrc']):
     config.update(cfg)
-
-

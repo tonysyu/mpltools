@@ -1,4 +1,5 @@
 from __future__ import division
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
@@ -197,4 +198,3 @@ if __name__ == '__main__':
     ax.set_title('floating_yaxis with pad_limits')
 
     plt.show()
-

@@ -47,7 +47,8 @@ class RectangleSelector(mwidgets.RectangleSelector):
         Rectangle extents: (xmin, xmax, ymin, ymax).
     """
 
-    def __init__(self, ax, onselect=None, rectprops=None, mindist=10, **kwargs):
+    def __init__(self, ax, onselect=None, rectprops=None,
+                 mindist=10, **kwargs):
 
         if 'drawtype' in kwargs and not kwargs['drawtype'] == 'box':
             raise ValueError('"drawtype" must be "box"')
@@ -87,7 +88,6 @@ class RectangleSelector(mwidgets.RectangleSelector):
         self.ax.add_line(self._edge_handles)
 
         self.connect_event('key_press_event', self.onkeypress)
-
 
     @property
     def _rect_bbox(self):
@@ -139,8 +139,6 @@ class RectangleSelector(mwidgets.RectangleSelector):
         self.set_animated(False)
 
     def press(self, event):
-        p = event.x, event.y # cursor coords
-
         dist = []
         for h in (self._corner_handles, self._edge_handles):
             pts = np.transpose((h.get_xdata(), h.get_ydata()))
@@ -185,7 +183,7 @@ class RectangleSelector(mwidgets.RectangleSelector):
         if self.eventpress is None or self.ignore(event):
             return
 
-        if self.active_handle == None:
+        if self.active_handle is None:
             xmin, ymin = event.xdata, event.ydata
             xmax = self.eventpress.xdata
             ymax = self.eventpress.ydata
@@ -206,7 +204,7 @@ class RectangleSelector(mwidgets.RectangleSelector):
         # Order by value instead of time.
         if xmin > xmax:
             xmin, xmax = xmax, xmin
-        if ymin>ymax:
+        if ymin > ymax:
             ymin, ymax = ymax, ymin
 
         self._rect.set_x(xmin)
@@ -234,7 +232,6 @@ class RectangleSelector(mwidgets.RectangleSelector):
         self._corner_handles.set_animated(val)
         self._edge_handles.set_animated(val)
 
-
     def update(self):
         if self.useblit:
             if self.background is not None:
@@ -258,4 +255,3 @@ if __name__ == '__main__':
     plt.show()
     print("Final selection:", end=' ')
     rect_select.onenter(rect_select.extents)
-
