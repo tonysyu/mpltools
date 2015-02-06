@@ -57,7 +57,6 @@ def update_user_library(base_library):
     return library
 
 
-
 def read_style_directory(style_dir):
     styles = dict()
     library_glob = os.path.join(style_dir, '*.rc')
@@ -108,4 +107,3 @@ def update_nested_dict(main_dict, new_dict):
 baselib = load_base_library()
 lib = update_user_library(baselib)
 available = list(lib.keys())
-

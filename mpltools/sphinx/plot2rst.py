@@ -49,7 +49,8 @@ plot2rst_flags : dict
 
 Flags
 -----
-You can add flags to example files by added a code comment with the prefix ``#PLOT2RST:`. Flags are specified as key-value pairs; for example::
+You can add flags to example files by added a code comment with the prefix
+``#PLOT2RST:`. Flags are specified as key-value pairs; for example::
 
     #PLOT2RST: auto_plots = False
 
@@ -57,7 +58,8 @@ There are also reStructuredText flags, which can be added like::
 
     .. plot2rst_gallery_style:: list
 
-Some flags can only be defined in the python example file, while others can only be defined in the gallery index. The following flags are defined:
+Some flags can only be defined in the python example file, while others can
+only be defined in the gallery index. The following flags are defined:
 
 auto_plots : bool
     If no plot tags are found in the example, `auto_plots` adds all figures to
@@ -107,6 +109,7 @@ Suggested CSS definitions
 """
 from __future__ import print_function
 from future.builtins import zip
+
 import os
 import shutil
 import token
@@ -155,6 +158,7 @@ GALLERY_LIST_TEMPLATE = """
 
 
 FLAG_PREFIX = '#PLOT2RST:'
+
 
 class Path(str):
     """Path object for manipulating directory and file paths."""
@@ -220,7 +224,7 @@ def generate_example_galleries(app):
     default_flags.update(cfg.plot2rst_flags)
     cfg.plot2rst_flags = default_flags
 
-    doc_src = Path(os.path.abspath(app.builder.srcdir)) # path/to/doc/source
+    doc_src = Path(os.path.abspath(app.builder.srcdir))  # path/to/doc/source
 
     if isinstance(cfg.plot2rst_paths, tuple):
         cfg.plot2rst_paths = [cfg.plot2rst_paths]
@@ -275,7 +279,7 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg, depth=0):
         print(src_dir)
         print(80*'_')
         print(('Example directory %s does not have a %s file'
-                        % (src_dir, index_name)))
+               % (src_dir, index_name)))
         print('Skipping this directory')
         print(80*'_')
         return
@@ -286,8 +290,8 @@ def write_gallery(gallery_index, src_dir, rst_dir, cfg, depth=0):
 
     rst_dir.makedirs()
     examples = [fname for fname in sorted(src_dir.listdir(), key=_plots_first)
-                      if fname.endswith('py')]
-    ex_names = [ex[:-3] for ex in examples] # strip '.py' extension
+                if fname.endswith('py')]
+    ex_names = [ex[:-3] for ex in examples]  # strip '.py' extension
     if depth == 0:
         sub_dir = Path('')
     else:
@@ -388,7 +392,7 @@ def write_example(src_name, src_dir, rst_dir, cfg):
     while True:
         head = blocks[0][2]
         if head.startswith('#!') or head.startswith(FLAG_PREFIX):
-            blocks.pop(0) # don't add shebangs or flags to rst file.
+            blocks.pop(0)  # don't add shebangs or flags to rst file.
         else:
             break
 
@@ -409,7 +413,7 @@ def write_example(src_name, src_dir, rst_dir, cfg):
 
     example_rst += CODE_LINK.format(src_name)
 
-    f = open(rst_path,'w')
+    f = open(rst_path, 'w')
     f.write(example_rst)
     f.flush()
 
@@ -500,7 +504,7 @@ def analyze_blocks(source_file):
                 key = flag_args[0].strip()
                 flags[key] = eval(flag_args[1])
     idx_first_text_block = 0
-    if not block_edges: # no text blocks
+    if not block_edges:  # no text blocks
         idx_first_text_block = None
     else:
         # when example doesn't start with text block.
@@ -508,7 +512,7 @@ def analyze_blocks(source_file):
             block_edges.insert(0, 1)
             idx_first_text_block = 1
         # when example doesn't end with text block.
-        if not block_edges[-1] == erow: # iffy: I'm using end state of loop
+        if not block_edges[-1] == erow:  # iffy: I'm using end state of loop
             block_edges.append(erow)
     return block_edges, idx_first_text_block, flags
 
@@ -604,4 +608,3 @@ def save_all_figures(image_path):
         plt.savefig(image_path.format(fig_num))
         figure_list.append(image_fmt_str.format(fig_num))
     return figure_list
-

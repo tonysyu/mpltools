@@ -70,14 +70,14 @@ class Slider(mwidgets.Slider):
 
         self.show_value = False if value_fmt is None else True
         if self.show_value:
-            self.valtext = ax.text(1 + pad, y0, value_fmt%value,
+            self.valtext = ax.text(1 + pad, y0, value_fmt % value,
                                    transform=ax.transAxes,
                                    verticalalignment='center',
                                    horizontalalignment='left')
 
         self.slidermin = slidermin
         self.slidermax = slidermax
-        self.drag_active  = False
+        self.drag_active = False
 
         self.cnt = 0
         self.observers = {}
@@ -137,4 +137,3 @@ if __name__ == '__main__':
                   label='Amplitude:', value=a0)
 
     plt.show()
-

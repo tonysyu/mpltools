@@ -46,7 +46,8 @@ def errorfill(x, y, yerr=None, xerr=None, color=None, ls=None, lw=None,
         ls = plt.rcParams['lines.linestyle']
     if lw is None:
         lw = plt.rcParams['lines.linewidth']
-    ax.plot(x, y, color=color, linestyle=ls, linewidth=lw, alpha=alpha, label=label)
+    ax.plot(x, y, linestyle=ls, linewidth=lw,
+            color=color, alpha=alpha, label=label)
 
     if yerr is not None and xerr is not None:
         msg = "Setting both `yerr` and `xerr` is not supported. Ignore `xerr`."
@@ -77,6 +78,7 @@ def fill_between(x, y1, y2=0, ax=None, **kwargs):
     ax = ax if ax is not None else plt.gca()
     ax.fill_between(x, y1, y2, **kwargs)
     ax.add_patch(plt.Rectangle((0, 0), 0, 0, **kwargs))
+
 
 def fill_between_x(x, y1, y2=0, ax=None, **kwargs):
     ax = ax if ax is not None else plt.gca()

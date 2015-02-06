@@ -1,4 +1,5 @@
 from __future__ import print_function
+
 import os
 import matplotlib.pyplot as plt
 
@@ -42,4 +43,3 @@ def save_all_figs(directory='./', fmt='png', default_name='untitled%i'):
             savename = '%s.%s' % (savepath, a_fmt)
             plt.savefig(savename)
             print(("Saved '%s'" % savename))
-
