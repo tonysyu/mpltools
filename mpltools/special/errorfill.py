@@ -46,7 +46,7 @@ def errorfill(x, y, yerr=None, xerr=None, color=None, ls=None, lw=None,
         ls = plt.rcParams['lines.linestyle']
     if lw is None:
         lw = plt.rcParams['lines.linewidth']
-    ax.plot(x, y, color, linestyle=ls, linewidth=lw, alpha=alpha, label=label)
+    ax.plot(x, y, color=color, linestyle=ls, linewidth=lw, alpha=alpha, label=label)
 
     if yerr is not None and xerr is not None:
         msg = "Setting both `yerr` and `xerr` is not supported. Ignore `xerr`."
