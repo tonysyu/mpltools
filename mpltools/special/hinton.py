@@ -1,5 +1,5 @@
 from __future__ import division
-from future.builtins import zip
+from future_builtins import zip
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import collections
