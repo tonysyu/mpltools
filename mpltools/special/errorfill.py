@@ -8,7 +8,7 @@ __all__ = ['errorfill']
 
 
 def errorfill(x, y, yerr=None, xerr=None, color=None, ls=None, lw=None,
-              alpha=1, alpha_fill=0.3, label='', label_fill='', ax=None):
+              alpha=1, alpha_fill=0.3, label='', label_fill='', ax=None, marker=None):
     """Plot data with errors marked by a filled region.
 
     Parameters
@@ -47,7 +47,7 @@ def errorfill(x, y, yerr=None, xerr=None, color=None, ls=None, lw=None,
     if lw is None:
         lw = plt.rcParams['lines.linewidth']
     ax.plot(x, y, linestyle=ls, linewidth=lw,
-            color=color, alpha=alpha, label=label)
+            color=color, alpha=alpha, label=label, marker=marker)
 
     if yerr is not None and xerr is not None:
         msg = "Setting both `yerr` and `xerr` is not supported. Ignore `xerr`."
