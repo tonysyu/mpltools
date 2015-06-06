@@ -166,7 +166,7 @@ def colors_from_cmap(length=50, cmap=None, start=None, stop=None):
     if isinstance(cmap, str):
         cmap = getattr(plt.cm, cmap)
 
-    crange = CMAP_RANGE.get(cmap.name, (0, 1))
+    crange = list(CMAP_RANGE.get(cmap.name, (0, 1)))
     if start is not None:
         crange[0] = start
     if stop is not None:
