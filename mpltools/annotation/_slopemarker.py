@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 __all__ = ['slope_marker']
 
 
-def slope_marker(origin, slope, invert=False, size_frac=0.1, pad_frac=0.2,
+def slope_marker(origin, slope, label=None, invert=False, size_frac=0.1, pad_frac=0.2,
                  text_kwargs=None, poly_kwargs=None, ax=None):
     """Plot triangular slope marker labeled with slope.
 
@@ -18,6 +18,8 @@ def slope_marker(origin, slope, invert=False, size_frac=0.1, pad_frac=0.2,
     slope : float or 2-tuple
         Slope of marker. If float, a single slope label is printed; if tuple,
         you can specify the (rise, run) of the slope and 2 labels are printed.
+    label : str
+        The text to be displayed instead of the slope (e.g. to decrease precision)
     invert : bool
         If True, hypotenuse is on the left (i.e. \| or /|).
         If False, hypotenuse is on the right (i.e. |/ or |\).
@@ -77,11 +79,14 @@ def slope_marker(origin, slope, invert=False, size_frac=0.1, pad_frac=0.2,
 
     va = 'top' if y_pad > 0 else 'bottom'
     ha = 'left' if x_pad > 0 else 'right'
-    if rise is not None:
-        ax.text(x_run, y_run, str(run), va=va, ha='center', **text_kwargs)
-        ax.text(x_rise, y_rise, str(rise), ha=ha, va='center', **text_kwargs)
+    if label is not None:
+        ax.text(x_rise, y_rise, label, ha=ha, va='center', **text_kwargs)
     else:
-        ax.text(x_rise, y_rise, str(slope), ha=ha, va='center', **text_kwargs)
+        if rise is not None:
+            ax.text(x_run, y_run, str(run), va=va, ha='center', **text_kwargs)
+            ax.text(x_rise, y_rise, str(rise), ha=ha, va='center', **text_kwargs)
+        else:
+            ax.text(x_rise, y_rise, str(slope), ha=ha, va='center', **text_kwargs)
 
     ax.add_patch(_slope_triangle(origin, dx, dy, **poly_kwargs))
 
